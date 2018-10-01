@@ -7,14 +7,18 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />   
-        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500' rel='stylesheet' type='text/css'></link>
-        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'></link>
+        
         <h:outputStylesheet name="css/mobile-menu.css"/>
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>    
         <h:outputStylesheet name="fonts/flaticon/flaticon.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/jquery-1.12.0.min.js"/>
         <h:outputStylesheet name="css/style.css"/>
-
+        <h:outputStylesheet name="css/dataTables.bootstrap.min.css" />
+        <h:outputScript name="js/jquery.dataTables.min.js"/>
+        <h:outputScript name="js/dataTables.bootstrap.min.js"/>
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
         <title>Administrador general</title>
     </h:head>
 
@@ -37,19 +41,11 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="#navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right main-nav">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li class="dropdown dropdown-toggle"><a href="#" data-toggle="dropdown">Dropdown <span><i class="fa fa-angle-down"></i></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Awesome Features</a></li>
-                                <li><a href="#">Clean Interface</a></li>
-                                <li><a href="#">Available Possibilities</a></li>
-                                <li><a href="#">Responsive Design</a></li>
-                                <li><a href="#">Pixel Perfect Graphics</a></li>
-                            </ul>
-                        </li>
+                        <li class="active"><a href="index.html">Registro</a></li>
+                        <li><a href="about.html">Editar</a></li>
+                        <li><a href="services.html">Lista cuidadanos</a></li>
+                        <li><a href="contact.html">Iniciar Cesión</a></li>
+                        
                     </ul>
 
                 </div>
@@ -61,15 +57,25 @@
         <section class="case-studies">
     <div class="container">
          <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+             <h2><ui:insert name="titulo"></ui:insert></h2>
         </div>
+        
+         <ui:insert name="contenido"/>
     </div><!-- /.container -->
+    
+     
+        <h:outputScript rendered="#{not empty flash.exito}">
+                alertify.success('#{flash.exito}');
+        </h:outputScript>
+        
+        <h:outputScript rendered="#{not empty flash.fracaso}">
+                alertify.error('#{flash.fracaso}');
+        </h:outputScript>
 </section>
 
        
 
-        <h:outputScript name="js/jquery-2.1.4.min.js"/>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+       
         <h:outputScript name="js/mobile-menu.js"/>
         <h:outputScript name="js/scripts.js"/>
     </h:body>

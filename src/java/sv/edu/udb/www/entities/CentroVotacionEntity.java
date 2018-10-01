@@ -23,6 +23,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ *
+ * @author Rodriguez
+ */
 @Entity
 @Table(name = "centro_votacion")
 @NamedQueries({
@@ -46,11 +50,11 @@ public class CentroVotacionEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 40)
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCentroVotacion")
-    private List<JrvEntity> jrvEntityList;
     @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
     @ManyToOne(optional = false)
     private MunicipioEntity idMunicipio;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCentroVotacion")
+    private List<CiudadanoEntity> ciudadanoEntityList;
 
     public CentroVotacionEntity() {
     }
@@ -89,20 +93,20 @@ public class CentroVotacionEntity implements Serializable {
         this.nombre = nombre;
     }
 
-    public List<JrvEntity> getJrvEntityList() {
-        return jrvEntityList;
-    }
-
-    public void setJrvEntityList(List<JrvEntity> jrvEntityList) {
-        this.jrvEntityList = jrvEntityList;
-    }
-
     public MunicipioEntity getIdMunicipio() {
         return idMunicipio;
     }
 
     public void setIdMunicipio(MunicipioEntity idMunicipio) {
         this.idMunicipio = idMunicipio;
+    }
+
+    public List<CiudadanoEntity> getCiudadanoEntityList() {
+        return ciudadanoEntityList;
+    }
+
+    public void setCiudadanoEntityList(List<CiudadanoEntity> ciudadanoEntityList) {
+        this.ciudadanoEntityList = ciudadanoEntityList;
     }
 
     @Override

@@ -6,22 +6,24 @@
 package sv.edu.udb.www.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
+/**
+ *
+ * @author Rodriguez
+ */
 @Entity
 @Table(name = "ciudadanos")
 @NamedQueries({
@@ -32,8 +34,7 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "CiudadanoEntity.findByDireccion", query = "SELECT c FROM CiudadanoEntity c WHERE c.direccion = :direccion")
     , @NamedQuery(name = "CiudadanoEntity.findByDui", query = "SELECT c FROM CiudadanoEntity c WHERE c.dui = :dui")
     , @NamedQuery(name = "CiudadanoEntity.findByTelefono", query = "SELECT c FROM CiudadanoEntity c WHERE c.telefono = :telefono")
-    , @NamedQuery(name = "CiudadanoEntity.findByUrlImagen", query = "SELECT c FROM CiudadanoEntity c WHERE c.urlImagen = :urlImagen")
-    , @NamedQuery(name = "CiudadanoEntity.findByIdJrv", query = "SELECT c FROM CiudadanoEntity c WHERE c.idJrv = :idJrv")})
+    , @NamedQuery(name = "CiudadanoEntity.findByUrlImagen", query = "SELECT c FROM CiudadanoEntity c WHERE c.urlImagen = :urlImagen")})
 public class CiudadanoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,14 +68,9 @@ public class CiudadanoEntity implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "url_imagen")
     private String urlImagen;
-    @Column(name = "id_jrv")
-    private Integer idJrv;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudadano")
-    private List<DetalleCiudadanoEleccionEntity> detalleCiudadanoEleccionEntityList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSecretario")
-    private List<JrvEntity> jrvEntityList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVocal")
-    private List<JrvEntity> jrvEntityList1;
+    @JoinColumn(name = "id_centro_votacion", referencedColumnName = "id_centro_votacion")
+    @ManyToOne(optional = false)
+    private CentroVotacionEntity idCentroVotacion;
 
     public CiudadanoEntity() {
     }
@@ -149,36 +145,12 @@ public class CiudadanoEntity implements Serializable {
         this.urlImagen = urlImagen;
     }
 
-    public Integer getIdJrv() {
-        return idJrv;
+    public CentroVotacionEntity getIdCentroVotacion() {
+        return idCentroVotacion;
     }
 
-    public void setIdJrv(Integer idJrv) {
-        this.idJrv = idJrv;
-    }
-
-    public List<DetalleCiudadanoEleccionEntity> getDetalleCiudadanoEleccionEntityList() {
-        return detalleCiudadanoEleccionEntityList;
-    }
-
-    public void setDetalleCiudadanoEleccionEntityList(List<DetalleCiudadanoEleccionEntity> detalleCiudadanoEleccionEntityList) {
-        this.detalleCiudadanoEleccionEntityList = detalleCiudadanoEleccionEntityList;
-    }
-
-    public List<JrvEntity> getJrvEntityList() {
-        return jrvEntityList;
-    }
-
-    public void setJrvEntityList(List<JrvEntity> jrvEntityList) {
-        this.jrvEntityList = jrvEntityList;
-    }
-
-    public List<JrvEntity> getJrvEntityList1() {
-        return jrvEntityList1;
-    }
-
-    public void setJrvEntityList1(List<JrvEntity> jrvEntityList1) {
-        this.jrvEntityList1 = jrvEntityList1;
+    public void setIdCentroVotacion(CentroVotacionEntity idCentroVotacion) {
+        this.idCentroVotacion = idCentroVotacion;
     }
 
     @Override
