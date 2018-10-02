@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sv.edu.udb.www.model;
 
 import java.util.List;
@@ -24,7 +20,7 @@ public class CiudadanosModel {
         return query.getResultList();
     }
 
-    public int insertarCiudadano(CiudadanoEntity ciudadano) {
+    public int insertarCiudadano(CiudadanoEntity ciudadano){
         try {
             em.persist(ciudadano);
             em.flush();

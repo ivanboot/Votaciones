@@ -24,7 +24,7 @@ public class CiudadanosBean {
     
     //Inyecciones para poder llenar ComboBox
     @EJB
-    private CentroVotacionesModel centroModel;       
+    private CentroVotacionesModel centroVotacionesModel;       
     
     List<CiudadanoEntity> listaCiudadanos;
     
@@ -40,7 +40,7 @@ public class CiudadanosBean {
     
     //Para llenar los comboBOX
     public List<CentroVotacionEntity> getListaCentroVotacion(){
-        return centroModel.listarCentroVotaciones();
+        return centroVotacionesModel.listarCentroVotaciones();
     }
 
     public CiudadanoEntity getCiudadano() {
@@ -55,7 +55,7 @@ public class CiudadanosBean {
         if(ciudadanosModel.insertarCiudadano(ciudadano) > 0){
             JsfUtils.addFlashMessage("exito", "Ciudadano registrado exitosamente");
         }
-        return "/RNPN/listaCiudadanos?faces-rediret=true";
+        return "/RNPN/listaCiudadanos?faces-redirect=true";
     }
     
     
