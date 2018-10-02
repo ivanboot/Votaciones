@@ -4,7 +4,7 @@ package sv.edu.udb.www.managed_beans;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import sv.edu.udb.www.entities.CentroVotacionEntity;
 import sv.edu.udb.www.entities.CiudadanoEntity;
 import sv.edu.udb.www.model.CentroVotacionesModel;
@@ -16,7 +16,7 @@ import sv.edu.udb.www.utils.JsfUtils;
  * @author Rodriguez
  */
 @Named(value = "ciudadanosBean")
-@Dependent
+@RequestScoped
 public class CiudadanosBean {
 
     @EJB
