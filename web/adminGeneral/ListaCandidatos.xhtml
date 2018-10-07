@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/AdminG_Template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="content">
+        <div class="col-md-12" style="background-color: white; padding: 5%;">                    
+        <h:form prependId="false">        
+            <h:dataTable id="tabla" value="#{candidatosBean.listaCandidatos}" var="item"
+                         class="table table-bordered">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nombres"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombres}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Apellidos"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellidos}"/>
+                </h:column>                    
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Partido político"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idPartido.partido}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Tipo de elección"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idMunicipio eq null? 'Precidencial' : item.idMunicipio.municipio}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Imagen"/>
+                    </f:facet>
+                    <h:outputText value="#{item.urlFoto}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+            </div>
+        <script>
+            $(document).ready(function () {
+                $("#tabla").dataTable();
+            });
+        </script>
+    </ui:define>
+
+</ui:composition>

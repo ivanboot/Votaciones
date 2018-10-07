@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/AdminG_Template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="content">
+        <div class="col-md-6" style="background-color: white; padding: 5%;">
+            <h2>Nueva elección</h2>
+
+            <h:form>
+                <h:panelGroup layout="block" class="alert alert-danger" rendered="#{not empty facesContext.messageList}">
+                    <h:messages />
+                </h:panelGroup>
+                
+                <div class="form-group">
+                    <h:outputLabel value="Titulo:" for="titulo" />
+                    <h:inputText class="form-control" id="titulo" value="#{eleccionesBean.eleccion.titulo}" title="Titulo"
+                                 required="true" requiredMessage="El titulo es obligatorio."/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Fecha inicio para eleccion de candidatos:" for="fechaInicioCandidato" />
+                    <h:inputText class="form-control" id="fechaInicioCandidato" value="#{eleccionesBean.eleccion.fechaInicioCandidato}" title="FechaInicioCandidato"
+                                 required="true" requiredMessage="La fecha de inicio es obligatoria."
+                                 converterMessage="Fecha inicio incorrecta"
+                                 a:type="date">
+                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Fecha limite para eleccion de candidatos:" for="fechaFinCandidato" />
+                    <h:inputText class="form-control" id="fechaFinCandidato" value="#{eleccionesBean.eleccion.fechaFinCandidato}" title="FechaFinCandidato"
+                                 required="true" requiredMessage="La fecha limite es obligatoria."
+                                 converterMessage="Fecha limite incorrecta"
+                                 a:type="date">
+                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Fecha de la eleccion:" for="fechaEleccion" />
+                    <h:inputText  class="form-control" id="fechaEleccion" value="#{eleccionesBean.eleccion.fechaEleccion}" title="FechaEleccion"
+                                  required="true" requiredMessage="La fecha de eleccion es obligatoria."
+                                  converterMessage="Fecha de eleccion incorrecta"
+                                  a:type="date">
+                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Tipo de Eleccion:" for="idTipoEleccion" />
+                    <h:selectOneMenu class="form-control" id="idTipoEleccion" value="#{eleccionesBean.eleccion.idTipoEleccion}" title="IdTipoEleccion"
+                                     required="true" requiredMessage="Tipo de eleccion es obligatorio.">
+                        <f:selectItems value="#{eleccionesBean.listaTipoEleccion}" var="eleccion"
+                                       itemValue="${eleccion}"
+                                       itemLabel="${eleccion.eleccion}"
+                                       />
+                    </h:selectOneMenu>
+                </div>
+                <h:commandLink class="btn btn-success" value="Insertar" action="#{eleccionesBean.nuevaEleccion()}">
+
+                </h:commandLink>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

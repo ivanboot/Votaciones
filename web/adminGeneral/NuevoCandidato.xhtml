@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/AdminG_Template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="content">
+        <div class="col-md-6">
+            <h:panelGroup layout="block" class="alert alert-danger"
+                          rendered="#{not empty facesContext.messageList}">
+                <h:messages />
+            </h:panelGroup>
+            <h:form>                
+                <h2>Nuevo candidato presidencial</h2>
+                <div class="form-group">
+                    <h:outputLabel value="Nombres:" for="nombres" />
+                    <h:inputText class="form-control" id="nombres" value="#{candidatosBean.candidato.nombres}" title="Nombres"
+                                 required="true" requiredMessage="Los nombres son obligatorios."/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Apellidos:" for="apellidos" />
+                    <h:inputText class="form-control" id="apellidos" value="#{candidatosBean.candidato.apellidos}"
+                                 title="Apellidos" required="true" requiredMessage="Los apellidos son obligatorios."/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Partido político:" for="partido" />
+                    <h:selectOneMenu class="form-control" id="partido" value="#{candidatosBean.candidato.idPartido}" title="partido"
+                                     required="true" requiredMessage="El partido es obligatorio.">                    
+                        <f:selectItems value="#{candidatosBean.listaPartidos}" var="partido"
+                                       itemValue="#{partido}"
+                                       itemLabel="#{partido.partido}"/>
+                    </h:selectOneMenu>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel value="Foto:" for="urlFoto" />
+                    <h:inputText class="form-control" id="urlFoto" value="#{candidatosBean.candidato.urlFoto}" title="UrlFoto" 
+                                 required="true" requiredMessage="La foto del candidato es obligatorio." />
+                </div>               
+                <h:commandLink class="btn btn-success" value="Guardar" id="btnGuardar" action="#{candidatosBean.nuevoCandidatoPresidencial()}" />
+            </h:form>       
+        </div>
+    </ui:define>
+
+</ui:composition>

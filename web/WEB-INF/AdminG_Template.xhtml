@@ -7,19 +7,23 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />   
-        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500' rel='stylesheet' type='text/css'></link>
-        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'></link>
-        <h:outputStylesheet name="css/mobile-menu.css"/>
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>    
+         <h:outputStylesheet name="css/mobile-menu.css"/>
         <h:outputStylesheet name="fonts/flaticon/flaticon.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
         <h:outputStylesheet name="css/style.css"/>
-
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
+         <h:outputStylesheet name="css/dataTables.bootstrap.min.css" />
+        <h:outputScript name="js/jquery-1.12.0.min.js"/>
+          <h:outputScript name="js/bootstrap.min.js"/>
+            <h:outputScript name="js/alertify.js"/>
+          <h:outputScript name="js/jquery.dataTables.min.js"/>
+           <h:outputScript name="js/dataTables.bootstrap.min.js"/>
         <title>Administrador general</title>
     </h:head>
 
     <h:body>
-        <nav class="navbar m-menu navbar-default">
+        <nav class="navbar m-menu navbar-collapse">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -37,17 +41,46 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="#navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right main-nav">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li class="dropdown dropdown-toggle"><a href="#" data-toggle="dropdown">Dropdown <span><i class="fa fa-angle-down"></i></span></a>
+                        <li><h:link outcome="/adminGeneral/InicioAdminG">Inicio</h:link></li>
+                        <li class="dropdown dropdown-toggle"><a href="#">Candidatos<span><i class="fa fa-angle-down"></i></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Awesome Features</a></li>
-                                <li><a href="#">Clean Interface</a></li>
-                                <li><a href="#">Available Possibilities</a></li>
-                                <li><a href="#">Responsive Design</a></li>
-                                <li><a href="#">Pixel Perfect Graphics</a></li>
+                                <li><h:link outcome="/adminGeneral/NuevoCandidato">Nuevo candidato</h:link></li>
+                                <li><h:link outcome="/adminGeneral/ListaCandidatos">Lista de candidatos</h:link></li>                                
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-toggle"><a href="#">Proceso electoral<span><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu">
+                                <li><h:link outcome="/adminGeneral/NuevaEleccion">Nuevo proceso </h:link></li>
+                                <li><h:link outcome="/adminGeneral/ListaElecciones">Lista de procesos</h:link></li>                                
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-toggle"><a href="#">Partidos<span><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu">
+                                <li><h:link>Nuevo partido </h:link></li>
+                                <li><h:link>Lista de partidos </h:link></li>                                
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-toggle"><a href="#">Departamentos<span><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu">
+                                <li><h:link outcome="/adminGeneral/NuevoDepartamento">Nuevo departamento </h:link></li>
+                                <li><h:link outcome="/adminGeneral/ListaDepartamentos">Lista departamentos </h:link></li>                                
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-toggle"><a href="#">Municipios<span><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu">
+                                <li><h:link outcome="/adminGeneral/NuevoMunicipio"> Nuevo municipio </h:link></li>
+                                <li><h:link outcome="/adminGeneral/ListaMunicipios">Lista de municipios </h:link></li>                                
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-toggle"><a href="#">Usuarios<span><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu">
+                                <li><h:link>Nuevo usuario </h:link></li>
+                                <li><h:link>Lista de usuarios </h:link></li>                                
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-toggle"><a href="#" data-toggle="dropdown">Cuenta <span><i class="fa fa-angle-down"></i></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Salir</a></li>                                
                             </ul>
                         </li>
                     </ul>
@@ -59,19 +92,19 @@
         </nav>
 
         <section class="case-studies">
-    <div class="container">
-         <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
-        </div>
-    </div><!-- /.container -->
-</section>
-
-       
-
-        <h:outputScript name="js/jquery-2.1.4.min.js"/>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <h:outputScript name="js/mobile-menu.js"/>
-        <h:outputScript name="js/scripts.js"/>
+            <div class="container">
+                <div id="content" class="center_content">
+                    <ui:insert name="content">Content</ui:insert>
+                </div>
+            </div><!-- /.container -->
+        </section>
+         
+            <h:outputScript rendered="#{not empty flash.exito}">
+                alertify.success('#{flash.exito}');
+            </h:outputScript>
+            <h:outputScript rendered="#{not empty flash.fracaso}">
+                alertify.error('#{flash.fracaso}');
+            </h:outputScript>
     </h:body>
 
 </html>
