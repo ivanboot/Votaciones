@@ -64,4 +64,19 @@ public class MunicipiosBean {
         JsfUtils.addFlashMessage("exito", "Municipio ingresado con exito");
         return "/adminGeneral/ListaMunicipios?faces-redirect=true";
     }
+    
+    public String obtenerMunicipio(){
+        int codigo = Integer.parseInt(JsfUtils.getRequest().getParameter("codigo"));
+        municipio = municipiosModel.obtenerMunicipio(codigo);
+        return "/adminGeneral/ModificarMunicipio";
+    }
+    
+    public String modificarMunicipio(){
+        if(municipiosModel.modificarMunicipio(municipio)==0){
+            JsfUtils.addErrorMessage("municipio", "Ya existe un municipio con ese nombre");
+            return null;
+        }
+        JsfUtils.addFlashMessage("exito", "Municipio modificado con exito");
+        return "/adminGeneral/ListaMunicipios?faces-redirect=true";
+    }
 }

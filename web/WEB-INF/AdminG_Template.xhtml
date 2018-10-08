@@ -7,18 +7,18 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />   
-         <h:outputStylesheet name="css/mobile-menu.css"/>
+        <h:outputStylesheet name="css/mobile-menu.css"/>
         <h:outputStylesheet name="fonts/flaticon/flaticon.css"/>
         <h:outputStylesheet name="css/bootstrap.min.css" />
         <h:outputStylesheet name="css/style.css"/>
         <h:outputStylesheet name="css/alertify.core.css" />
         <h:outputStylesheet name="css/alertify.default.css" />
-         <h:outputStylesheet name="css/dataTables.bootstrap.min.css" />
+        <h:outputStylesheet name="css/dataTables.bootstrap.min.css" />
         <h:outputScript name="js/jquery-1.12.0.min.js"/>
-          <h:outputScript name="js/bootstrap.min.js"/>
-            <h:outputScript name="js/alertify.js"/>
-          <h:outputScript name="js/jquery.dataTables.min.js"/>
-           <h:outputScript name="js/dataTables.bootstrap.min.js"/>
+        <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/alertify.js"/>
+        <h:outputScript name="js/jquery.dataTables.min.js"/>
+        <h:outputScript name="js/dataTables.bootstrap.min.js"/>
         <title>Administrador general</title>
     </h:head>
 
@@ -74,8 +74,8 @@
                         </li>
                         <li class="dropdown dropdown-toggle"><a href="#">Usuarios<span><i class="fa fa-angle-down"></i></span></a>
                             <ul class="dropdown-menu">
-                                <li><h:link>Nuevo usuario </h:link></li>
-                                <li><h:link>Lista de usuarios </h:link></li>                                
+                                <li><h:link outcome="/adminGeneral/NuevoUsuario">Nuevo usuario </h:link></li>
+                                <li><h:link outcome="/adminGeneral/ListaUsuarios">Lista de usuarios </h:link></li>                                
                             </ul>
                         </li>
                         <li class="dropdown dropdown-toggle"><a href="#" data-toggle="dropdown">Cuenta <span><i class="fa fa-angle-down"></i></span></a>
@@ -98,13 +98,13 @@
                 </div>
             </div><!-- /.container -->
         </section>
-         
-            <h:outputScript rendered="#{not empty flash.exito}">
-                alertify.success('#{flash.exito}');
-            </h:outputScript>
-            <h:outputScript rendered="#{not empty flash.fracaso}">
-                alertify.error('#{flash.fracaso}');
-            </h:outputScript>
+
+        <h:outputScript rendered="#{not empty flash.exito}">
+            alertify.success('#{flash.exito}');
+        </h:outputScript>
+        <h:outputScript rendered="#{not empty flash.fracaso}">
+            alertify.error('#{flash.fracaso}');
+        </h:outputScript>
     </h:body>
 
 </html>

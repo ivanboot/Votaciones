@@ -62,6 +62,11 @@ public class EleccionesBean {
     }
     
     public String nuevaEleccion(){
+        if(eleccionesModel.listarEleccionesActivas()!=null){
+            JsfUtils.addErrorMessage("idEleccion", "Ya existe una elección activa");
+            return null;
+        }
+        
         eleccion.setEstado(Short.parseShort("1"));
         if(eleccion.getFechaInicioCandidato().before(new Date())){
             JsfUtils.addErrorMessage("fechaInicioCandidato", "La fecha inicial no puede ser menor a la fecha actual");

@@ -6,9 +6,7 @@
 package sv.edu.udb.www.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
+/**
+ *
+ * @author ivanm
+ */
 @Entity
 @Table(name = "usuarios")
 @NamedQueries({
@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "UsuarioEntity.findByNombres", query = "SELECT u FROM UsuarioEntity u WHERE u.nombres = :nombres")
     , @NamedQuery(name = "UsuarioEntity.findByApellidos", query = "SELECT u FROM UsuarioEntity u WHERE u.apellidos = :apellidos")
     , @NamedQuery(name = "UsuarioEntity.findByCorreo", query = "SELECT u FROM UsuarioEntity u WHERE u.correo = :correo")
-    , @NamedQuery(name = "UsuarioEntity.findByContrase\u00f1a", query = "SELECT u FROM UsuarioEntity u WHERE u.contrase\u00f1a = :contrase\u00f1a")})
+    , @NamedQuery(name = "UsuarioEntity.findByContra", query = "SELECT u FROM UsuarioEntity u WHERE u.contra = :contra")})
 public class UsuarioEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,12 +56,10 @@ public class UsuarioEntity implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
-    private String contraseña;
+    private String contra;
     @JoinColumn(name = "id_tipo_usuario", referencedColumnName = "id_tipo_usuario")
     @ManyToOne(optional = false)
     private TipoUsuarioEntity idTipoUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresidente")
-    private List<JrvEntity> jrvEntityList;
 
     public UsuarioEntity() {
     }
@@ -70,12 +68,12 @@ public class UsuarioEntity implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public UsuarioEntity(Integer idUsuario, String nombres, String apellidos, String correo, String contraseña) {
+    public UsuarioEntity(Integer idUsuario, String nombres, String apellidos, String correo, String contra) {
         this.idUsuario = idUsuario;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
-        this.contraseña = contraseña;
+        this.contra = contra;
     }
 
     public Integer getIdUsuario() {
@@ -110,12 +108,12 @@ public class UsuarioEntity implements Serializable {
         this.correo = correo;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContra() {
+        return contra;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContra(String contra) {
+        this.contra = contra;
     }
 
     public TipoUsuarioEntity getIdTipoUsuario() {
@@ -124,14 +122,6 @@ public class UsuarioEntity implements Serializable {
 
     public void setIdTipoUsuario(TipoUsuarioEntity idTipoUsuario) {
         this.idTipoUsuario = idTipoUsuario;
-    }
-
-    public List<JrvEntity> getJrvEntityList() {
-        return jrvEntityList;
-    }
-
-    public void setJrvEntityList(List<JrvEntity> jrvEntityList) {
-        this.jrvEntityList = jrvEntityList;
     }
 
     @Override

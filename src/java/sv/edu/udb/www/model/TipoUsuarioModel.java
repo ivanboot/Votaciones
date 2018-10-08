@@ -20,7 +20,7 @@ public class TipoUsuarioModel {
     private EntityManager em;
 
     public List<TipoUsuarioEntity> listarTipoUsuario() {
-        Query query = em.createNamedQuery("TipoEleccionEntity.findAll");
+        Query query = em.createQuery("Select e From TipoUsuarioEntity e where e.idTipoUsuario != 4");
         return query.getResultList();
     }
 
