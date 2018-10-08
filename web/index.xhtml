@@ -1,12 +1,53 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>Facelet Title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />   
+        <h:outputStylesheet name="css/mobile-menu.css"/>
+        <h:outputStylesheet name="fonts/flaticon/flaticon.css"/>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="css/style.css"/>
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
+        <h:outputScript name="js/jquery-1.12.0.min.js"/>
+        <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/alertify.js"/>
     </h:head>
     <h:body>
-        
+        <div class="container-fluid">
+            <div class="row" style="margin-top: 5%;">                
+                <div class="col-sm-4 col-sm-offset-4">
+                    <h2>Inicio de sesión</h2>
+                    
+                    
+                    <h:panelGroup layout="block" class="alert alert-danger" 
+                                  rendered="#{not empty facesContext.messageList}">
+                        <h:messages/>
+                    </h:panelGroup>
+                    <h:form>
+                        <div class="form-group">
+                            <label for="correo">Correo</label>
+                            <h:inputText value="#{loginBean.correo}" class="form-control"
+                                         required="true" requiredMessage="Debes ingresar tu correo"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contra">Contraseña:</label>
+                            <h:inputSecret value="#{loginBean.contra}" class="form-control"
+                                           required="true" requiredMessage="Debes ingresar tu contraseña"/>
+                        </div>
+                        <div class="form-group">
+                            <h:commandButton class="btn btn-lg btn-primary btn-block" 
+                                             value="Iniciar sesión" action="#{loginBean.iniciarSesion()}" />
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
 

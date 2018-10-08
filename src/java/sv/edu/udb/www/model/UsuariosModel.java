@@ -12,12 +12,22 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import sv.edu.udb.www.entities.UsuarioEntity;
 
-
 @Stateless
 public class UsuariosModel {
 
     @PersistenceContext(unitName = "VotacionPU")
     private EntityManager em;
+
+    public UsuarioEntity verificarCredenciales(String correo, String contra) {
+        try {
+            Query query = em.createQuery("SELECT u FROM UsuarioEntity u WHERE u.correo=:correo AND u.contra=:contra");
+            query.setParameter("correo", correo);
+            query.setParameter("contra", contra);
+            return (UsuarioEntity) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     public List<UsuarioEntity> listarUsuarios() {
         Query query = em.createNamedQuery("UsuarioEntity.findAll");
@@ -46,8 +56,7 @@ public class UsuariosModel {
     }
 
     public UsuarioEntity obtenerUsuario(int codigo) {
-        return em.find(UsuarioEntity.class,codigo);
+        return em.find(UsuarioEntity.class, codigo);
     }
 
-    
 }
