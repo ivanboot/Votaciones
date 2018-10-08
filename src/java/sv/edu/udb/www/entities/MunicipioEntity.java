@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Rodriguez
+ * @author ivanm
  */
 @Entity
 @Table(name = "municipio")
@@ -45,11 +45,13 @@ public class MunicipioEntity implements Serializable {
     @NotNull
     @Size(min = 1, max = 30)
     private String municipio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMunicipio")
-    private List<CentroVotacionEntity> centroVotacionEntityList;
     @JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento")
     @ManyToOne(optional = false)
     private DepartamentoEntity idDepartamento;
+    @OneToMany(mappedBy = "idMunicipio")
+    private List<CandidatoEntity> candidatoEntityList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMunicipio")
+    private List<CentroVotacionEntity> centroVotacionEntityList;
 
     public MunicipioEntity() {
     }
@@ -79,20 +81,28 @@ public class MunicipioEntity implements Serializable {
         this.municipio = municipio;
     }
 
-    public List<CentroVotacionEntity> getCentroVotacionEntityList() {
-        return centroVotacionEntityList;
-    }
-
-    public void setCentroVotacionEntityList(List<CentroVotacionEntity> centroVotacionEntityList) {
-        this.centroVotacionEntityList = centroVotacionEntityList;
-    }
-
     public DepartamentoEntity getIdDepartamento() {
         return idDepartamento;
     }
 
     public void setIdDepartamento(DepartamentoEntity idDepartamento) {
         this.idDepartamento = idDepartamento;
+    }
+
+    public List<CandidatoEntity> getCandidatoEntityList() {
+        return candidatoEntityList;
+    }
+
+    public void setCandidatoEntityList(List<CandidatoEntity> candidatoEntityList) {
+        this.candidatoEntityList = candidatoEntityList;
+    }
+
+    public List<CentroVotacionEntity> getCentroVotacionEntityList() {
+        return centroVotacionEntityList;
+    }
+
+    public void setCentroVotacionEntityList(List<CentroVotacionEntity> centroVotacionEntityList) {
+        this.centroVotacionEntityList = centroVotacionEntityList;
     }
 
     @Override

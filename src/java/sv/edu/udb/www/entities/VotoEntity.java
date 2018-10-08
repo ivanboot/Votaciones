@@ -19,7 +19,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
+/**
+ *
+ * @author ivanm
+ */
 @Entity
 @Table(name = "votos")
 @NamedQueries({

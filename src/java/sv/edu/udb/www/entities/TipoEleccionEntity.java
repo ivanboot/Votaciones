@@ -21,7 +21,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
+/**
+ *
+ * @author ivanm
+ */
 @Entity
 @Table(name = "tipo_eleccion")
 @NamedQueries({

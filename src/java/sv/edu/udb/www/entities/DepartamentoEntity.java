@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Rodriguez
+ * @author ivanm
  */
 @Entity
 @Table(name = "departamentos")

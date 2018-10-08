@@ -98,4 +98,43 @@ public class EleccionesBean {
         return "/adminGeneral/ListaElecciones?faces-redirect=true";
     }
     
+    public String obtenerEleccion(){
+        int codigo = Integer.parseInt(JsfUtils.getRequest().getParameter("codigo"));
+        eleccion=eleccionesModel.obtenerEleccion(codigo);
+        return "/adminGeneral/ModificarEleccion";
+    }
+    
+    public String modificarEleccion(){        
+        
+        eleccion.setEstado(Short.parseShort("1"));
+        if(eleccion.getFechaInicioCandidato().before(new Date())){
+            JsfUtils.addErrorMessage("fechaInicioCandidato", "La fecha inicial no puede ser menor a la fecha actual");
+            return null;
+        }
+        if(eleccion.getFechaFinCandidato().before(eleccion.getFechaInicioCandidato())){
+            JsfUtils.addErrorMessage("fechaFinCandidato", "La fecha limite no puede ser menor a la fecha inicial");
+            return null;
+        }
+        
+        if(eleccion.getFechaFinCandidato().after(eleccion.getFechaEleccion())){
+            JsfUtils.addErrorMessage("fechaFinCandidato","La fecha limite no puede ser mayor a la fecha de eleccion");
+            return null;
+        }
+        if(eleccion.getFechaEleccion().before(eleccion.getFechaInicioCandidato())){
+            JsfUtils.addErrorMessage("fechaEleccion","La fecha de eleccion no puede ser menor a la fecha Inicial");
+            return null;
+        }
+        if(eleccion.getFechaEleccion().before(eleccion.getFechaFinCandidato())){
+            JsfUtils.addErrorMessage("fechaEleccion","La fecha de eleccion no puede ser menor a la fecha limite");
+            return null;
+        }
+        
+        if(eleccionesModel.modificarEleccion(eleccion)==0){
+            JsfUtils.addErrorMessage("idEleccion", "No se pudo modificar la eleccion");
+        }else{
+            JsfUtils.addFlashMessage("exito", "Proceso de eleccion modificado con exito");
+        }
+        return "/adminGeneral/ListaElecciones?faces-redirect=true";
+    }
+    
 }

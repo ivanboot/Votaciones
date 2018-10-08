@@ -6,7 +6,9 @@
 package sv.edu.udb.www.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,13 +18,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author Rodriguez
+ * @author ivanm
  */
 @Entity
 @Table(name = "ciudadanos")
@@ -71,6 +74,12 @@ public class CiudadanoEntity implements Serializable {
     @JoinColumn(name = "id_centro_votacion", referencedColumnName = "id_centro_votacion")
     @ManyToOne(optional = false)
     private CentroVotacionEntity idCentroVotacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudadano")
+    private List<DetalleCiudadanoEleccionEntity> detalleCiudadanoEleccionEntityList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSecretario")
+    private List<JrvEntity> jrvEntityList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVocal")
+    private List<JrvEntity> jrvEntityList1;
 
     public CiudadanoEntity() {
     }
@@ -151,6 +160,30 @@ public class CiudadanoEntity implements Serializable {
 
     public void setIdCentroVotacion(CentroVotacionEntity idCentroVotacion) {
         this.idCentroVotacion = idCentroVotacion;
+    }
+
+    public List<DetalleCiudadanoEleccionEntity> getDetalleCiudadanoEleccionEntityList() {
+        return detalleCiudadanoEleccionEntityList;
+    }
+
+    public void setDetalleCiudadanoEleccionEntityList(List<DetalleCiudadanoEleccionEntity> detalleCiudadanoEleccionEntityList) {
+        this.detalleCiudadanoEleccionEntityList = detalleCiudadanoEleccionEntityList;
+    }
+
+    public List<JrvEntity> getJrvEntityList() {
+        return jrvEntityList;
+    }
+
+    public void setJrvEntityList(List<JrvEntity> jrvEntityList) {
+        this.jrvEntityList = jrvEntityList;
+    }
+
+    public List<JrvEntity> getJrvEntityList1() {
+        return jrvEntityList1;
+    }
+
+    public void setJrvEntityList1(List<JrvEntity> jrvEntityList1) {
+        this.jrvEntityList1 = jrvEntityList1;
     }
 
     @Override

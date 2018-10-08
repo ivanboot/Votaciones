@@ -6,6 +6,7 @@
 package sv.edu.udb.www.managed_beans;
 
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +14,7 @@ import sv.edu.udb.www.entities.TipoUsuarioEntity;
 import sv.edu.udb.www.entities.UsuarioEntity;
 import sv.edu.udb.www.model.TipoUsuarioModel;
 import sv.edu.udb.www.model.UsuariosModel;
+import sv.edu.udb.www.utils.Correo;
 import sv.edu.udb.www.utils.JsfUtils;
 
 /**
@@ -57,10 +59,28 @@ public class UsuariosBean {
     }
     
     public String nuevoUsuario(){
+        //Creacion password
+            char[] caracteres;
+            caracteres = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+            String pass = "";
+            for (int i = 0; i < 8; i++) {
+                pass += caracteres[new Random().nextInt(62)];
+            }
+            //fin contraseña
+            usuario.setContra(pass);
         if(usuariosModel.insertarUsuario(usuario)==0){
             JsfUtils.addErrorMessage("idUsuario", "No se pudo ingresar el usuario");
             return null;
         }
+        
+        String texto = "Has sido registrado exitosamente al sistema electoral.<br>";
+                    texto += "Anota tu contraseña: " + pass + "<br> ";
+                    texto += "Accede con tu correo: "+ usuario.getCorreo()+".";
+                    Correo correo = new Correo();
+                    correo.setAsunto("Has sido registrado");
+                    correo.setMensaje(texto);
+                    correo.setDestinatario(usuario.getCorreo());
+                    correo.enviarCorreo();
         JsfUtils.addFlashMessage("exito", "Usuario ingresado con exito");
         return "/adminGeneral/ListaUsuarios?faces-redirect=true";
     }

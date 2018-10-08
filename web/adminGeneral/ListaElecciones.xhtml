@@ -53,6 +53,15 @@
                         </f:facet>
                         <h:outputText value="#{item.idTipoEleccion.eleccion}"/>
                     </h:column>
+                     <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Operaciones"/>
+                        </f:facet>
+                         <h:commandLink class="btn btn-info" action="#{eleccionesBean.obtenerEleccion()}" rendered="#{item.estado eq 1}" >
+                            <i class="glyphicon glyphicon-edit"></i>
+                            <f:param name="codigo" value="#{item.idEleccion}" /> 
+                        </h:commandLink>
+                    </h:column>
                 </h:dataTable>
             </h:form>
         </div>

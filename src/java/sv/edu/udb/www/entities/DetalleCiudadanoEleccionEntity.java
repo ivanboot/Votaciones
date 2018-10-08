@@ -18,7 +18,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
+/**
+ *
+ * @author ivanm
+ */
 @Entity
 @Table(name = "detalle_ciudadano_eleccion")
 @NamedQueries({
