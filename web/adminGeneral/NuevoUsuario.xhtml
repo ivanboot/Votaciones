@@ -15,14 +15,13 @@
             </h:panelGroup>
             <h:form>                
                 <div class="form-group">
-                    <h:outputLabel value="Nombres:" for="nombres" />
-                    <h:inputText class="form-control" id="nombres" value="#{usuariosBean.usuario.nombres}" title="Nombres"
-                                 required="true" requiredMessage="El nombre del usuario es obligatorio."/>
-                </div>
-                <div class="form-group">
-                    <h:outputLabel value="Apellidos:" for="apellidos" />
-                    <h:inputText class="form-control" id="apellidos" value="#{usuariosBean.usuario.apellidos}" title="Apellidos" 
-                                 required="true" requiredMessage="El apellido del usuario es obligatorio."/>
+                    <h:outputLabel value="Ciudadanos disponibles:" for="idCiudadano"/>
+                    <h:selectOneMenu class="form-control" id="idCiudadano" value="#{usuariosBean.usuario.idCiudadano}" 
+                                     title="IdCiudadano" required="true" requiredMessage="Es obligatorio relacionar a un ciudadano." >                        
+                        <f:selectItems value="#{usuariosBean.listaCiudadanos}" var="ciudadano"
+                                       itemValue="#{ciudadano}"
+                                       itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+                    </h:selectOneMenu>
                 </div>
                 <div class="form-group">
                     <h:outputLabel value="Correo:" for="correo" />

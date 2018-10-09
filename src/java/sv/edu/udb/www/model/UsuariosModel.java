@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import sv.edu.udb.www.entities.CiudadanoEntity;
 import sv.edu.udb.www.entities.UsuarioEntity;
 
 @Stateless
@@ -27,8 +28,8 @@ public class UsuariosModel {
         } catch (Exception e) {
             return null;
         }
-    }
-
+    }      
+    
     public List<UsuarioEntity> listarUsuarios() {
         Query query = em.createNamedQuery("UsuarioEntity.findAll");
         return query.getResultList();
@@ -46,7 +47,6 @@ public class UsuariosModel {
 
     public int modificarUsuario(UsuarioEntity usuario) {
         try {
-
             em.merge(usuario);
             em.flush();
             return 1;

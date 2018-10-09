@@ -41,10 +41,9 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="#navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right main-nav">
-                        <li><a href="index.html">Registro</a></li>
-                        <li><a href="about.html">Editar</a></li>
-                        <li><a href="services.html">Lista cuidadanos</a></li>
-                        <li><a href="contact.html">Iniciar Cesión</a></li>
+                        <li><h:link value="Regitrar" outcome="/RNPN/nuevoCiudadano" /></li>
+                        <li><h:link value="Listar" outcome="/RNPN/listaCiudadanos" /></li>
+                        <li><h:form> <h:commandLink value="Cerrar Sesion" action="#{loginBean.cerrarSesion()}" /></h:form></li>
                         
                     </ul>
 

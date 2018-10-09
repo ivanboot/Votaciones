@@ -10,8 +10,11 @@ import java.util.Random;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import sv.edu.udb.www.entities.CiudadanoEntity;
 import sv.edu.udb.www.entities.TipoUsuarioEntity;
 import sv.edu.udb.www.entities.UsuarioEntity;
+import sv.edu.udb.www.model.CandidatosModel;
+import sv.edu.udb.www.model.CiudadanosModel;
 import sv.edu.udb.www.model.TipoUsuarioModel;
 import sv.edu.udb.www.model.UsuariosModel;
 import sv.edu.udb.www.utils.Correo;
@@ -26,14 +29,19 @@ import sv.edu.udb.www.utils.JsfUtils;
 public class UsuariosBean {
 
     @EJB
+    private CiudadanosModel ciudadanosModel;
+    
+    @EJB
     private TipoUsuarioModel tipoUsuarioModel;
 
     @EJB
-    private UsuariosModel usuariosModel;
+    private UsuariosModel usuariosModel;        
         
     List<UsuarioEntity> listaUsuarios;
     
     List<TipoUsuarioEntity> listaTipoUsuario;
+    
+    List<CiudadanoEntity> listaCiudadanos;
     
     UsuarioEntity usuario = new UsuarioEntity();
     
@@ -50,6 +58,12 @@ public class UsuariosBean {
         return listaTipoUsuario;
     }
 
+    public List<CiudadanoEntity> getListaCiudadanos() {
+        listaCiudadanos = ciudadanosModel.listarCiudadanoDisponible();
+        return listaCiudadanos;
+    }
+    
+    
     public UsuarioEntity getUsuario() {
         return usuario;
     }

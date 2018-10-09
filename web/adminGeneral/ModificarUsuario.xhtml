@@ -8,7 +8,7 @@
 
     <ui:define name="content">
         <div class="col-md-6" style="background-color: white; padding: 5%;">
-            <h3 class="title text-center">Modificar usuario</h3>
+            <h3 class="title text-center"> Modificar usuario</h3>
             <h:panelGroup layout="block" class="alert alert-danger"
                           rendered="#{not empty facesContext.messageList}">
                 <h:messages />
@@ -17,14 +17,13 @@
                 <div class="form-group">
                     <h:inputHidden value="#{usuariosBean.usuario.idUsuario}" />
                     <h:inputHidden value="#{usuariosBean.usuario.contra}" />
-                    <h:outputLabel value="Nombres:" for="nombres" />
-                    <h:inputText class="form-control" id="nombres" value="#{usuariosBean.usuario.nombres}" title="Nombres"
-                                 required="true" requiredMessage="El nombre del usuario es obligatorio."/>
-                </div>
-                <div class="form-group">
-                    <h:outputLabel value="Apellidos:" for="apellidos" />
-                    <h:inputText class="form-control" id="apellidos" value="#{usuariosBean.usuario.apellidos}" title="Apellidos" 
-                                 required="true" requiredMessage="El apellido del usuario es obligatorio."/>
+                    <h:outputLabel value="Ciudadanos disponibles:" for="idCiudadano"/>
+                    <h:selectOneMenu class="form-control" id="idCiudadano" value="#{usuariosBean.usuario.idCiudadano}" 
+                                     title="IdCiudadano" required="true" requiredMessage="Es obligatorio relacionar a un ciudadano." >                        
+                        <f:selectItems value="#{usuariosBean.listaCiudadanos}" var="ciudadano"
+                                       itemValue="#{ciudadano}"
+                                       itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+                    </h:selectOneMenu>
                 </div>
                 <div class="form-group">
                     <h:outputLabel value="Correo:" for="correo" />
@@ -43,7 +42,7 @@
                                        itemLabel="#{tipo.tipoUsuario}"/>
                     </h:selectOneMenu>
                 </div>
-                <h:commandLink class="btn btn-success" value="Modificar" action="#{usuariosBean.modificarUsuario()}" />
+                <h:commandLink class="btn btn-success" value="Guardar" action="#{usuariosBean.modificarUsuario()}" />
             </h:form>
 
         </div>

@@ -23,10 +23,10 @@ public class LoginBean {
 
     @EJB
     private UsuariosModel usuariosModel;
-    
+
     private String correo;
     private String contra;
-    
+
     public LoginBean() {
     }
 
@@ -45,31 +45,33 @@ public class LoginBean {
     public void setContra(String contra) {
         this.contra = contra;
     }
-    
-   
-    
-    public String iniciarSesion(){
-        UsuarioEntity user= usuariosModel.verificarCredenciales(correo, contra);
-        if(user==null){
+
+    public String iniciarSesion() {
+        UsuarioEntity user = usuariosModel.verificarCredenciales(correo, contra);
+        if (user == null) {
             JsfUtils.addErrorMessage(null, "Correo y/o contraseña incorrecta");
             return null;
-        }
-        else{
-            HttpServletRequest request= JsfUtils.getRequest();
+        } else {
+            HttpServletRequest request = JsfUtils.getRequest();
             request.getSession().setAttribute("correo", correo);
-            request.getSession().setAttribute("rol",user.getIdTipoUsuario().getIdTipoUsuario());
-            if(user.getIdTipoUsuario().getIdTipoUsuario() == 1){
+            request.getSession().setAttribute("rol", user.getIdTipoUsuario().getIdTipoUsuario());
+            if (user.getIdTipoUsuario().getIdTipoUsuario() == 1) {
                 return "/adminGeneral/InicioAdminG?faces-redirect=true";
-            }
-            else{
+            } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 2) {
+                return null;
+            } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 3) {
+                return "/RNPN/listaCiudadanos?faces-redirect=true";
+            } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 4) {
+                return null;
+            } else {
                 return null;
             }
         }
     }
-    
-    public String cerrarSesion(){
+
+    public String cerrarSesion() {
         JsfUtils.getRequest().getSession().invalidate();
-        return "/login?faces-redirect=true";
+        return "/index?faces-redirect=true";
     }
-    
+
 }

@@ -19,7 +19,12 @@ public class CiudadanosModel {
         Query query = em.createNamedQuery("CiudadanoEntity.findAll");
         return query.getResultList();
     }
-
+    
+      public List<CiudadanoEntity> listarCiudadanoDisponible() {
+        Query query = em.createQuery("Select c From CiudadanoEntity c LEFT JOIN c.usuarioEntityList u where u.idUsuario = null");
+        return query.getResultList();
+    }
+      
     public int insertarCiudadano(CiudadanoEntity ciudadano){
         try {
             em.persist(ciudadano);
