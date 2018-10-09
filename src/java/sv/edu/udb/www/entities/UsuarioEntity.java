@@ -6,9 +6,7 @@
 package sv.edu.udb.www.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,22 +16,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author ivanm
+ * @author Ferh
  */
 @Entity
 @Table(name = "usuarios")
 @NamedQueries({
     @NamedQuery(name = "UsuarioEntity.findAll", query = "SELECT u FROM UsuarioEntity u")
     , @NamedQuery(name = "UsuarioEntity.findByIdUsuario", query = "SELECT u FROM UsuarioEntity u WHERE u.idUsuario = :idUsuario")
-    , @NamedQuery(name = "UsuarioEntity.findByNombres", query = "SELECT u FROM UsuarioEntity u WHERE u.nombres = :nombres")
-    , @NamedQuery(name = "UsuarioEntity.findByApellidos", query = "SELECT u FROM UsuarioEntity u WHERE u.apellidos = :apellidos")
     , @NamedQuery(name = "UsuarioEntity.findByCorreo", query = "SELECT u FROM UsuarioEntity u WHERE u.correo = :correo")
     , @NamedQuery(name = "UsuarioEntity.findByContra", query = "SELECT u FROM UsuarioEntity u WHERE u.contra = :contra")})
 public class UsuarioEntity implements Serializable {
@@ -46,25 +41,18 @@ public class UsuarioEntity implements Serializable {
     private Integer idUsuario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 40)
-    private String nombres;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 40)
-    private String apellidos;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     private String correo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
     private String contra;
+    @JoinColumn(name = "id_ciudadano", referencedColumnName = "id_ciudadano")
+    @ManyToOne
+    private CiudadanoEntity idCiudadano;
     @JoinColumn(name = "id_tipo_usuario", referencedColumnName = "id_tipo_usuario")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private TipoUsuarioEntity idTipoUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresidente")
-    private List<JrvEntity> jrvEntityList;
 
     public UsuarioEntity() {
     }
@@ -73,10 +61,8 @@ public class UsuarioEntity implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public UsuarioEntity(Integer idUsuario, String nombres, String apellidos, String correo, String contra) {
+    public UsuarioEntity(Integer idUsuario, String correo, String contra) {
         this.idUsuario = idUsuario;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
         this.correo = correo;
         this.contra = contra;
     }
@@ -87,22 +73,6 @@ public class UsuarioEntity implements Serializable {
 
     public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
     }
 
     public String getCorreo() {
@@ -121,20 +91,20 @@ public class UsuarioEntity implements Serializable {
         this.contra = contra;
     }
 
+    public CiudadanoEntity getIdCiudadano() {
+        return idCiudadano;
+    }
+
+    public void setIdCiudadano(CiudadanoEntity idCiudadano) {
+        this.idCiudadano = idCiudadano;
+    }
+
     public TipoUsuarioEntity getIdTipoUsuario() {
         return idTipoUsuario;
     }
 
     public void setIdTipoUsuario(TipoUsuarioEntity idTipoUsuario) {
         this.idTipoUsuario = idTipoUsuario;
-    }
-
-    public List<JrvEntity> getJrvEntityList() {
-        return jrvEntityList;
-    }
-
-    public void setJrvEntityList(List<JrvEntity> jrvEntityList) {
-        this.jrvEntityList = jrvEntityList;
     }
 
     @Override

@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/AdminD_Template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="content">
+        <section class="single-page-title single-page-title-contact" >
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Lista de JRV para Elecciones </h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="container">
+
+                <div role="tabpanel" style="">
+                    <!-- Nav tabs -->
+                    <ul id="tabOne" class="nav nav-tabs nav-justified">
+                        <li class="active"><a href="#contentOne-1" data-toggle="tab" aria-expanded="true">JRV Activas</a></li>
+                        <li class=""><a href="#contentOne-2" data-toggle="tab" aria-expanded="false">JRV Finalizdas</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="padding: 2%;border:1px solid #ddd;border-top: none;">
+                        <div class="tab-pane fade active in" id="contentOne-1">
+                            <h:form prependId="false">
+                                <h:dataTable id="tabla" value="#{jrvBean.listaJrvsActivas}" var="item" class="table table-bordered" >
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Id"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idJrv}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha de Inicio"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaInicio}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha de finalización"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaFinal}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </h:column>
+
+
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Centro de Votacion"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idCentroVotacion.nombre}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Presidente"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Secretario"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Vocal"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Operaciones"/>
+                                        </f:facet>
+                                        <h:commandLink class="btn btn-success btn-sm">Editar <span class="fa fa-edit"></span></h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:form>
+                        </div>
+                        <div class="tab-pane fade" id="contentOne-2">
+                            <h:form prependId="false">
+                                <h:dataTable id="tabla1" value="#{jrvBean.listaJrvsFinalizadas}" var="item" class="table table-bordered" >
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Id"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idJrv}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha de Inicio"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaInicio}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha de finalización"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fechaFinal}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </h:column>
+
+
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Centro de Votacion"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idCentroVotacion.nombre}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Presidente"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Secretario"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Vocal"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Operaciones"/>
+                                        </f:facet>
+                                        <h:commandLink class="btn btn-success btn-sm">Editar <span class="fa fa-edit"></span></h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </section>
+        <script>
+            $(document).ready(function () {
+                $("#tabla").dataTable();
+            });
+        </script>
+
+    </ui:define>
+
+</ui:composition>

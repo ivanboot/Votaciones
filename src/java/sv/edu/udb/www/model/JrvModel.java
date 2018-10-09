@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import sv.edu.udb.www.entities.CiudadanoEntity;
 import sv.edu.udb.www.entities.JrvEntity;
 import sv.edu.udb.www.entities.PartidosEntity;
 
@@ -22,6 +23,16 @@ public class JrvModel {
 
     public List<JrvEntity> listarJrv() {
         Query query = em.createNamedQuery("JrvEntity.findAll");
+        return query.getResultList();
+    }
+    
+    public List<JrvEntity> listarJrvActivas() {
+        Query query = em.createNamedQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 1");
+        return query.getResultList();
+    }
+    
+    public List<JrvEntity> listarJrvFinalizadas() {
+        Query query = em.createNamedQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 0");
         return query.getResultList();
     }
 
@@ -49,6 +60,11 @@ public class JrvModel {
     public JrvEntity obtenerJrv(int codigo) {
         return em.find(JrvEntity.class,codigo);
     }
-
+    
+    public List<JrvEntity> obtenerSecretarioJunta(JrvEntity jrv){
+        Query query = em.createNamedQuery("Select j.idSecretario, e FROM JrvEntity j JOIN j.idElecciones e WHERE e.estado = 1 and j.idSecretario=:idSecretario");
+        query.setParameter("idSecretario", jrv.getIdSecretario());
+        return query.getResultList();
+    }
     
 }
