@@ -6,12 +6,17 @@
 package sv.edu.udb.www.managed_beans;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.io.InputStream;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 import sv.edu.udb.www.entities.CandidatoEntity;
 import sv.edu.udb.www.entities.MunicipioEntity;
 import sv.edu.udb.www.entities.PartidosEntity;
@@ -35,37 +40,36 @@ public class CandidatosBean {
     private MunicipiosModel municipiosModel;
 
     @EJB
-    private CandidatosModel candidatosModel;   
-      
-    
-    List <CandidatoEntity> listaCandidatos;
-    
-    List <MunicipioEntity> listaMunicipios;
-    
-    List <PartidosEntity> listaPartidos;
-    
+    private CandidatosModel candidatosModel;
+
+    List<CandidatoEntity> listaCandidatos;
+
+    List<MunicipioEntity> listaMunicipios;
+
+    List<PartidosEntity> listaPartidos;
+
     private CandidatoEntity candidato = new CandidatoEntity();
-    /**
-     * Creates a new instance of CandidatosBean
-     */
+
+    private Part imagen;
+
     public CandidatosBean() {
-        
+
     }
 
     public List<CandidatoEntity> getListaCandidatos() {
-        listaCandidatos=candidatosModel.listarCandidatos();
+        listaCandidatos = candidatosModel.listarCandidatos();
         return listaCandidatos;
     }
 
     public List<MunicipioEntity> getListaMunicipios() {
-        listaMunicipios=municipiosModel.listarMunicipios();
+        listaMunicipios = municipiosModel.listarMunicipios();
         return listaMunicipios;
     }
 
     public List<PartidosEntity> getListaPartidos() {
-        listaPartidos=partidosModel.listarPartidos();
+        listaPartidos = partidosModel.listarPartidos();
         return listaPartidos;
-    }        
+    }
 
     public CandidatoEntity getCandidato() {
         return candidato;
@@ -75,14 +79,39 @@ public class CandidatosBean {
         this.candidato = candidato;
     }
 
-    public String nuevoCandidatoPresidencial(){
+    public Part getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Part imagen) {
+        this.imagen = imagen;
+    }
+
+    public String nuevoCandidatoPresidencial() {
         candidato.setIdMunicipio(null);
-        if(candidatosModel.insertarCandidadto(candidato)==0){
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+
+        try {
+            InputStream input = imagen.getInputStream();
+            candidato.setUrlFoto(imagen.getSubmittedFileName());
+            Files.copy(input, new File(path + "/resources/candidatos/", candidato.getUrlFoto()).toPath());
+        } catch (Exception e) {
+            JsfUtils.addErrorMessage("idCandidatos", e.toString());
+            return null;
+        }
+
+        if (candidatosModel.insertarCandidadto(candidato) == 0) {
             JsfUtils.addErrorMessage("idCandidatos", "Ya existe un cadidato con este id");
             return null;
         }
         JsfUtils.addFlashMessage("exito", "Candidato a presidente ingresado con exito");
         return "/adminGeneral/ListaCandidatos?faces-redirect=true";
     }
-    
+
+    public String hola() {
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+        JsfUtils.addErrorMessage("idCandidatos", path);
+        return null;
+    }
+
 }

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/AdminG_Template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="content">
+        <div class="col-md-6" style="background-color: white; padding: 5%;">
+            <h3 class="title text-center"> Modificar usuario</h3>
+            <h:panelGroup layout="block" class="alert alert-danger"
+                          rendered="#{not empty facesContext.messageList}">
+                <h:messages />
+            </h:panelGroup>
+            <h:form>                
+                <div class="form-group">
+                    <h:inputHidden value="#{usuariosBean.usuario.idUsuario}" />
+                    <h:inputHidden value="#{usuariosBean.usuario.contra}" />
+                    <h:outputLabel value="Ciudadanos disponibles:" for="idCiudadano"/>
+                    <h:selectOneMenu class="form-control" id="idCiudadano" value="#{usuariosBean.usuario.idCiudadano}" 
+                                     title="IdCiudadano" required="true" requiredMessage="Es obligatorio relacionar a un ciudadano." >                        
+                        <f:selectItems value="#{usuariosBean.listaCiudadanos}" var="ciudadano"
+                                       itemValue="#{ciudadano}"
+                                       itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+                    </h:selectOneMenu>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Correo:" for="correo" />
+                    <h:inputText class="form-control" id="correo" value="#{usuariosBean.usuario.correo}" title="Correo" 
+                                 required="true" requiredMessage="El correo es obligatorio."
+                                 validatorMessage="Ingrese un correo valido.">
+                        <f:validateRegex pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"  />
+                    </h:inputText>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Tipo de usuario:" for="idTipoUsuario" />
+                    <h:selectOneMenu class="form-control" id="idTipoUsuario" value="#{usuariosBean.usuario.idTipoUsuario}" title="IdTipoUsuario"
+                                     required="true" requiredMessage="Tipo de usuario es obligatorio.">
+                        <f:selectItems value="#{usuariosBean.listaTipoUsuario}" var="tipo"
+                                       itemValue="#{tipo}"
+                                       itemLabel="#{tipo.tipoUsuario}"/>
+                    </h:selectOneMenu>
+                </div>
+                <h:commandLink class="btn btn-success" value="Guardar" action="#{usuariosBean.modificarUsuario()}" />
+            </h:form>
+
+        </div>
+    </ui:define>
+
+</ui:composition>
