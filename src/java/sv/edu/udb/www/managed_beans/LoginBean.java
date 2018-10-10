@@ -58,7 +58,7 @@ public class LoginBean {
             if (user.getIdTipoUsuario().getIdTipoUsuario() == 1) {
                 return "/adminGeneral/InicioAdminG?faces-redirect=true";
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 2) {
-                return null;
+                return "/adminDepartamental/InicioAdminD?faces-redirect=true";
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 3) {
                 return "/RNPN/listaCiudadanos?faces-redirect=true";
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 4) {
