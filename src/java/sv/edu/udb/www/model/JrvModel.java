@@ -27,12 +27,12 @@ public class JrvModel {
     }
     
     public List<JrvEntity> listarJrvActivas() {
-        Query query = em.createNamedQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 1");
+        Query query = em.createQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 1 AND j.estado = 1");
         return query.getResultList();
     }
     
     public List<JrvEntity> listarJrvFinalizadas() {
-        Query query = em.createNamedQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 0");
+        Query query = em.createQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 1 AND j.estado = 0 ");
         return query.getResultList();
     }
 

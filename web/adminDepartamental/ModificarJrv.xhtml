@@ -33,6 +33,7 @@
                     <h:form prependId="false">
                         <div class="row">
                             <div class="col-md-6">
+                                <h:inputHidden value="#{jrvBean.jrv.idJrv}" />
                                 <div class="form-group">
                                     <h:outputLabel value="Fecha de inicio:" for="fechaInicio" />
                                     <h:inputText class="form-control" required="true" id="fechaInicio" value="#{jrvBean.jrv.fechaInicio}" requiredMessage="Debes ingresar una fecha de inicio" converterMessage="El formato de la fecha de inicio debe ser Mes/dia/año" a:placeholder="Fecha de inicio">
@@ -76,10 +77,13 @@
 
                                         <c:if test="#{not empty jrvBean.listaJrvs}">
 
-                                            <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
+                                            <f:selectItem  itemValue="#{jrvBean.jrv.idPresidente}"
+                                                           itemLabel="#{jrvBean.jrv.idPresidente.idCiudadano.nombres} #{jrvBean.jrv.idPresidente.idCiudadano.apellidos}"/>
+                                            <c:forEach items="#{jrvBean.listaJrvs}" var="jrv1">
 
                                                 <c:forEach items="#{jrvBean.listaUsuarios}" var="presidente">
-                                                    <c:if test="#{jrv.idPresidente.idUsuario ne presidente.idUsuario}">
+
+                                                    <c:if test="#{jrv1.idPresidente.idUsuario ne presidente.idUsuario}">
                                                         <f:selectItem  itemValue="#{presidente}"
                                                                        itemLabel="#{presidente.idCiudadano.nombres} #{presidente.idCiudadano.apellidos}"/>
                                                     </c:if>
@@ -91,10 +95,11 @@
                                         <c:if test="#{empty jrvBean.listaJrvs}">
 
                                             <f:selectItems value="#{jrvBean.listaUsuarios}" var="presidente" itemValue="#{presidente}"
-                                                           itemLabel="#{presidente.nombres} #{presidente.apellidos}"/>
+                                                           itemLabel="#{presidente.idCiudadano.nombres} #{presidente.idCiudadano.apellidos}"/>
 
                                         </c:if>
 
+                                        <f:ajax rendered="presidente"/>
 
                                     </h:selectOneMenu>
                                 </div>
@@ -107,13 +112,14 @@
                                             <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
 
                                                 <c:forEach items="#{jrvBean.listaCiudadanos}" var="ciudadano">
-                                                    <c:if test="#{(jrvBean.jrv.idSecretario ne ciudadano.idCiudadano) and (jrv.idVocal.idCiudadano ne ciudadano.idCiudadano)}">
+                                                    <c:if test="#{(jrvBean.jrv.idSecretario.idCiudadano ne ciudadano.idCiudadano) and (jrv.idVocal.idCiudadano ne ciudadano.idCiudadano) and (jrv.idPresidente.idCiudadano.idCiudadano ne ciudadano.idCiudadano)}">
                                                         <f:selectItem itemValue="#{ciudadano}"
                                                                       itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
                                                     </c:if>
                                                 </c:forEach>
                                             </c:forEach>
-
+                                            <f:selectItem itemValue="#{jrvBean.jrv.idSecretario}"
+                                                          itemLabel="#{jrvBean.jrv.idSecretario.nombres} #{jrvBean.jrv.idSecretario.apellidos}"/>
                                         </c:if>
 
                                         <c:if test="#{empty jrvBean.listaJrvs}">
@@ -123,6 +129,8 @@
                                                            itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
 
                                         </c:if>
+                                        
+                                        <f:ajax rendered="secretario"/>
                                     </h:selectOneMenu>
                                 </div>
                                 <div class="form-group">
@@ -133,12 +141,16 @@
                                             <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
 
                                                 <c:forEach items="#{jrvBean.listaCiudadanos}" var="ciudadano">
-                                                    <c:if test="#{(jrvBean.jrv.idVocal ne ciudadano.idCiudadano) and (jrv.idSecretario.idCiudadano ne ciudadano.idCiudadano)}">
+
+                                                    <c:if test="#{(jrvBean.jrv.idVocal.idCiudadano ne ciudadano.idCiudadano) and (jrv.idSecretario.idCiudadano ne ciudadano.idCiudadano) and (jrv.idPresidente.idCiudadano.idCiudadano ne ciudadano.idCiudadano)}">
                                                         <f:selectItem itemValue="#{ciudadano}"
                                                                       itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
                                                     </c:if>
+
                                                 </c:forEach>
                                             </c:forEach>
+                                            <f:selectItem itemValue="#{jrvBean.jrv.idVocal}"
+                                                          itemLabel="#{jrvBean.jrv.idVocal.nombres} #{jrvBean.jrv.idVocal.apellidos}"/>
                                         </c:if>
 
                                         <c:if test="#{empty jrvBean.listaJrvs}">
@@ -148,12 +160,24 @@
                                                            itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
 
                                         </c:if>
+                                        
+                                        <f:ajax rendered="vocal"/>
                                     </h:selectOneMenu>
                                 </div>
                             </div> 
                         </div>
 
-                        <h:commandButton class="btn btn-primary btn-lg pull-right" action="#{jrvBean.modificarJrv()}" value="Registrar"/>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <a action="ListaJrv" href="ListaJrv.xhtml" class="btn btn-danger btn-lg" >Cancelar</a>
+                            </div>
+                            <div class="col-md-2">
+                                <h:commandButton class="btn btn-primary btn-lg pull-right" action="#{jrvBean.modificarJrv()}" value="Modificar"/>
+                            </div>
+
+                        </div>
+
+
                     </h:form>
                 </div> <!-- contact-form -->           
             </div>

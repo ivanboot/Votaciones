@@ -25,6 +25,12 @@ public class CiudadanosModel {
         return query.getResultList();
     }
       
+    public List<CiudadanoEntity> listarCiudadanosMunicipio(int id) {
+        Query query = em.createQuery("Select c From CiudadanoEntity c Where c.idCentroVotacion.idMunicipio.idMunicipio =:idMunicipio");
+        query.setParameter("idMunicipio", id);
+        return query.getResultList();
+    }
+      
     public int insertarCiudadano(CiudadanoEntity ciudadano){
         try {
             em.persist(ciudadano);

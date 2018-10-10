@@ -44,39 +44,51 @@ public class JrvBean {
     @EJB
     private JrvModel jrvModel;
 
-    List <JrvEntity> listaJrvs;
-    
-    List <CiudadanoEntity> listaCiudadanos;
-    
-    List <UsuarioEntity> listaUsuarios;
-    
-    List <EleccionEntity> listaElecciones;
-    
-    List <CentroVotacionEntity> listaCentroVotaciones;
-    
+    List<JrvEntity> listaJrvs;
+
+    List<CiudadanoEntity> listaCiudadanos;
+
+    List<UsuarioEntity> listaUsuarios;
+
+    List<EleccionEntity> listaElecciones;
+
+    List<CentroVotacionEntity> listaCentroVotaciones;
+
     JrvEntity jrv = new JrvEntity();
-    
+
     public JrvBean() {
     }
 
     public List<JrvEntity> getListaJrvs() {
         return jrvModel.listarJrv();
     }
-    
+
     public List<JrvEntity> getListaJrvsActivas() {
         return jrvModel.listarJrvActivas();
     }
-    
+
     public List<JrvEntity> getListaJrvsFinalizadas() {
         return jrvModel.listarJrvFinalizadas();
     }
 
     public List<CiudadanoEntity> getListaCiudadanos() {
-        return ciudadanosModel.listarCiudadanos();
+
+        try {
+            return ciudadanosModel.listarCiudadanosMunicipio(jrv.getIdCentroVotacion().getIdMunicipio().getIdMunicipio());
+        } catch (Exception e) {
+
+            return null;
+        }
+
     }
 
     public List<UsuarioEntity> getListaUsuarios() {
-        return usuariosModel.listarUsuarios();
+        try {
+            return usuariosModel.listarPresidentes(jrv.getIdCentroVotacion().getIdMunicipio().getIdMunicipio());
+        } catch (Exception e) {
+
+            return null;
+        }
     }
 
     public List<EleccionEntity> getListaElecciones() {
@@ -94,37 +106,53 @@ public class JrvBean {
     public void setJrv(JrvEntity jrv) {
         this.jrv = jrv;
     }
-    
-    
-    public String nuevaJrv(){
+
+    public String nuevaJrv() {
+        short estado = 1;
+        jrv.setEstado(estado);
         
-        if(jrv.getIdSecretario().getIdCiudadano() == jrv.getIdVocal().getIdCiudadano()){
+        if (jrv.getIdSecretario().getIdCiudadano() == jrv.getIdPresidente().getIdCiudadano().getIdCiudadano()) {
+            JsfUtils.addErrorMessage("vocal", "Debe seleccionar otro secretario. Este ciudadano ya tiene un cargo");
+            return null;
+        }
+        
+        if (jrv.getIdPresidente().getIdCiudadano().getIdCiudadano() == jrv.getIdVocal().getIdCiudadano()) {
             JsfUtils.addErrorMessage("vocal", "Debe seleccionar otro vocal. Este ciudadano ya tiene un cargo");
             return null;
         }
-        if(jrvModel.insertarJrv(jrv)==0){
+        
+        if (jrv.getIdSecretario().getIdCiudadano() == jrv.getIdVocal().getIdCiudadano()) {
+            JsfUtils.addErrorMessage("vocal", "Debe seleccionar otro vocal. Este ciudadano ya tiene un cargo");
+            return null;
+        }
+        if (jrvModel.insertarJrv(jrv) == 0) {
             JsfUtils.addErrorMessage("idJrv", "No se pudo ingresar la JRV");
             return null;
         }
         JsfUtils.addFlashMessage("exito", "JRV ingresada con exito");
         return "/adminDepartamental/ListaJrv?faces-redirect=true";
     }
-    
-    public String modificarJrv(){
-        
-        if(jrv.getIdSecretario().getIdCiudadano() == jrv.getIdVocal().getIdCiudadano()){
+
+    public String modificarJrv() {
+
+        if (jrv.getIdSecretario().getIdCiudadano() == jrv.getIdVocal().getIdCiudadano()) {
             JsfUtils.addErrorMessage("vocal", "Debe seleccionar otro vocal. Este ciudadano ya tiene un cargo");
             return null;
         }
-        if(jrvModel.insertarJrv(jrv)==0){
-            JsfUtils.addErrorMessage("idJrv", "No se pudo ingresar la JRV");
+        if (jrvModel.modificarJrv(jrv) == 0) {
+            JsfUtils.addErrorMessage("idJrv", "No se pudo modificar la JRV");
             return null;
         }
-        JsfUtils.addFlashMessage("exito", "JRV ingresada con exito");
+        JsfUtils.addFlashMessage("exito", "JRV modificada con exito");
         return "/adminDepartamental/ListaJrv?faces-redirect=true";
     }
-    
-    
-    
-    
+
+    public String obtenerJrv() {
+
+        int id = Integer.parseInt(JsfUtils.getRequest().getParameter("id"));
+        jrv = jrvModel.obtenerJrv(id);
+        return "/adminDepartamental/ModificarJrv";
+
+    }
+
 }

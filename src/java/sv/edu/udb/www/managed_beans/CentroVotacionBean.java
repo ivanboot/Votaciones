@@ -6,7 +6,9 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import sv.edu.udb.www.entities.CentroVotacionEntity;
+import sv.edu.udb.www.entities.MunicipioEntity;
 import sv.edu.udb.www.model.CentroVotacionesModel;
+import sv.edu.udb.www.model.MunicipiosModel;
 
 /**
  *
@@ -17,10 +19,16 @@ import sv.edu.udb.www.model.CentroVotacionesModel;
 public class CentroVotacionBean {
 
     @EJB
-    private CentroVotacionesModel centroVotacionesModel;
+    private MunicipiosModel municipiosModel;
 
     
+
+    @EJB
+    private CentroVotacionesModel centroVotacionesModel;
+    
     List<CentroVotacionEntity> listaCentroVotacion;
+    
+    List<MunicipioEntity> listaMunicipios;
     
     private CentroVotacionEntity centro = new CentroVotacionEntity();
     
@@ -31,6 +39,12 @@ public class CentroVotacionBean {
         listaCentroVotacion = centroVotacionesModel.listarCentroVotaciones();
         return listaCentroVotacion;
     }
+
+    public List<MunicipioEntity> getListaMunicipios() {
+        listaMunicipios = municipiosModel.listarMunicipios();
+        return listaMunicipios;
+    }
+   
 
     public CentroVotacionEntity getCentro() {
         return centro;

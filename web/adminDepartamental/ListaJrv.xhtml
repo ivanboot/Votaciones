@@ -25,129 +25,136 @@
                     <!-- Nav tabs -->
                     <ul id="tabOne" class="nav nav-tabs nav-justified">
                         <li class="active"><a href="#contentOne-1" data-toggle="tab" aria-expanded="true">JRV Activas</a></li>
-                        <li class=""><a href="#contentOne-2" data-toggle="tab" aria-expanded="false">JRV Finalizdas</a></li>
+                        <li class=""><a href="#contentOne-2" data-toggle="tab" aria-expanded="false">JRV Finalizadas</a></li>
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content" style="padding: 2%;border:1px solid #ddd;border-top: none;">
                         <div class="tab-pane fade active in" id="contentOne-1">
                             <h:form prependId="false">
-                                <h:dataTable id="tabla" value="#{jrvBean.listaJrvsActivas}" var="item" class="table table-bordered" >
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Id"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idJrv}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Fecha de Inicio"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.fechaInicio}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                                        </h:outputText>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Fecha de finalización"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.fechaFinal}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                                        </h:outputText>
-                                    </h:column>
+                                <c:if test="#{empty jrvBean.listaJrvsActivas}">
+                                    <h2>No hay JRV activas</h2>
+                                </c:if>
+                                <c:if test="#{not empty jrvBean.listaJrvsActivas}">
+                                    <h:dataTable id="tabla" value="#{jrvBean.listaJrvsActivas}" var="item" class="table table-bordered" >
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Id"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idJrv}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Fecha de Inicio"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.fechaInicio}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:outputText>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Fecha de finalización"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.fechaFinal}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:outputText>
+                                        </h:column>
 
 
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Centro de Votacion"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idCentroVotacion.nombre}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Presidente"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Secretario"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Vocal"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Operaciones"/>
-                                        </f:facet>
-                                        <h:commandLink class="btn btn-success btn-sm">Editar <span class="fa fa-edit"></span></h:commandLink>
-                                    </h:column>
-                                </h:dataTable>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Centro de Votacion"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idCentroVotacion.nombre}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Presidente"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Secretario"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Vocal"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Operaciones"/>
+                                            </f:facet>
+                                            <h:commandLink class="btn btn-success btn-sm" action="#{jrvBean.obtenerJrv()}"><i class="fa fa-edit"></i>
+                                                <f:param name="id" value="#{item.idJrv}" />
+                                            </h:commandLink>
+                                        </h:column>
+                                    </h:dataTable>
+                                </c:if>
                             </h:form>
                         </div>
                         <div class="tab-pane fade" id="contentOne-2">
                             <h:form prependId="false">
-                                <h:dataTable id="tabla1" value="#{jrvBean.listaJrvsFinalizadas}" var="item" class="table table-bordered" >
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Id"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idJrv}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Fecha de Inicio"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.fechaInicio}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                                        </h:outputText>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Fecha de finalización"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.fechaFinal}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                                        </h:outputText>
-                                    </h:column>
+                                <c:if test="#{empty jrvBean.listaJrvsFinalizadas}">
+                                    <h2>No hay JRV finalizadas</h2>
+                                </c:if>
+                                <c:if test="#{not empty jrvBean.listaJrvsFinalizadas}">
+                                    <h:dataTable id="tabla1" value="#{jrvBean.listaJrvsFinalizadas}" var="item" class="table table-bordered" >
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Id"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idJrv}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Fecha de Inicio"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.fechaInicio}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:outputText>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Fecha de finalización"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.fechaFinal}">
+                                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                            </h:outputText>
+                                        </h:column>
 
 
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Centro de Votacion"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idCentroVotacion.nombre}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Presidente"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Secretario"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Vocal"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Operaciones"/>
-                                        </f:facet>
-                                        <h:commandLink class="btn btn-success btn-sm">Editar <span class="fa fa-edit"></span></h:commandLink>
-                                    </h:column>
-                                </h:dataTable>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Centro de Votacion"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idCentroVotacion.nombre}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Presidente"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Secretario"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Vocal"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
+                                        </h:column>
+                                        
+                                    </h:dataTable>
+                                </c:if>
                             </h:form>
 
                         </div>
