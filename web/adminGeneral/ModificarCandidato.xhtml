@@ -13,8 +13,9 @@
                 <h:messages />
             </h:panelGroup>
             <h:form enctype="multipart/form-data"  prependId="false">                
-                <h2>Nuevo candidato presidencial</h2>
+                <h2>Modificar candidato presidencial</h2>
                 <div class="form-group">
+                    <h:inputHidden value="#{candidatosBean.candidato.idCandidatos}" />
                     <h:outputLabel value="Nombres:" for="nombres" />
                     <h:inputText class="form-control" id="nombres" value="#{candidatosBean.candidato.nombres}" title="Nombres"
                                  required="true" requiredMessage="Los nombres son obligatorios."/>
@@ -39,7 +40,7 @@
                     <h:inputFile class="form-control" id="urlFoto" value="#{candidatosBean.imagen}" title="UrlFoto" 
                                  required="true" requiredMessage="La foto del candidato es obligatorio." />
                 </div>               
-                <h:commandLink class="btn btn-success" value="Guardar" id="btnGuardar" action="#{candidatosBean.nuevoCandidatoPresidencial()}" />                
+                <h:commandLink class="btn btn-success" value="Modificar" id="btnGuardar" action="#{candidatosBean.modificarCandidatoPresidencial()}" />                
             </h:form>       
         </div>
     </ui:define>

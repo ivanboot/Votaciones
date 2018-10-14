@@ -17,7 +17,7 @@
                               rendered="#{not empty facesContext.messageList}">
                     <h:messages/>
                 </h:panelGroup>
-                <h:form prependId="false">                   
+                <h:form enctype="multipart/form-data" prependId="false">                   
                         <div class="form-group">
                             <h:outputLabel value="Nombres:" for="nombres" />
                             <h:inputText id="nombres" class="form-control"
@@ -66,10 +66,8 @@
                         
                         <div class="form-group">
                             <h:outputLabel value="Imagen:" for="urlImagen" />
-                            <h:inputText id="urlImagen" class="form-control"
-                                         value="#{ciudadanosBean.ciudadano.urlImagen}" 
-                                         title="UrlImagen" required="true" 
-                                         requiredMessage="La imágen es obligatoria"/>
+                            <h:inputFile class="form-control" id="urlImagen" value="#{ciudadanosBean.imagen}" title="urlImagen" 
+                                 required="true" requiredMessage="La foto del ciudadano es obligatoria." />
                         </div>
                         
                         <div class="form-group">

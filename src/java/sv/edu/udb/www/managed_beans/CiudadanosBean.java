@@ -1,10 +1,14 @@
-
 package sv.edu.udb.www.managed_beans;
 
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 import sv.edu.udb.www.entities.CentroVotacionEntity;
 import sv.edu.udb.www.entities.CiudadanoEntity;
 import sv.edu.udb.www.model.CentroVotacionesModel;
@@ -21,15 +25,17 @@ public class CiudadanosBean {
 
     @EJB
     private CiudadanosModel ciudadanosModel;
-    
+
     //Inyecciones para poder llenar ComboBox
     @EJB
-    private CentroVotacionesModel centroVotacionesModel;       
-    
+    private CentroVotacionesModel centroVotacionesModel;
+
     List<CiudadanoEntity> listaCiudadanos;
-    
+
+    private Part imagen;
+
     private CiudadanoEntity ciudadano = new CiudadanoEntity();
-    
+
     public CiudadanosBean() {
     }
 
@@ -37,9 +43,9 @@ public class CiudadanosBean {
         listaCiudadanos = ciudadanosModel.listarCiudadanos();
         return listaCiudadanos;
     }
-    
+
     //Para llenar los comboBOX
-    public List<CentroVotacionEntity> getListaCentroVotacion(){
+    public List<CentroVotacionEntity> getListaCentroVotacion() {
         return centroVotacionesModel.listarCentroVotaciones();
     }
 
@@ -50,16 +56,35 @@ public class CiudadanosBean {
     public void setCiudadano(CiudadanoEntity ciudadano) {
         this.ciudadano = ciudadano;
     }
-    
-    public String insertarCiudadano(){
-        if(ciudadanosModel.insertarCiudadano(ciudadano) > 0){
-            JsfUtils.addFlashMessage("exito", "Ciudadano registrado exitosamente");
-        }
-        return "/RNPN/listaCiudadanos?faces-redirect=true";
+
+    public Part getImagen() {
+        return imagen;
     }
-    
-    
-    
-    
-    
+
+    public void setImagen(Part imagen) {
+        this.imagen = imagen;
+    }
+
+    public String insertarCiudadano() {
+        try {
+            InputStream input = imagen.getInputStream();
+            ciudadano.setUrlImagen(imagen.getSubmittedFileName());
+            
+            if (ciudadanosModel.insertarCiudadano(ciudadano) > 0) {
+                String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+
+                Files.copy(input, new File(path + "/resources/ciudadanos/", ciudadano.getUrlImagen()).toPath());
+
+                JsfUtils.addFlashMessage("exito", "Ciudadano registrado exitosamente");
+            } else {
+                JsfUtils.addFlashMessage("fracaso", "No se pudo registrar al ciudadano");
+            }
+
+            return "/RNPN/listaCiudadanos?faces-redirect=true";
+        } catch (Exception e) {
+            JsfUtils.addErrorMessage("idCiudadano", e.toString());
+            return null;
+        }
+    }
+
 }

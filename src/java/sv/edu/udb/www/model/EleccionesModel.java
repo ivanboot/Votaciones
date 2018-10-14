@@ -25,6 +25,11 @@ public class EleccionesModel {
         return query.getResultList();
     }
     
+    public List<EleccionEntity> listaEleccionesDisponibles(){
+        Query query = em.createQuery("SELECT e FROM EleccionEntity e where e.fechaInicioCandidato < CURRENT_DATE and e.fechaFinCandidato > CURRENT_DATE and e.estado = 1");
+        return query.getResultList();
+    }
+    
     public List<EleccionEntity> listarEleccionesActivas(){
         Query query = em.createQuery("SELECT e FROM EleccionEntity e WHERE e.estado = 1");
         return query.getResultList();

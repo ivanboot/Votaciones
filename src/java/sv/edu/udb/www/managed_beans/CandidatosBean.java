@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sv.edu.udb.www.managed_beans;
 
 import java.io.File;
@@ -21,6 +17,7 @@ import sv.edu.udb.www.entities.CandidatoEntity;
 import sv.edu.udb.www.entities.MunicipioEntity;
 import sv.edu.udb.www.entities.PartidosEntity;
 import sv.edu.udb.www.model.CandidatosModel;
+import sv.edu.udb.www.model.EleccionesModel;
 import sv.edu.udb.www.model.MunicipiosModel;
 import sv.edu.udb.www.model.PartidosModel;
 import sv.edu.udb.www.utils.JsfUtils;
@@ -34,6 +31,9 @@ import sv.edu.udb.www.utils.JsfUtils;
 public class CandidatosBean {
 
     @EJB
+    private EleccionesModel eleccionesModel;
+
+    @EJB
     private PartidosModel partidosModel;
 
     @EJB
@@ -41,7 +41,7 @@ public class CandidatosBean {
 
     @EJB
     private CandidatosModel candidatosModel;
-
+    
     List<CandidatoEntity> listaCandidatos;
 
     List<MunicipioEntity> listaMunicipios;
@@ -88,6 +88,11 @@ public class CandidatosBean {
     }
 
     public String nuevoCandidatoPresidencial() {
+        if(eleccionesModel.listaEleccionesDisponibles().isEmpty()){
+            JsfUtils.addFlashMessage("fracaso", "No hay elecciones activas disponibles para ingresar candidatos");
+            return "/adminGeneral/ListaCandidatos?faces-redirect=true";
+        }
+        
         candidato.setIdMunicipio(null);
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
 
@@ -112,6 +117,34 @@ public class CandidatosBean {
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
         JsfUtils.addErrorMessage("idCandidatos", path);
         return null;
+    }
+    
+    public String obtenerCandidato(){
+        int codigo = Integer.parseInt(JsfUtils.getRequest().getParameter("codigo"));
+        candidato = candidatosModel.obtenerCandidato(codigo);
+        return "/adminGeneral/ModificarCandidato";
+    }
+    
+    public String modificarCandidatoPresidencial() {        
+        
+        candidato.setIdMunicipio(null);
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+
+        try {
+            InputStream input = imagen.getInputStream();
+            candidato.setUrlFoto(imagen.getSubmittedFileName());
+            Files.copy(input, new File(path + "/resources/candidatos/", candidato.getUrlFoto()).toPath());
+        } catch (Exception e) {
+            JsfUtils.addErrorMessage("idCandidatos", e.toString());
+            return null;
+        }
+
+        if (candidatosModel.modificarCandidato(candidato) == 0) {
+            JsfUtils.addErrorMessage("idCandidatos", "Ya existe un cadidato con este id");
+            return null;
+        }
+        JsfUtils.addFlashMessage("exito", "Candidato a presidente modificado con exito");
+        return "/adminGeneral/ListaCandidatos?faces-redirect=true";
     }
 
 }
