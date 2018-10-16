@@ -93,10 +93,16 @@ public class CandidatosBean {
             return "/adminGeneral/ListaCandidatos?faces-redirect=true";
         }
         
+        if(!imagen.getSubmittedFileName().toString().endsWith("jpg") || !imagen.getSubmittedFileName().toString().endsWith("jpeg") || !imagen.getSubmittedFileName().toString().endsWith("png")){
+            JsfUtils.addErrorMessage("idCandidatos", "Debe seleccionar un archivo de imagen .jpg, .jpeg o .png");
+            return null;
+        }
+        
         candidato.setIdMunicipio(null);
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
 
         try {
+            
             InputStream input = imagen.getInputStream();
             candidato.setUrlFoto(imagen.getSubmittedFileName());
             Files.copy(input, new File(path + "/resources/candidatos/", candidato.getUrlFoto()).toPath());
@@ -129,7 +135,12 @@ public class CandidatosBean {
         
         candidato.setIdMunicipio(null);
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-
+        
+        if(!imagen.getSubmittedFileName().toString().endsWith("jpg") || !imagen.getSubmittedFileName().toString().endsWith("jpeg") || !imagen.getSubmittedFileName().toString().endsWith("png")){
+            JsfUtils.addErrorMessage("idCandidatos", "Debe seleccionar un archivo de imagen .jpg, .jpeg o .png");
+            return null;
+        }
+        
         try {
             InputStream input = imagen.getInputStream();
             candidato.setUrlFoto(imagen.getSubmittedFileName());

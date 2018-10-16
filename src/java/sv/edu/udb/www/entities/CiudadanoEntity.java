@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -69,6 +71,9 @@ public class CiudadanoEntity implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "url_imagen")
     private String urlImagen;
+    @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
+    @ManyToOne
+    private MunicipioEntity idMunicipio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudadano")
     private List<DetalleCiudadanoEleccionEntity> detalleCiudadanoEleccionEntityList;
     @OneToMany(mappedBy = "idCiudadano")
@@ -151,6 +156,14 @@ public class CiudadanoEntity implements Serializable {
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
+    }
+
+    public MunicipioEntity getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    public void setIdMunicipio(MunicipioEntity idMunicipio) {
+        this.idMunicipio = idMunicipio;
     }
 
     public List<DetalleCiudadanoEleccionEntity> getDetalleCiudadanoEleccionEntityList() {
