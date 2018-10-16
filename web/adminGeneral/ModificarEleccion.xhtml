@@ -8,14 +8,18 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="content">
-        <div class="col-md-6" style="background-color: white; padding: 5%;">
-            <h2>Modificar elección</h2>
-
-            <h:form>
+        <section class="contact-section" style="padding: 0;">
+            <div  class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
+                  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                      box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
+                      
                 <h:panelGroup layout="block" class="alert alert-danger" rendered="#{not empty facesContext.messageList}">
                     <h:messages />
                 </h:panelGroup>
                 
+                <div class="contact-form mt-50">
+                    <h:form>    
+                <h2 style="text-align: center;">Modificar elección</h2>
                 <div class="form-group">
                     <h:inputHidden value="#{eleccionesBean.eleccion.idEleccion}" />
                     <h:outputLabel value="Titulo:" for="titulo" />
@@ -63,7 +67,9 @@
 
                 </h:commandLink>
             </h:form>
-        </div>
+                </div>
+            </div>
+        </section>
     </ui:define>
 
 </ui:composition>

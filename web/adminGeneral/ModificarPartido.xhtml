@@ -7,20 +7,28 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="content">
-        <div class="col-md-6" style="background-color: white; padding: 5%;">
-            <h3 class="title text-center">Modificar partido</h3>
-            <h:panelGroup layout="block" class="alert alert-danger" rendered="#{not empty facesContext.messageList}">
-                <h:messages />
-            </h:panelGroup>
-                <h:form>                    
-                    <div class="form-group">                      
-                        <h:inputHidden value="#{partidosBean.partido.idPartido}" />
-                        <h:outputLabel value="Nombre del partido:" for="partido" />
-                        <h:inputText id="partido" value="#{partidosBean.partido.partido}" title="Partido"
-                                     required="true" requiredMessage="El nombre del partido es obligatorio."/>
-                    </div>
-                    <h:commandLink class="btn btn-success" value="Modificar" action="#{partidosBean.modificarPartido()}" />
-                </h:form>
-        </div>
+        <section class="contact-section" style="padding: 0;">
+            <div  class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
+                  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
+
+                <h:panelGroup layout="block" class="alert alert-danger" rendered="#{not empty facesContext.messageList}">
+                    <h:messages />
+                </h:panelGroup>
+
+                <div class="contact-form mt-50">
+                    <h:form>
+                        <h3 class="title text-center">Modificar partido</h3>
+                        <div class="form-group">                      
+                            <h:inputHidden value="#{partidosBean.partido.idPartido}" />
+                            <h:outputLabel value="Nombre del partido:" for="partido" />
+                            <h:inputText id="partido" value="#{partidosBean.partido.partido}" title="Partido"
+                                         required="true" requiredMessage="El nombre del partido es obligatorio."/>
+                        </div>
+                        <h:commandLink class="btn btn-success" value="Modificar" action="#{partidosBean.modificarPartido()}" />
+                    </h:form>
+                </div>
+            </div>
+        </section>
     </ui:define>
 </ui:composition>

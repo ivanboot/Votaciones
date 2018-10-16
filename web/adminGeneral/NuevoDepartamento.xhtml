@@ -7,21 +7,31 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="content">
-        <div class="col-md-6" style="background-color: white; padding: 5%;">
-            <h3 class="title text-center">Nuevo departamento</h3>
-            <h:panelGroup layout="block" class="alert alert-danger" rendered="#{not empty facesContext.messageList}">
-                <h:messages />
-            </h:panelGroup>
-            <h:form>
+        <section class="contact-section" style="padding: 0;">
+            <div  class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
+                  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
 
-                <div class="form-group">
-                    <h:outputLabel value="Nombre del departamento:" for="departamento" />
-                    <h:inputText class="form-control" id="departamento" value="#{departamentosBean.departamento.departamento}" title="Departamento"
-                                 required="true" requiredMessage="El nombre del departamento es obligatorio."/>
+                <h:panelGroup layout="block" class="alert alert-danger" rendered="#{not empty facesContext.messageList}">
+                    <h:messages />
+                </h:panelGroup>
+
+                <div class="contact-form mt-50">
+                    <h:form>
+                        <h3 class="title text-center">Nuevo departamento</h3>
+                        <div class="form-group">
+                            <h:outputLabel value="Nombre del departamento:" for="departamento" />
+                            <h:inputText class="form-control" id="departamento" value="#{departamentosBean.departamento.departamento}" title="Departamento"
+                                         required="true" requiredMessage="El nombre del departamento es obligatorio."/>
+                        </div>
+                        <h:commandLink class="btn btn-success" value="Insertar" action="#{departamentosBean.nuevoDepartamento()}" />
+                    </h:form>
                 </div>
-                <h:commandLink class="btn btn-success" value="Insertar" action="#{departamentosBean.nuevoDepartamento()}" />
-            </h:form>
-        </div>
+            </div>
+        </section>
+
+
+
 
     </ui:define>
 
