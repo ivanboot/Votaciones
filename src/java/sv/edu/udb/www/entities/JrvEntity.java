@@ -44,12 +44,10 @@ public class JrvEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_jrv")
-    private Integer idJrv;    
-    @Basic(optional = false)    
+    private Integer idJrv;
     @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
-    @Basic(optional = false)    
     @Column(name = "fecha_final")
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
@@ -73,6 +71,8 @@ public class JrvEntity implements Serializable {
     @JoinColumn(name = "id_vocal", referencedColumnName = "id_ciudadano")
     @ManyToOne(optional = false)
     private CiudadanoEntity idVocal;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJrv")
+    private List<DetalleCiudadanoJrvEntity> detalleCiudadanoJrvEntityList;
 
     public JrvEntity() {
     }
@@ -81,10 +81,8 @@ public class JrvEntity implements Serializable {
         this.idJrv = idJrv;
     }
 
-    public JrvEntity(Integer idJrv, Date fechaInicio, Date fechaFinal, short estado) {
+    public JrvEntity(Integer idJrv, short estado) {
         this.idJrv = idJrv;
-        this.fechaInicio = fechaInicio;
-        this.fechaFinal = fechaFinal;
         this.estado = estado;
     }
 
@@ -166,6 +164,14 @@ public class JrvEntity implements Serializable {
 
     public void setIdVocal(CiudadanoEntity idVocal) {
         this.idVocal = idVocal;
+    }
+
+    public List<DetalleCiudadanoJrvEntity> getDetalleCiudadanoJrvEntityList() {
+        return detalleCiudadanoJrvEntityList;
+    }
+
+    public void setDetalleCiudadanoJrvEntityList(List<DetalleCiudadanoJrvEntity> detalleCiudadanoJrvEntityList) {
+        this.detalleCiudadanoJrvEntityList = detalleCiudadanoJrvEntityList;
     }
 
     @Override

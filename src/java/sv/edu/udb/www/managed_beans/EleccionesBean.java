@@ -104,6 +104,12 @@ public class EleccionesBean {
         return "/adminGeneral/ModificarEleccion";
     }
     
+    public String obtenerEleccionPublica(){
+        int codigo = Integer.parseInt(JsfUtils.getRequest().getParameter("codigo"));
+        eleccion=eleccionesModel.obtenerEleccion(codigo);
+        return "/resultados/listaResultado";
+    }
+    
     public String modificarEleccion(){        
         
         eleccion.setEstado(Short.parseShort("1"));

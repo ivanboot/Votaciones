@@ -8,13 +8,12 @@ package sv.edu.udb.www.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -24,7 +23,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Ferh
+ * @author ivanm
  */
 @Entity
 @Table(name = "ciudadanos")
@@ -70,11 +69,16 @@ public class CiudadanoEntity implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "url_imagen")
     private String urlImagen;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudadano")
+    private List<DetalleCiudadanoEleccionEntity> detalleCiudadanoEleccionEntityList;
     @OneToMany(mappedBy = "idCiudadano")
     private List<UsuarioEntity> usuarioEntityList;
-    @JoinColumn(name = "id_centro_votacion", referencedColumnName = "id_centro_votacion")
-    @ManyToOne
-    private CentroVotacionEntity idCentroVotacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSecretario")
+    private List<JrvEntity> jrvEntityList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVocal")
+    private List<JrvEntity> jrvEntityList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudadano")
+    private List<DetalleCiudadanoJrvEntity> detalleCiudadanoJrvEntityList;
 
     public CiudadanoEntity() {
     }
@@ -149,6 +153,14 @@ public class CiudadanoEntity implements Serializable {
         this.urlImagen = urlImagen;
     }
 
+    public List<DetalleCiudadanoEleccionEntity> getDetalleCiudadanoEleccionEntityList() {
+        return detalleCiudadanoEleccionEntityList;
+    }
+
+    public void setDetalleCiudadanoEleccionEntityList(List<DetalleCiudadanoEleccionEntity> detalleCiudadanoEleccionEntityList) {
+        this.detalleCiudadanoEleccionEntityList = detalleCiudadanoEleccionEntityList;
+    }
+
     public List<UsuarioEntity> getUsuarioEntityList() {
         return usuarioEntityList;
     }
@@ -157,12 +169,28 @@ public class CiudadanoEntity implements Serializable {
         this.usuarioEntityList = usuarioEntityList;
     }
 
-    public CentroVotacionEntity getIdCentroVotacion() {
-        return idCentroVotacion;
+    public List<JrvEntity> getJrvEntityList() {
+        return jrvEntityList;
     }
 
-    public void setIdCentroVotacion(CentroVotacionEntity idCentroVotacion) {
-        this.idCentroVotacion = idCentroVotacion;
+    public void setJrvEntityList(List<JrvEntity> jrvEntityList) {
+        this.jrvEntityList = jrvEntityList;
+    }
+
+    public List<JrvEntity> getJrvEntityList1() {
+        return jrvEntityList1;
+    }
+
+    public void setJrvEntityList1(List<JrvEntity> jrvEntityList1) {
+        this.jrvEntityList1 = jrvEntityList1;
+    }
+
+    public List<DetalleCiudadanoJrvEntity> getDetalleCiudadanoJrvEntityList() {
+        return detalleCiudadanoJrvEntityList;
+    }
+
+    public void setDetalleCiudadanoJrvEntityList(List<DetalleCiudadanoJrvEntity> detalleCiudadanoJrvEntityList) {
+        this.detalleCiudadanoJrvEntityList = detalleCiudadanoJrvEntityList;
     }
 
     @Override

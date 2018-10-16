@@ -51,8 +51,6 @@ public class CentroVotacionEntity implements Serializable {
     @Size(min = 1, max = 40)
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCentroVotacion")
-    private List<CiudadanoEntity> ciudadanoEntityList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCentroVotacion")
     private List<JrvEntity> jrvEntityList;
     @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
     @ManyToOne(optional = false)
@@ -93,14 +91,6 @@ public class CentroVotacionEntity implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public List<CiudadanoEntity> getCiudadanoEntityList() {
-        return ciudadanoEntityList;
-    }
-
-    public void setCiudadanoEntityList(List<CiudadanoEntity> ciudadanoEntityList) {
-        this.ciudadanoEntityList = ciudadanoEntityList;
     }
 
     public List<JrvEntity> getJrvEntityList() {
