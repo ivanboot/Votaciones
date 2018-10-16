@@ -11,21 +11,19 @@
     <ui:define name="titulo">
         Nueva JRV
     </ui:define>
-    
-    <ui:define name="content">
-        
 
-        <section class="contact-section">
-            <div class="container" style="-webkit-box-shadow: 2px 2px 18px 0px rgba(0,0,0,0.75);
-                 -moz-box-shadow: 2px 2px 18px 0px rgba(0,0,0,0.75);
-                 box-shadow: 2px 2px 18px 0px rgba(0,0,0,0.75); padding:1%;max-width: 700px;margin-top: -100px;background-color: white;">
+    <ui:define name="content">
+
+
+        <section class="contact-section" style="padding: 0;">
+            <div class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
+                 -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                 box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
 
 
                 <h:panelGroup layout="block" class="alert alert-danger" rendered="#{not empty facesContext.messageList}">
                     <h:messages/>
                 </h:panelGroup>
-
-
 
                 <div class="contact-form mt-50">
                     <h:form prependId="false">
@@ -85,7 +83,7 @@
 
                                         </c:if>
 
-                                        
+
 
                                     </h:selectOneMenu>
                                 </div>
