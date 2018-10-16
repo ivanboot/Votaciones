@@ -45,21 +45,11 @@
                                     </h:inputText>
                                 </div>
 
-                                <div class="form-group" style="display: none;">
-                                    <h:outputLabel value="Seleccione una eleccion:" for="elecciones" />
-                                    <h:selectOneMenu id="elecciones" class="form-control" value="#{jrvBean.jrv.idElecciones}" title="IdElecciones" required="true" requiredMessage="No hay ninguna elección activa" >
-                                        <f:selectItems value="#{jrvBean.listaElecciones}" var="eleccion"
-                                                       itemValue="#{eleccion}"
-                                                       itemLabel="#{eleccion.titulo}"/>
-
-                                    </h:selectOneMenu>
-                                </div>
-
                                 <div class="form-group">
                                     <h:outputLabel value="Seleccione un centro de votacion" for="centroVotacion" />
                                     <h:selectOneMenu id="centroVotacion" class="form-control centroVotacion" value="#{jrvBean.jrv.idCentroVotacion}" title="IdCentroVotacion" required="true" requiredMessage="No hay centros de votaciones disponibles">
                                         <!-- TODO: update below reference to list of available items-->
-                                        <f:selectItem itemLabel="Seleccione el centro de votacion" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Seleccione el centro de votacion" itemValue="" noSelectionOption="true"/>
                                         <f:selectItems value="#{jrvBean.listaCentroVotaciones}" var="centro"
                                                        itemValue="#{centro}"
                                                        itemLabel="#{centro.nombre}"/>
@@ -73,7 +63,7 @@
                                 <div class="form-group">
                                     <h:outputLabel value="Seleccione un presidente" for="presidente" />
                                     <h:selectOneMenu id="presidente" class="form-control presidente" value="#{jrvBean.jrv.idPresidente}" title="IdPresidente" required="true" requiredMessage="No hay usuarios para presidente disponibles">
-                                        <f:selectItem itemLabel="Seleccione un presidente" itemValue="" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Seleccione un presidente" itemValue="" noSelectionOption="true"/>
                                         <c:if test="#{not empty jrvBean.listaJrvs}">
 
                                             <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">

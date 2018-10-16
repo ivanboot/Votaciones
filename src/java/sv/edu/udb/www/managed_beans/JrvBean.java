@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import sv.edu.udb.www.entities.CentroVotacionEntity;
 import sv.edu.udb.www.entities.CiudadanoEntity;
 import sv.edu.udb.www.entities.EleccionEntity;
@@ -26,7 +27,7 @@ import sv.edu.udb.www.utils.JsfUtils;
  * @author Ferh
  */
 @Named(value = "jrvBean")
-@RequestScoped
+@ViewScoped
 public class JrvBean {
 
     @EJB
@@ -74,7 +75,7 @@ public class JrvBean {
     public List<CiudadanoEntity> getListaCiudadanos() {
 
         try {
-            return ciudadanosModel.listarCiudadanosMunicipio(jrv.getIdCentroVotacion().getIdMunicipio().getIdMunicipio());
+            return ciudadanosModel.listarCiudadanosMunicipio(1);
         } catch (Exception e) {
 
             return null;
@@ -89,10 +90,6 @@ public class JrvBean {
 
             return null;
         }
-    }
-
-    public List<EleccionEntity> getListaElecciones() {
-        return eleccionesModel.listarEleccionesActivas();
     }
 
     public List<CentroVotacionEntity> getListaCentroVotaciones() {
@@ -110,6 +107,7 @@ public class JrvBean {
     public String nuevaJrv() {
         short estado = 1;
         jrv.setEstado(estado);
+        jrv.setIdElecciones(eleccionesModel.obtenerEleccionActiva());
         
         if (jrv.getIdSecretario().getIdCiudadano() == jrv.getIdPresidente().getIdCiudadano().getIdCiudadano()) {
             JsfUtils.addErrorMessage("vocal", "Debe seleccionar otro secretario. Este ciudadano ya tiene un cargo");
@@ -134,6 +132,8 @@ public class JrvBean {
     }
 
     public String modificarJrv() {
+        
+        jrv.setIdElecciones(eleccionesModel.obtenerEleccionActiva());
 
         if (jrv.getIdSecretario().getIdCiudadano() == jrv.getIdVocal().getIdCiudadano()) {
             JsfUtils.addErrorMessage("vocal", "Debe seleccionar otro vocal. Este ciudadano ya tiene un cargo");
@@ -151,7 +151,7 @@ public class JrvBean {
 
         int id = Integer.parseInt(JsfUtils.getRequest().getParameter("id"));
         jrv = jrvModel.obtenerJrv(id);
-        return "/adminDepartamental/ModificarJrv";
+        return "/adminDepartamental/ModificarJrv?faces-redirect=true";
 
     }
 

@@ -34,6 +34,11 @@ public class EleccionesModel {
         Query query = em.createQuery("SELECT e FROM EleccionEntity e WHERE e.estado = 1");
         return query.getResultList();
     }
+    
+    public EleccionEntity obtenerEleccionActiva(){
+        Query query = em.createQuery("SELECT e FROM EleccionEntity e WHERE e.estado = 1");
+        return (EleccionEntity) query.getSingleResult();
+    }
 
     public int insertarEleccion(EleccionEntity eleccion) {
         try {
