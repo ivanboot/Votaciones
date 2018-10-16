@@ -44,14 +44,12 @@ public class JrvEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_jrv")
-    private Integer idJrv;
-    @Basic(optional = false)
-    @NotNull
+    private Integer idJrv;    
+    @Basic(optional = false)    
     @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = false)    
     @Column(name = "fecha_final")
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
