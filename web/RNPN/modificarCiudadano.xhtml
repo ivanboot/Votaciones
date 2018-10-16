@@ -21,10 +21,12 @@
                     <h:messages />
                 </h:panelGroup>
 
+
                 <div class="contact-form mt-50">
                     <h:form enctype="multipart/form-data"  prependId="false">
-                        <h2 style="text-align: center;">Nuevo Ciudadano</h2>
+                        <h2 style="text-align: center;">Modificar Ciudadano</h2>
                         <div class="form-group">
+                            <h:inputHidden value="#{ciudadanosBean.ciudadano.idCiudadano}" />
                             <h:outputLabel value="Nombres:" for="nombres" />
                             <h:inputText id="nombres" class="form-control"
                                          value="#{ciudadanosBean.ciudadano.nombres}" 
@@ -97,5 +99,8 @@
                 </div>
             </div>
         </section>
+
+
     </ui:define>
+
 </ui:composition>

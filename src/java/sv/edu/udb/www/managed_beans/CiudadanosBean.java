@@ -86,5 +86,30 @@ public class CiudadanosBean {
             return null;
         }
     }
+    
+    public String obtenerCuidadano(){
+        int codigo = Integer.parseInt(JsfUtils.getRequest().getParameter("codigo"));
+        ciudadano = ciudadanosModel.obtenerCiudadano(codigo);
+        return "/RNPN/modificarCiudadano";
+    }
+    
+    public String modificarCiudadano(){
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+        try {
+            InputStream input = imagen.getInputStream();
+            ciudadano.setUrlImagen(imagen.getSubmittedFileName());
+            Files.copy(input, new File(path + "/resources/ciudadanos", ciudadano.getUrlImagen()).toPath());
+        } catch (Exception e) {
+            JsfUtils.addErrorMessage("idCiudadano", e.toString());
+            return null;
+        }
+        
+        if(ciudadanosModel.modificarCiudadano(ciudadano) == 0){
+            JsfUtils.addErrorMessage("idCiudadano", "Ya existe un Ciudadano con este ID");
+            return null;
+        }
+        JsfUtils.addErrorMessage("exito", "Cuidadano modificado con exito");
+        return "/RNPN/listaCiudadanos?faces-redirect=true";
+    }
 
 }

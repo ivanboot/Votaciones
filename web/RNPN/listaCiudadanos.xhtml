@@ -14,68 +14,77 @@
         <div class="row">
             <div class="col-md-12">
                 <h:form prependId="false">
-                        <h:dataTable value="#{ciudadanosBean.listaCiudadanos}" var="item"
-                                     class="table table-bordered" id="tabla">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Ciudadano"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idCiudadano}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Nombres"/>
-                                </f:facet>
-                                <h:outputText value="#{item.nombres}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Apellidos"/>
-                                </f:facet>
-                                <h:outputText value="#{item.apellidos}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Dirección"/>
-                                </f:facet>
-                                <h:outputText value="#{item.direccion}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Dui"/>
-                                </f:facet>
-                                <h:outputText value="#{item.dui}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Teléfono"/>
-                                </f:facet>
-                                <h:outputText value="#{item.telefono}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Foto"/>
-                                </f:facet>
-                                <h:graphicImage name="ciudadanos/#{item.urlImagen}" width="100px"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Centro votación"/>
-                                </f:facet>
-                                <h:outputText value="#{item.idCentroVotacion.nombre}"/>
-                            </h:column>
-                          
-                        </h:dataTable>
-                    </h:form>
+                    <h:dataTable value="#{ciudadanosBean.listaCiudadanos}" var="item"
+                                 class="table table-bordered" id="tabla">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ciudadano"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idCiudadano}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombres"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombres}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Apellidos"/>
+                            </f:facet>
+                            <h:outputText value="#{item.apellidos}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Dirección"/>
+                            </f:facet>
+                            <h:outputText value="#{item.direccion}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Dui"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dui}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Teléfono"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telefono}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Foto"/>
+                            </f:facet>
+                            <h:graphicImage name="ciudadanos/#{item.urlImagen}" width="100px"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Centro votación"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idCentroVotacion.nombre}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Operación" />                                
+                            </f:facet>
+                            <h:commandLink class="btn btn-info" action="#{ciudadanosBean.obtenerCuidadano()}">
+                                <i class="glyphicon glyphicon-edit"></i>
+                                <f:param name="codigo" value="#{item.idCiudadano}" />
+                            </h:commandLink>
+                        </h:column>
+
+                    </h:dataTable>
+                </h:form>
             </div>
         </div>
-        
-       <script>
-            $(document).ready(function (){
+
+        <script>
+            $(document).ready(function () {
                 $("#tabla").dataTable();
             });
         </script>
-        
+
     </ui:define>
 
 </ui:composition>
