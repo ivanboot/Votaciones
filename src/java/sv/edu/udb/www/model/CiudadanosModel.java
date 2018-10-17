@@ -26,8 +26,14 @@ public class CiudadanosModel {
     }
       
     public List<CiudadanoEntity> listarCiudadanosMunicipio(int id) {
-        Query query = em.createQuery("Select c From CiudadanoEntity c LEFT JOIN c.usuarioEntityList u Where c.idCentroVotacion.idMunicipio.idMunicipio =:idMunicipio and u.idUsuario = null");
+        Query query = em.createQuery("Select c From CiudadanoEntity c LEFT JOIN c.usuarioEntityList u Where c.idMunicipio =:idMunicipio and u.idUsuario = null");
         query.setParameter("idMunicipio", id);
+        return query.getResultList();
+    }
+    
+    public List<CiudadanoEntity> listarCiudadanosJrv(int id){
+        Query query = em.createQuery("Select c From CiudadanoEntity c, c.idCentroVotacion.jrvEntityList j where j.idJrv = :idJrv");
+        query.setParameter("idJrv", id);
         return query.getResultList();
     }
       

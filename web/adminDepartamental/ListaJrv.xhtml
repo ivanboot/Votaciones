@@ -16,6 +16,8 @@
         <section class="contact-section">
             <div class="container" style="margin-top: -100px;">
 
+                <a href="NuevaJrv.xhtml" class="btn btn-primary btn-lg" >Nueva Jrv</a><br/><br/>
+                
                 <div role="tabpanel" style="">
                     <!-- Nav tabs -->
                     <ul id="tabOne" class="nav nav-tabs nav-justified">
@@ -37,24 +39,7 @@
                                                 <h:outputText value="Id"/>
                                             </f:facet>
                                             <h:outputText value="#{item.idJrv}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Fecha de Inicio"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.fechaInicio}">
-                                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                                            </h:outputText>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Fecha de finalización"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.fechaFinal}">
-                                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                                            </h:outputText>
-                                        </h:column>
-
+                                        </h:column>                                      
 
                                         <h:column>
                                             <f:facet name="header">

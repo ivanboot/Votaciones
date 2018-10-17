@@ -28,20 +28,8 @@
                 <div class="contact-form mt-50">
                     <h:form prependId="false">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <h:outputLabel value="Fecha de inicio:" for="fechaInicio" />
-                                    <h:inputText class="form-control" required="true" id="fechaInicio" value="#{jrvBean.jrv.fechaInicio}" requiredMessage="Debes ingresar una fecha de inicio" converterMessage="El formato de la fecha de inicio debe ser Mes/dia/año" a:placeholder="Fecha de inicio">
-                                        <f:convertDateTime type="date" pattern="MM/dd/yyyy" />
-                                    </h:inputText>
-                                </div>
-
-                                <div class="form-group">
-                                    <h:outputLabel value="Fecha de finalización:" for="fechaFin" id="hola"/>
-                                    <h:inputText class="form-control" required="true" id="fechaFin" value="#{jrvBean.jrv.fechaFinal}" requiredMessage="Debes ingresar una fecha de finalización" converterMessage="El formato de la fecha de finalización debe ser Mes/dia/año" a:placeholder="Fecha de finalización">
-                                        <f:convertDateTime type="date" pattern="MM/dd/yyyy" />
-                                    </h:inputText>
-                                </div>
+                            <div class="col-md-12">
+                                
 
                                 <div class="form-group">
                                     <h:outputLabel value="Seleccione un centro de votacion" for="centroVotacion" />
@@ -55,9 +43,7 @@
                                     </h:selectOneMenu>
 
                                 </div>
-                            </div> <!-- col-md-4 -->
-
-                            <div class="col-md-6">
+                            
                                 <div class="form-group">
                                     <h:outputLabel value="Seleccione un presidente" for="presidente" />
                                     <h:selectOneMenu id="presidente" class="form-control presidente" value="#{jrvBean.jrv.idPresidente}" title="IdPresidente" required="true" requiredMessage="No hay usuarios para presidente disponibles">
@@ -151,9 +137,10 @@
                             </div> 
                         </div>
 
-                        <h:commandButton class="btn btn-primary btn-lg pull-right" action="#{jrvBean.nuevaJrv()}" value="Registrar"/>
-
-                        <script id="select">
+                        <h:commandButton class="btn btn-primary btn-lg" action="#{jrvBean.nuevaJrv()}" style="margin-right: 20px;" value="Registrar"/>
+                        
+                        
+                        <script>
                             $(document).ready(function () {
 
                                 function matchCustom(params, data) {

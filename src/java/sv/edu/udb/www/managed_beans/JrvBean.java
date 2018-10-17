@@ -5,11 +5,14 @@
  */
 package sv.edu.udb.www.managed_beans;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 import sv.edu.udb.www.entities.CentroVotacionEntity;
 import sv.edu.udb.www.entities.CiudadanoEntity;
 import sv.edu.udb.www.entities.EleccionEntity;
@@ -27,8 +30,8 @@ import sv.edu.udb.www.utils.JsfUtils;
  * @author Ferh
  */
 @Named(value = "jrvBean")
-@ViewScoped
-public class JrvBean {
+@SessionScoped
+public class JrvBean implements Serializable{
 
     @EJB
     private CentroVotacionesModel centroVotacionesModel;
@@ -75,7 +78,7 @@ public class JrvBean {
     public List<CiudadanoEntity> getListaCiudadanos() {
 
         try {
-            return ciudadanosModel.listarCiudadanosMunicipio(1);
+            return ciudadanosModel.listarCiudadanosMunicipio(jrv.getIdCentroVotacion().getIdMunicipio().getIdMunicipio());
         } catch (Exception e) {
 
             return null;
@@ -93,7 +96,8 @@ public class JrvBean {
     }
 
     public List<CentroVotacionEntity> getListaCentroVotaciones() {
-        return centroVotacionesModel.listarCentroVotaciones();
+        HttpServletRequest request = JsfUtils.getRequest();
+        return centroVotacionesModel.listarCentroVotacionesDepartamento(Integer.parseInt((String) request.getSession().getAttribute("departamento")));
     }
 
     public JrvEntity getJrv() {
@@ -127,6 +131,8 @@ public class JrvBean {
             JsfUtils.addErrorMessage("idJrv", "No se pudo ingresar la JRV");
             return null;
         }
+        
+        jrv = new JrvEntity();
         JsfUtils.addFlashMessage("exito", "JRV ingresada con exito");
         return "/adminDepartamental/ListaJrv?faces-redirect=true";
     }
@@ -143,6 +149,7 @@ public class JrvBean {
             JsfUtils.addErrorMessage("idJrv", "No se pudo modificar la JRV");
             return null;
         }
+        jrv = new JrvEntity();
         JsfUtils.addFlashMessage("exito", "JRV modificada con exito");
         return "/adminDepartamental/ListaJrv?faces-redirect=true";
     }
@@ -151,7 +158,8 @@ public class JrvBean {
 
         int id = Integer.parseInt(JsfUtils.getRequest().getParameter("id"));
         jrv = jrvModel.obtenerJrv(id);
-        return "/adminDepartamental/ModificarJrv?faces-redirect=true";
+        System.out.println(jrv.getIdCentroVotacion().getIdMunicipio().getIdMunicipio());
+        return "/adminDepartamental/ModificarJrv";
 
     }
 

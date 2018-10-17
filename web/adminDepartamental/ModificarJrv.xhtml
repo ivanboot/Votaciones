@@ -11,14 +11,14 @@
     <ui:define name="titulo">
         Modificar JRV
     </ui:define>
-    
+
     <ui:define name="content">
-        
+
 
         <section class="contact-section" style="padding: 0;">
             <div class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
-    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
+                 -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                 box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
 
 
                 <h:panelGroup layout="block" class="alert alert-danger" rendered="#{not empty facesContext.messageList}">
@@ -30,20 +30,6 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h:inputHidden value="#{jrvBean.jrv.idJrv}" />
-                                <div class="form-group">
-                                    <h:outputLabel value="Fecha de inicio:" for="fechaInicio" />
-                                    <h:inputText class="form-control" required="true" id="fechaInicio" value="#{jrvBean.jrv.fechaInicio}" requiredMessage="Debes ingresar una fecha de inicio" converterMessage="El formato de la fecha de inicio debe ser Mes/dia/año" a:placeholder="Fecha de inicio">
-                                        <f:convertDateTime type="date" pattern="MM/dd/yyyy" />
-                                    </h:inputText>
-                                </div>
-
-                                <div class="form-group">
-                                    <h:outputLabel value="Fecha de finalización:" for="fechaFin" id="hola"/>
-                                    <h:inputText class="form-control" required="true" id="fechaFin" value="#{jrvBean.jrv.fechaFinal}" requiredMessage="Debes ingresar una fecha de finalización" converterMessage="El formato de la fecha de finalización debe ser Mes/dia/año" a:placeholder="Fecha de finalización">
-                                        <f:convertDateTime type="date" pattern="MM/dd/yyyy" />
-                                    </h:inputText>
-                                </div>
-
 
 
                                 <div class="form-group">
@@ -54,6 +40,7 @@
                                         <f:selectItems value="#{jrvBean.listaCentroVotaciones}" var="centro"
                                                        itemValue="#{centro}"
                                                        itemLabel="#{centro.nombre}"/>
+                                        <f:ajax render="@form"/>
                                     </h:selectOneMenu>
                                 </div>
                             </div> <!-- col-md-4 -->
@@ -61,7 +48,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <h:outputLabel value="Seleccione un presidente" for="presidente" />
-                                    <h:selectOneMenu id="presidente" class="form-control presidente" value="#{jrvBean.jrv.idPresidente}" title="IdPresidente" required="true" requiredMessage="No hay usuarios para presidente disponibles">
+                                    <h:selectOneMenu id="presidente" class="form-control presidente" value="#{jrvBean.jrv.idPresidente}" title="IdPresidente" required="true" requiredMessage="No hay usuarios para presidente disponibles" >
 
                                         <c:if test="#{not empty jrvBean.listaJrvs}">
 
@@ -95,15 +82,20 @@
                                     <h:outputLabel value="Seleccione un secretario" for="secretario" />
 
                                     <h:selectOneMenu id="secretario" class="form-control secretario js-states" value="#{jrvBean.jrv.idSecretario}" title="Secretario" required="true" requiredMessage="No hay ciudadanos para secretario disponibles">                                      
-                                        <c:if test="#{not empty jrvBean.listaJrvs}">
+                                        
+                                            
+                                            
+                                            <c:if test="#{not empty jrvBean.listaJrvs}">
 
                                             <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
 
                                                 <c:forEach items="#{jrvBean.listaCiudadanos}" var="ciudadano">
-                                                    <c:if test="#{(jrvBean.jrv.idSecretario.idCiudadano ne ciudadano.idCiudadano) and (jrv.idVocal.idCiudadano ne ciudadano.idCiudadano) and (jrv.idPresidente.idCiudadano.idCiudadano ne ciudadano.idCiudadano)}">
+
+                                                    <c:if test="#{(jrvBean.jrv.idVocal.idCiudadano ne ciudadano.idCiudadano) and (jrv.idSecretario.idCiudadano ne ciudadano.idCiudadano) and (jrv.idPresidente.idCiudadano.idCiudadano ne ciudadano.idCiudadano)}">
                                                         <f:selectItem itemValue="#{ciudadano}"
                                                                       itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
                                                     </c:if>
+
                                                 </c:forEach>
                                             </c:forEach>
                                             <f:selectItem itemValue="#{jrvBean.jrv.idSecretario}"
@@ -117,8 +109,8 @@
                                                            itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
 
                                         </c:if>
+
                                         
-                                        <f:ajax rendered="secretario"/>
                                     </h:selectOneMenu>
                                 </div>
                                 <div class="form-group">
@@ -148,22 +140,68 @@
                                                            itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
 
                                         </c:if>
-                                        
+
                                         <f:ajax rendered="vocal"/>
                                     </h:selectOneMenu>
                                 </div>
                             </div> 
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-10">
+>
                                 <a action="ListaJrv" href="ListaJrv.xhtml" class="btn btn-danger btn-lg" >Cancelar</a>
-                            </div>
-                            <div class="col-md-2">
                                 <h:commandButton class="btn btn-primary btn-lg pull-right" action="#{jrvBean.modificarJrv()}" value="Modificar"/>
-                            </div>
 
                         </div>
+
+                        <script>
+                            $(document).ready(function () {
+
+                                function matchCustom(params, data) {
+
+                                    if ($.trim(params.term) === '') {
+                                        return data;
+                                    }
+
+                                    if (typeof data.text === 'undefined') {
+                                        return null;
+                                    }
+
+                                    if (data.text.indexOf(params.term) > -1) {
+                                        var modifiedData = $.extend({}, data, true);
+
+                                        return modifiedData;
+                                    }
+
+                                    if (data.id.indexOf(params.term) > -1) {
+                                        var modifiedData = $.extend({}, data, true);
+
+                                        return modifiedData;
+                                    }
+
+
+                                    return null;
+                                }
+
+                                $('.centroVotacion').select2({
+                                    language: "es"
+                                });
+
+                                $('.presidente').select2({
+                                    language: "es"
+                                });
+
+
+                                $('.secretario').select2({
+                                    matcher: matchCustom
+
+                                });
+                                $('.vocal').select2({
+                                    matcher: matchCustom
+                                });
+
+                            });
+
+                        </script>
 
 
                     </h:form>
@@ -173,55 +211,7 @@
 
 
 
-        <script>
-            $(document).ready(function () {
 
-                function matchCustom(params, data) {
-
-                    if ($.trim(params.term) === '') {
-                        return data;
-                    }
-
-                    if (typeof data.text === 'undefined') {
-                        return null;
-                    }
-
-                    if (data.text.indexOf(params.term) > -1) {
-                        var modifiedData = $.extend({}, data, true);
-
-                        return modifiedData;
-                    }
-
-                    if (data.id.indexOf(params.term) > -1) {
-                        var modifiedData = $.extend({}, data, true);
-
-                        return modifiedData;
-                    }
-
-
-                    return null;
-                }
-
-                $('.centroVotacion').select2({
-                    language: "es"
-                });
-
-                $('.presidente').select2({
-                    language: "es"
-                });
-
-
-                $('.secretario').select2({
-                    matcher: matchCustom
-
-                });
-                $('.vocal').select2({
-                    matcher: matchCustom
-                });
-
-            });
-
-        </script>
 
 
 
