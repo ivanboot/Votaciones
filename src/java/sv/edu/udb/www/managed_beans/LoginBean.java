@@ -55,10 +55,11 @@ public class LoginBean {
             HttpServletRequest request = JsfUtils.getRequest();
             request.getSession().setAttribute("correo", correo);
             request.getSession().setAttribute("rol", user.getIdTipoUsuario().getIdTipoUsuario());
-            request.getSession().setAttribute("departamento", user.getIdCiudadano().getIdMunicipio().getIdDepartamento().getIdDepartamento());
+            
             if (user.getIdTipoUsuario().getIdTipoUsuario() == 1) {
                 return "/adminGeneral/InicioAdminG?faces-redirect=true";
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 2) {
+                request.getSession().setAttribute("departamento", user.getIdCiudadano().getIdMunicipio().getIdDepartamento().getIdDepartamento());
                 return "/adminDepartamental/InicioAdminD?faces-redirect=true";
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 3) {
                 return "/RNPN/listaCiudadanos?faces-redirect=true";

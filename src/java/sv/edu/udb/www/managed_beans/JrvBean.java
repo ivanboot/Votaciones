@@ -97,7 +97,7 @@ public class JrvBean implements Serializable{
 
     public List<CentroVotacionEntity> getListaCentroVotaciones() {
         HttpServletRequest request = JsfUtils.getRequest();
-        return centroVotacionesModel.listarCentroVotacionesDepartamento(Integer.parseInt((String) request.getSession().getAttribute("departamento")));
+        return centroVotacionesModel.listarCentroVotacionesDepartamento(Integer.parseInt(request.getSession().getAttribute("departamento").toString()));
     }
 
     public JrvEntity getJrv() {

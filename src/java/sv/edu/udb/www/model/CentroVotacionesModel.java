@@ -25,7 +25,7 @@ public class CentroVotacionesModel {
     }
     
     public List<CentroVotacionEntity> listarCentroVotacionesDepartamento(int id) {
-        Query query = em.createQuery("SELECT c FROM CentroVotacionEntity c WHERE c.idMunicipio.idDepartamento.idDepartamento:idDepartamento");
+        Query query = em.createQuery("SELECT c FROM CentroVotacionEntity c WHERE c.idMunicipio.idDepartamento.idDepartamento=:idDepartamento");
         query.setParameter("idDepartamento", id);
         return query.getResultList();
     }
