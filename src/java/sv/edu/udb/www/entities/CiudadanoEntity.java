@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author ivanm
+ * @author usuario
  */
 @Entity
 @Table(name = "ciudadanos")
@@ -71,9 +71,9 @@ public class CiudadanoEntity implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "url_imagen")
     private String urlImagen;
-    @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio")
+    @JoinColumn(name = "id_centro_votacion", referencedColumnName = "id_centro_votacion")
     @ManyToOne
-    private MunicipioEntity idMunicipio;
+    private CentroVotacionEntity idCentroVotacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudadano")
     private List<DetalleCiudadanoEleccionEntity> detalleCiudadanoEleccionEntityList;
     @OneToMany(mappedBy = "idCiudadano")
@@ -158,12 +158,12 @@ public class CiudadanoEntity implements Serializable {
         this.urlImagen = urlImagen;
     }
 
-    public MunicipioEntity getIdMunicipio() {
-        return idMunicipio;
+    public CentroVotacionEntity getIdCentroVotacion() {
+        return idCentroVotacion;
     }
 
-    public void setIdMunicipio(MunicipioEntity idMunicipio) {
-        this.idMunicipio = idMunicipio;
+    public void setIdCentroVotacion(CentroVotacionEntity idCentroVotacion) {
+        this.idCentroVotacion = idCentroVotacion;
     }
 
     public List<DetalleCiudadanoEleccionEntity> getDetalleCiudadanoEleccionEntityList() {

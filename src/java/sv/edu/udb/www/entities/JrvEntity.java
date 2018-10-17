@@ -27,7 +27,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author ivanm
+ * @author usuario
  */
 @Entity
 @Table(name = "jrv")
