@@ -32,33 +32,31 @@ import javax.servlet.http.HttpServletResponseWrapper;
  */
 @WebFilter(filterName = "Filtro", urlPatterns = {"/*"})
 public class Filtro implements Filter {
-    
+
     private static final boolean debug = false;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-    
+
     public Filtro() {
-    }    
-    
+    }
+
     private void doBeforeProcessing(RequestWrapper request, ResponseWrapper response)
             throws IOException, ServletException {
         if (debug) {
             log("Filtro:DoBeforeProcessing");
         }
 
-       
-    }    
-    
+    }
+
     private void doAfterProcessing(RequestWrapper request, ResponseWrapper response)
             throws IOException, ServletException {
         if (debug) {
             log("Filtro:DoAfterProcessing");
         }
 
-       
     }
 
     /**
@@ -73,53 +71,55 @@ public class Filtro implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
+
         if (debug) {
             log("Filtro:doFilter()");
         }
 
-        
         RequestWrapper wrappedRequest = new RequestWrapper((HttpServletRequest) request);
         ResponseWrapper wrappedResponse = new ResponseWrapper((HttpServletResponse) response);
         String url = wrappedRequest.getRequestURI();
-        if(url.contains("login.xhtml") || url.contains("index.xhtml")|| url.contains("javax.faces.resource")){
+        if (url.contains("login.xhtml") || url.contains("index.xhtml") || url.contains("javax.faces.resource")) {
             chain.doFilter(request, response);
             return;
         }
-        
-        if(wrappedRequest.getSession().getAttribute("correo")==null){
-              wrappedResponse.sendRedirect(wrappedRequest.getContextPath() + "/faces/index.xhtml");
-                    return;
+
+        if (url.contains("/resultados")) {
+            chain.doFilter(request, response);
+            return;
         }
-        else{
-            int perfil= Integer.parseInt( wrappedRequest.getSession().getAttribute("rol").toString());
-            switch(perfil){
+
+        if (wrappedRequest.getSession().getAttribute("correo") == null) {
+            wrappedResponse.sendRedirect(wrappedRequest.getContextPath() + "/faces/index.xhtml");
+            return;
+        } else {
+            int perfil = Integer.parseInt(wrappedRequest.getSession().getAttribute("rol").toString());
+            switch (perfil) {
                 case 1:
-                    if(url.contains("/adminGeneral")){
+                    if (url.contains("/adminGeneral")) {
                         chain.doFilter(request, response);
                         return;
                     }
-                     wrappedResponse.sendRedirect(wrappedRequest.getContextPath() + "/faces/adminGeneral/InicioAdminG.xhtml");
+                    wrappedResponse.sendRedirect(wrappedRequest.getContextPath() + "/faces/adminGeneral/InicioAdminG.xhtml");
                     break;
                 case 2:
-                    if(url.contains("/adminDepartamental")){
+                    if (url.contains("/adminDepartamental")) {
                         chain.doFilter(request, response);
                         return;
                     }
                     wrappedResponse.sendRedirect(wrappedRequest.getContextPath() + "/faces/adminDepartamental/InicioAdminD.xhtml");
                     break;
                 case 3:
-                    if(url.contains("/RNPN")){
+                    if (url.contains("/RNPN")) {
                         chain.doFilter(request, response);
                         return;
                     }
                     wrappedResponse.sendRedirect(wrappedRequest.getContextPath() + "/faces/RNPN/listaCiudadano.xhtml");
                     break;
             }
-            
-            
+
         }
-        
+
     }
 
     /**
@@ -141,16 +141,16 @@ public class Filtro implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
+            if (debug) {
                 log("Filtro: Initializing filter");
             }
         }
@@ -168,22 +168,22 @@ public class Filtro implements Filter {
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
-        
+
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -200,7 +200,7 @@ public class Filtro implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -214,9 +214,9 @@ public class Filtro implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
 
     /**
@@ -227,7 +227,7 @@ public class Filtro implements Filter {
      * access to the wrapped request using the method getRequest()
      */
     class RequestWrapper extends HttpServletRequestWrapper {
-        
+
         public RequestWrapper(HttpServletRequest request) {
             super(request);
         }
@@ -236,12 +236,12 @@ public class Filtro implements Filter {
         // you must also override the getParameter, getParameterValues, getParameterMap,
         // and getParameterNames methods.
         protected Hashtable localParams = null;
-        
+
         public void setParameter(String name, String[] values) {
             if (debug) {
                 System.out.println("Filtro::setParameter(" + name + "=" + values + ")" + " localParams = " + localParams);
             }
-            
+
             if (localParams == null) {
                 localParams = new Hashtable();
                 // Copy the parameters from the underlying request.
@@ -255,7 +255,7 @@ public class Filtro implements Filter {
             }
             localParams.put(name, values);
         }
-        
+
         @Override
         public String getParameter(String name) {
             if (debug) {
@@ -274,7 +274,7 @@ public class Filtro implements Filter {
             }
             return (val == null ? null : val.toString());
         }
-        
+
         @Override
         public String[] getParameterValues(String name) {
             if (debug) {
@@ -285,7 +285,7 @@ public class Filtro implements Filter {
             }
             return (String[]) localParams.get(name);
         }
-        
+
         @Override
         public Enumeration getParameterNames() {
             if (debug) {
@@ -295,8 +295,8 @@ public class Filtro implements Filter {
                 return getRequest().getParameterNames();
             }
             return localParams.keys();
-        }        
-        
+        }
+
         @Override
         public Map getParameterMap() {
             if (debug) {
@@ -317,9 +317,9 @@ public class Filtro implements Filter {
      * get access to the wrapped response using the method getResponse()
      */
     class ResponseWrapper extends HttpServletResponseWrapper {
-        
+
         public ResponseWrapper(HttpServletResponse response) {
-            super(response);            
+            super(response);
         }
 
         // You might, for example, wish to know what cookies were set on the response
@@ -346,5 +346,5 @@ public class Filtro implements Filter {
 	}
          */
     }
-    
+
 }
