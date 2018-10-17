@@ -8,8 +8,8 @@
 
     <ui:define name="content">
         <div class="col-md-12" style="background-color: white; padding: 5%;">
-            <h:form>
-                <h:dataTable value="#{eleccionesBean.listaElecciones}" var="item">
+            <h:form prependId="false">
+                <h:dataTable id="tabla" class="table table-bordered" value="#{eleccionesBean.listaElecciones}" var="item">
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Titulo"/>
@@ -40,14 +40,19 @@
                         <f:facet name="header">
                             <h:outputText value="Operación"/>
                         </f:facet>
-                        <h:commandLink class="btn btn-info" action="#{eleccionesBean.obtenerEleccion()}" >
-                            <i class="glyphicon glyphicon-edit"></i>
+                        <h:commandLink class="btn btn-info" action="#{eleccionesBean.obtenerEleccionPublica()}" >
+                            <i class="glyphicon glyphicon-check"></i>
                             <f:param name="codigo" value="#{item.idEleccion}" /> 
                         </h:commandLink>
                     </h:column>
                 </h:dataTable>
             </h:form>
         </div>
+        <script>
+            $(document).ready(function () {
+                $("#tabla").dataTable();
+            });
+        </script>
     </ui:define>
 
 </ui:composition>

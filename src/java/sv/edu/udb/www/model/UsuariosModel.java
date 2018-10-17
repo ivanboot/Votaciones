@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import sv.edu.udb.www.entities.CiudadanoEntity;
 import sv.edu.udb.www.entities.UsuarioEntity;
+import sv.edu.udb.www.utils.SecurityUtils;
 
 @Stateless
 public class UsuariosModel {
@@ -23,7 +24,7 @@ public class UsuariosModel {
         try {
             Query query = em.createQuery("SELECT u FROM UsuarioEntity u WHERE u.correo=:correo AND u.contra=:contra");
             query.setParameter("correo", correo);
-            query.setParameter("contra", contra);
+            query.setParameter("contra", SecurityUtils.encriptarSHA(contra));
             return (UsuarioEntity) query.getSingleResult();
         } catch (Exception e) {
             return null;
