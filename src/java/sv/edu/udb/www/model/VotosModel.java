@@ -24,7 +24,7 @@ public class VotosModel {
         return query.getResultList();
     }
     
-    public List<VotoEntity> listarVotacionTotal(int eleccion){
+    public List<Object[]> listarVotacionTotal(int eleccion){
         Query query = em.createQuery("Select v.idCandidato.nombres, SUM(v.cantidad) from VotoEntity v where v.idJrv.idElecciones.idEleccion=:idEleccion GROUP BY v.idCandidato.nombres");
         query.setParameter("idEleccion", eleccion);
         return query.getResultList();

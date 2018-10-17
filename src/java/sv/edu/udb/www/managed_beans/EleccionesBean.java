@@ -106,8 +106,8 @@ public class EleccionesBean {
     
     public String obtenerEleccionPublica(){
         int codigo = Integer.parseInt(JsfUtils.getRequest().getParameter("codigo"));
-        eleccion=eleccionesModel.obtenerEleccion(codigo);
-        return "/resultados/listaResultado";
+        //eleccion=eleccionesModel.obtenerEleccion(codigo);
+        return "/resultados/listaResultado?faces-redirect=true&codigo=" + codigo;
     }
     
     public String modificarEleccion(){        
