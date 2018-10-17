@@ -23,7 +23,13 @@ public class VotosModel {
         Query query = em.createNamedQuery("VotoEntity.findAll");
         return query.getResultList();
     }
-
+    
+    public List<VotoEntity> listarVotacionTotal(int eleccion){
+        Query query = em.createQuery("Select v.idCandidato.nombres, SUM(v.cantidad) from VotoEntity v where v.idJrv.idElecciones.idEleccion=:idEleccion GROUP BY v.idCandidato.nombres");
+        query.setParameter("idEleccion", eleccion);
+        return query.getResultList();
+    }
+    
     public int insertarVoto(VotoEntity voto) {
         try {
             em.persist(voto);
