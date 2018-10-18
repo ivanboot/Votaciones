@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/AdminD_Template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="titulo">
+        Modificar JRV
+    </ui:define>
+
+    <ui:define name="content">
+
+
+        <section class="contact-section" style="padding: 0;">
+            <div class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
+                 -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                 box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
+
+
+                <h:panelGroup layout="block" class="alert alert-danger" rendered="#{not empty facesContext.messageList}">
+                    <h:messages/>
+                </h:panelGroup>
+
+                <div class="contact-form mt-50">
+                    <h:form prependId="false">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h:inputHidden value="#{jrvBean.jrv.idJrv}" />
+
+
+                                <div class="form-group">
+                                    <h:outputLabel value="Seleccione un centro de votacion" for="centroVotacion" />
+                                    <h:selectOneMenu id="centroVotacion" class="form-control centroVotacion" value="#{jrvBean.jrv.idCentroVotacion}" title="IdCentroVotacion" required="true" requiredMessage="No hay centros de votaciones disponibles">
+                                        <!-- TODO: update below reference to list of available items-->
+
+                                        <f:selectItems value="#{jrvBean.listaCentroVotaciones}" var="centro"
+                                                       itemValue="#{centro}"
+                                                       itemLabel="#{centro.nombre}"/>
+                                        <f:ajax render="@form"/>
+                                    </h:selectOneMenu>
+                                </div>
+                            </div> <!-- col-md-4 -->
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <h:outputLabel value="Seleccione un presidente" for="presidente" />
+                                    <h:selectOneMenu id="presidente" class="form-control presidente" value="#{jrvBean.jrv.idPresidente}" title="IdPresidente" required="true" requiredMessage="No hay usuarios para presidente disponibles" >
+
+                                        <c:if test="#{not empty jrvBean.listaJrvs}">
+
+                                            <f:selectItem  itemValue="#{jrvBean.jrv.idPresidente}"
+                                                           itemLabel="#{jrvBean.jrv.idPresidente.idCiudadano.nombres} #{jrvBean.jrv.idPresidente.idCiudadano.apellidos}"/>
+                                            <c:forEach items="#{jrvBean.listaJrvs}" var="jrv1">
+
+                                                <c:forEach items="#{jrvBean.listaUsuarios}" var="presidente">
+
+                                                    <c:if test="#{jrv1.idPresidente.idUsuario ne presidente.idUsuario}">
+                                                        <f:selectItem  itemValue="#{presidente}"
+                                                                       itemLabel="#{presidente.idCiudadano.nombres} #{presidente.idCiudadano.apellidos}"/>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:forEach>
+
+                                        </c:if>
+
+                                        <c:if test="#{empty jrvBean.listaJrvs}">
+
+                                            <f:selectItems value="#{jrvBean.listaUsuarios}" var="presidente" itemValue="#{presidente}"
+                                                           itemLabel="#{presidente.idCiudadano.nombres} #{presidente.idCiudadano.apellidos}"/>
+
+                                        </c:if>
+
+                                        <f:ajax rendered="presidente"/>
+
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel value="Seleccione un secretario" for="secretario" />
+
+                                    <h:selectOneMenu id="secretario" class="form-control secretario js-states" value="#{jrvBean.jrv.idSecretario}" title="Secretario" required="true" requiredMessage="No hay ciudadanos para secretario disponibles">                                      
+                                        
+                                            
+                                            
+                                            <c:if test="#{not empty jrvBean.listaJrvs}">
+
+                                            <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
+
+                                                <c:forEach items="#{jrvBean.listaCiudadanos}" var="ciudadano">
+
+                                                    <c:if test="#{(jrvBean.jrv.idVocal.idCiudadano ne ciudadano.idCiudadano) and (jrv.idSecretario.idCiudadano ne ciudadano.idCiudadano) and (jrv.idPresidente.idCiudadano.idCiudadano ne ciudadano.idCiudadano)}">
+                                                        <f:selectItem itemValue="#{ciudadano}"
+                                                                      itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+                                                    </c:if>
+
+                                                </c:forEach>
+                                            </c:forEach>
+                                            <f:selectItem itemValue="#{jrvBean.jrv.idSecretario}"
+                                                          itemLabel="#{jrvBean.jrv.idSecretario.nombres} #{jrvBean.jrv.idSecretario.apellidos}"/>
+                                        </c:if>
+
+                                        <c:if test="#{empty jrvBean.listaJrvs}">
+
+                                            <f:selectItems value="#{jrvBean.listaCiudadanos}" var="ciudadano"
+                                                           itemValue="#{ciudadano}"
+                                                           itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+
+                                        </c:if>
+
+                                        
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel value="Seleccione un vocal" for="vocal" />
+                                    <h:selectOneMenu id="vocal" class="form-control vocal" value="#{jrvBean.jrv.idVocal}" title="IdVocal" required="true" requiredMessage="No hay ciudadanos para vocales disponibles">
+                                        <c:if test="#{not empty jrvBean.listaJrvs}">
+
+                                            <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
+
+                                                <c:forEach items="#{jrvBean.listaCiudadanos}" var="ciudadano">
+
+                                                    <c:if test="#{(jrvBean.jrv.idVocal.idCiudadano ne ciudadano.idCiudadano) and (jrv.idSecretario.idCiudadano ne ciudadano.idCiudadano) and (jrv.idPresidente.idCiudadano.idCiudadano ne ciudadano.idCiudadano)}">
+                                                        <f:selectItem itemValue="#{ciudadano}"
+                                                                      itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+                                                    </c:if>
+
+                                                </c:forEach>
+                                            </c:forEach>
+                                            <f:selectItem itemValue="#{jrvBean.jrv.idVocal}"
+                                                          itemLabel="#{jrvBean.jrv.idVocal.nombres} #{jrvBean.jrv.idVocal.apellidos}"/>
+                                        </c:if>
+
+                                        <c:if test="#{empty jrvBean.listaJrvs}">
+
+                                            <f:selectItems value="#{jrvBean.listaCiudadanos}" var="ciudadano"
+                                                           itemValue="#{ciudadano}"
+                                                           itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+
+                                        </c:if>
+
+                                        <f:ajax rendered="vocal"/>
+                                    </h:selectOneMenu>
+                                </div>
+                            </div> 
+                        </div>
+
+>
+                                <a action="ListaJrv" href="ListaJrv.xhtml" class="btn btn-danger btn-lg" >Cancelar</a>
+                                <h:commandButton class="btn btn-primary btn-lg pull-right" action="#{jrvBean.modificarJrv()}" value="Modificar"/>
+
+                        </div>
+
+                        <script>
+                            $(document).ready(function () {
+
+                                function matchCustom(params, data) {
+
+                                    if ($.trim(params.term) === '') {
+                                        return data;
+                                    }
+
+                                    if (typeof data.text === 'undefined') {
+                                        return null;
+                                    }
+
+                                    if (data.text.indexOf(params.term) > -1) {
+                                        var modifiedData = $.extend({}, data, true);
+
+                                        return modifiedData;
+                                    }
+
+                                    if (data.id.indexOf(params.term) > -1) {
+                                        var modifiedData = $.extend({}, data, true);
+
+                                        return modifiedData;
+                                    }
+
+
+                                    return null;
+                                }
+
+                                $('.centroVotacion').select2({
+                                    language: "es"
+                                });
+
+                                $('.presidente').select2({
+                                    language: "es"
+                                });
+
+
+                                $('.secretario').select2({
+                                    matcher: matchCustom
+
+                                });
+                                $('.vocal').select2({
+                                    matcher: matchCustom
+                                });
+
+                            });
+
+                        </script>
+
+
+                    </h:form>
+                </div> <!-- contact-form -->           
+            </div>
+        </section>
+
+
+
+
+
+
+
+    </ui:define>
+
+</ui:composition>
