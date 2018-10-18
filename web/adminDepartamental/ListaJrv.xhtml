@@ -4,153 +4,256 @@
                 template="./../WEB-INF/AdminD_Template.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="titulo">
-        Lista de JRV para Elecciones
+        <c:if test="#{not empty jrvBean.eleccionActiva}">Lista de JRV para Elecciones <h:outputLabel value="#{jrvBean.eleccionActiva.fechaEleccion}"><f:convertDateTime pattern="yyyy" /></h:outputLabel></c:if>
     </ui:define>
-    
+
     <ui:define name="content">
 
+
         <section class="contact-section">
-            <div class="container" style="margin-top: -100px;">
+            <div class="container">
 
-                <a href="NuevaJrv.xhtml" class="btn btn-primary btn-lg" >Nueva Jrv</a><br/><br/>
-                
-                <div role="tabpanel" style="">
-                    <!-- Nav tabs -->
-                    <ul id="tabOne" class="nav nav-tabs nav-justified">
-                        <li class="active"><a href="#contentOne-1" data-toggle="tab" aria-expanded="true">JRV Activas</a></li>
-                        <li class=""><a href="#contentOne-2" data-toggle="tab" aria-expanded="false">JRV Finalizadas</a></li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content" style="padding: 2%;border:1px solid #ddd;border-top: none;background-color: white;">
-                        <div class="tab-pane fade active in" id="contentOne-1">
-                            <h:form prependId="false">
-                                <c:if test="#{empty jrvBean.listaJrvsActivas}">
-                                    <h2>No hay JRV activas</h2>
-                                </c:if>
-                                <c:if test="#{not empty jrvBean.listaJrvsActivas}">
-                                    <h:dataTable id="tabla" value="#{jrvBean.listaJrvsActivas}" var="item" class="table table-bordered" >
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Id"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idJrv}"/>
-                                        </h:column>                                      
-
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Centro de Votacion"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idCentroVotacion.nombre}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Presidente"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Secretario"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Vocal"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Operaciones"/>
-                                            </f:facet>
-                                            <h:commandLink class="btn btn-success btn-sm" action="#{jrvBean.obtenerJrv()}"><i class="fa fa-edit"></i>
-                                                <f:param name="id" value="#{item.idJrv}" />
-                                            </h:commandLink>
-                                        </h:column>
-                                    </h:dataTable>
-                                </c:if>
-                            </h:form>
+                <c:if test="#{empty jrvBean.eleccionActiva}">
+                    <div class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
+                         -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                         box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
+                        <h1>No hay eleccion activa</h1><br/>
+                        <center>
+                            <h:graphicImage name="img/file.png" style="width: 25%;"></h:graphicImage>
+                        </center>
+                        <div class="caption">
+                            <a href="InicioAdminD.xhtml" class="btn btn-primary btn-lg" >Regresar</a><br/><br/>
                         </div>
-                        <div class="tab-pane fade" id="contentOne-2">
-                            <h:form prependId="false">
-                                <c:if test="#{empty jrvBean.listaJrvsFinalizadas}">
-                                    <h2>No hay JRV finalizadas</h2>
-                                </c:if>
-                                <c:if test="#{not empty jrvBean.listaJrvsFinalizadas}">
-                                    <h:dataTable id="tabla1" value="#{jrvBean.listaJrvsFinalizadas}" var="item" class="table table-bordered" >
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Id"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idJrv}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Fecha de Inicio"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.fechaInicio}">
-                                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                                            </h:outputText>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Fecha de finalización"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.fechaFinal}">
-                                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                                            </h:outputText>
-                                        </h:column>
+
+                    </div>
+
+                </c:if>
+
+                <c:if test="#{not empty jrvBean.eleccionActiva}">
+
+                    <div role="tabpanel" style="">
+                        <!-- Nav tabs -->
+                        <ul id="tabOne" class="nav nav-tabs nav-justified">
+                            <li class="active"><a href="#contentOne-1" data-toggle="tab" aria-expanded="true">JRV Activas</a></li>
+                            <li class=""><a href="#contentOne-2" data-toggle="tab" aria-expanded="false">JRV Finalizadas</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content" style="padding: 2%;border:1px solid #ddd;border-top: none;background-color: white;">
+                            <div class="tab-pane fade active in" id="contentOne-1">
+                                <h:form prependId="false">
 
 
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Centro de Votacion"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idCentroVotacion.nombre}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Presidente"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Secretario"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Vocal"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
-                                        </h:column>
-                                        
-                                    </h:dataTable>
-                                </c:if>
-                            </h:form>
+                                    <c:if test="#{empty jrvBean.listaJrvsActivas}">
+                                        <h2>No hay JRV activas</h2>
+                                    </c:if>
+
+                                    <c:if test="#{not empty jrvBean.listaJrvsActivas}">
+                                        <h:dataTable id="tabla" value="#{jrvBean.listaJrvsActivas}" var="item" class="table table-bordered" >
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Id"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idJrv}"/>
+                                            </h:column>                                      
+
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Centro de Votacion"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idCentroVotacion.nombre}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Presidente"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Secretario"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Vocal"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Operaciones"/>
+                                                </f:facet>
+                                                <h:commandLink class="btn btn-success btn-sm" action="#{jrvBean.obtenerJrv()}"><i class="fa fa-edit"></i>
+                                                    <f:param name="id" value="#{item.idJrv}" />
+                                                </h:commandLink>
+                                                <h:commandLink a:type="button" class="btn btn-info btn-sm" a:data-toggle="modal" a:data-target="#ciudadanos" style="margin-left: 5px;"><i class="fa fa fa-eye"></i>
+                                                    <f:ajax listener="#{jrvBean.obtenerListaCiudadanosJrv(item.idJrv)}" render=":ciudadanos1"/>
+                                                </h:commandLink>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </c:if>
+
+
+                                </h:form>
+                            </div>
+                            <div class="tab-pane fade" id="contentOne-2">
+                                <h:form prependId="false" id="aa">
+                                    <c:if test="#{empty jrvBean.listaJrvsFinalizadas}">
+                                        <h2>No hay JRV finalizadas</h2>
+                                    </c:if>
+                                    <c:if test="#{not empty jrvBean.listaJrvsFinalizadas}">
+                                        <h:dataTable id="tabla1" value="#{jrvBean.listaJrvsFinalizadas}" var="item" class="table table-bordered" >
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Id"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idJrv}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Fecha de Inicio"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.fechaInicio}">
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                </h:outputText>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Fecha de finalización"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.fechaFinal}">
+                                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                                </h:outputText>
+                                            </h:column>
+
+
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Centro de Votacion"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idCentroVotacion.nombre}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Presidente"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idPresidente.idCiudadano.nombres} #{item.idPresidente.idCiudadano.apellidos}" />
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Secretario"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idSecretario.nombres} #{item.idSecretario.apellidos}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Vocal"/>
+                                                </f:facet>
+                                                <h:outputText value="#{item.idVocal.nombres} #{item.idVocal.apellidos}"/>
+                                            </h:column>
+                                            
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Operaciones"/>
+                                                </f:facet>
+                                                
+                                                <h:commandLink a:type="button" class="btn btn-info btn-sm" a:data-toggle="modal" a:data-target="#ciudadanos"><i class="fa fa fa-eye"></i>
+                                                    <f:ajax listener="#{jrvBean.obtenerListaCiudadanosJrv(item.idJrv)}" render=":ciudadanos1"/>
+                                                </h:commandLink>
+                                            </h:column>
+
+                                        </h:dataTable>
+                                    </c:if>
+                                </h:form>
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
-
-
+                </c:if>
 
             </div>
         </section>
+
+
+
+        <div class="modal fade bd-example-modal-lg" id="ciudadanos" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="padding: 2%;">
+                    <h1>Lista de ciudadanos por JRV</h1>
+                    <h:form id="ciudadanos1" prependId="false">
+
+                        <h:dataTable id="tabla2" value="#{jrvBean.listaDetalleCiudadanoJrv}" var="item" class="table table-bordered">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idCiudadano.nombres}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Apellidos"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idCiudadano.apellidos}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha de finalización"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idCiudadano.telefono}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </h:column>
+
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Centro de Votacion"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idCiudadano.dui}"/>
+                            </h:column>
+
+                        </h:dataTable>
+
+                        <script>
+                            $(document).ready(function () {
+                                $("#tabla2").dataTable({
+                                    dom: 'Bfrtip',
+                                    buttons: [
+                                        'excel', 'pdf'
+                                    ]
+                                });
+                            });
+                        </script>
+
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
         <script>
             $(document).ready(function () {
                 $("#tabla").dataTable();
+                $("#tabla1").dataTable();
             });
+            $('#ciudadanos').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
         </script>
 
     </ui:define>

@@ -7,19 +7,17 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
+    <ui:define name="titulo">
+        Lista de Centros de Votaciones
+    </ui:define>
+    
     <ui:define name="content">
-        <section class="single-page-title single-page-title-contact" >
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Lista de Centros de Votacion </h2>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
         <section class="contact-section">
-            <div class="container">
+            <div class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
+                 -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                 box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
 
                 <h:form prependId="false">
                     <c:if test="#{empty jrvBean.listaJrvsActivas}">

@@ -26,13 +26,15 @@ public class JrvModel {
         return query.getResultList();
     }
     
-    public List<JrvEntity> listarJrvActivas() {
-        Query query = em.createQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 1 AND j.estado = 1");
+    public List<JrvEntity> listarJrvActivas(int id) {
+        Query query = em.createQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 1 AND j.estado = 1 AND j.idCentroVotacion.idMunicipio.idDepartamento.idDepartamento =:idDepartamento");
+        query.setParameter("idDepartamento", id);
         return query.getResultList();
     }
     
-    public List<JrvEntity> listarJrvFinalizadas() {
-        Query query = em.createQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 1 AND j.estado = 0 ");
+    public List<JrvEntity> listarJrvFinalizadas(int id) {
+        Query query = em.createQuery("SELECT j FROM JrvEntity j WHERE j.idElecciones.estado = 1 AND j.estado = 0 AND j.idCentroVotacion.idMunicipio.idDepartamento.idDepartamento =:idDepartamento");
+        query.setParameter("idDepartamento", id);
         return query.getResultList();
     }
 

@@ -5,10 +5,12 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.servlet.http.HttpServletRequest;
 import sv.edu.udb.www.entities.CentroVotacionEntity;
 import sv.edu.udb.www.entities.MunicipioEntity;
 import sv.edu.udb.www.model.CentroVotacionesModel;
 import sv.edu.udb.www.model.MunicipiosModel;
+import sv.edu.udb.www.utils.JsfUtils;
 
 /**
  *
@@ -36,12 +38,14 @@ public class CentroVotacionBean {
     }
 
     public List<CentroVotacionEntity> getListaCentroVotacion() {
-        listaCentroVotacion = centroVotacionesModel.listarCentroVotaciones();
+        HttpServletRequest request = JsfUtils.getRequest();
+        listaCentroVotacion = centroVotacionesModel.listarCentroVotacionesDepartamento(Integer.parseInt(request.getSession().getAttribute("departamento").toString()));
         return listaCentroVotacion;
     }
 
     public List<MunicipioEntity> getListaMunicipios() {
-        listaMunicipios = municipiosModel.listarMunicipios();
+        HttpServletRequest request = JsfUtils.getRequest();
+        listaMunicipios = municipiosModel.listarMunicipiosDepartamento(Integer.parseInt(request.getSession().getAttribute("departamento").toString()));
         return listaMunicipios;
     }
    

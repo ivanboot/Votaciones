@@ -7,62 +7,48 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
+    <ui:define name="titulo">
+        Administrador Departamental
+    </ui:define>
+    
     <ui:define name="content">
         <section >
             <div class="container">
                  
                 <div class="row text-center">
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-6 col-md-6">
                         <div class="thumbnail">
                             <h:graphicImage name="img/politics.png"></h:graphicImage>
                             <div class="caption">
-                                <h3><h:link outcome="/adminGeneral/ListaCandidatos" style="text-decoration: none; color:#c2185b;">Gestion de candidatos</h:link></h3>
+                                <h3><h:link outcome="/adminDepartamental/ListaPartidos" style="text-decoration: none; color:#c2185b;">Gestion de candidatos</h:link></h3>
                                 <p>Gestiona los candidatos.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <h:graphicImage name="img/vote.png"></h:graphicImage>
-                            <div class="caption">
-                                <h3><h:link outcome="/adminGeneral/ListaElecciones" style="text-decoration: none; color:#c2185b;">Gestion de elecciones</h:link></h3>
-                                <p>Gestiona las elecciones .</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-6 col-md-6">
                         <div class="thumbnail">
                             <h:graphicImage name="img/flag.png"></h:graphicImage>
                             <div class="caption">
-                                <h3><h:link outcome="/adminGeneral/ListaPartidos" style="text-decoration: none; color:#c2185b;">Gestion de partidos</h:link></h3>
+                                <h3><h:link outcome="/adminDepartamental/ListaPartidos" style="text-decoration: none; color:#c2185b;">Gestion de partidos</h:link></h3>
                                 <p>Gestiona los partidos políticos.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <h:graphicImage name="img/el-salvador.png"></h:graphicImage>
-                            <div class="caption">
-                                <h3><h:link outcome="/adminGeneral/ListaDepartamentos" style="text-decoration: none; color:#c2185b;">Gestion de departamentos</h:link></h3>
-                                <p>Gestiona los departamentos del país.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-6 col-md-6">
                         <div class="thumbnail">
                             <h:graphicImage name="img/el-salvador2.png"></h:graphicImage>
                             <div class="caption">
-                                <h3><h:link  outcome="/adminGeneral/ListaMunicipios" style="text-decoration: none; color:#c2185b;">Gestion de municipios</h:link></h3>
-                                <p>Gestiona los municipios de los departamentos.</p>
+                                <h3><h:link outcome="/adminDepartamental/ListaCentroVotacion" style="text-decoration: none; color:#c2185b;">Gestion de Centros de Votación</h:link></h3>
+                                <p>Gestiona los Centros de votación de tu departamento.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-6 col-md-6">
                         <div class="thumbnail">
-                            <h:graphicImage name="img/group.png"></h:graphicImage>
+                            <h:graphicImage name="img/vote.png"></h:graphicImage>
                             <div class="caption">
-                                <h3><h:link outcome="/adminGeneral/ListaUsuarios" style="text-decoration: none; color:#c2185b;">Gestion de usuarios</h:link></h3>
-                                <p>Gestiona los usuarios del sistema.</p>
+                                <h3><h:link  outcome="/adminDepartamental/ListaJrv" style="text-decoration: none; color:#c2185b;">Gestion de JRV</h:link></h3>
+                                <p>Gestiona las JRV de tu departamento.</p>
                             </div>
                         </div>
                     </div>

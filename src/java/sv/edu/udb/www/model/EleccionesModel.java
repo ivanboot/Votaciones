@@ -7,6 +7,7 @@ package sv.edu.udb.www.model;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -37,7 +38,11 @@ public class EleccionesModel {
     
     public EleccionEntity obtenerEleccionActiva(){
         Query query = em.createQuery("SELECT e FROM EleccionEntity e WHERE e.estado = 1");
-        return (EleccionEntity) query.getSingleResult();
+        try{
+            return (EleccionEntity) query.getSingleResult();
+        }catch(Exception e){
+            return null;
+        }
     }
 
     public int insertarEleccion(EleccionEntity eleccion) {

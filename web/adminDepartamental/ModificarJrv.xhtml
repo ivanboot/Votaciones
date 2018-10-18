@@ -15,7 +15,7 @@
     <ui:define name="content">
 
 
-        <section class="contact-section" style="padding: 0;">
+        <section class="contact-section">
             <div class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
                  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
                  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
@@ -27,8 +27,21 @@
 
                 <div class="contact-form mt-50">
                     <h:form prependId="false">
+                        <c:if test="#{empty jrvBean.eleccionDisponible}">
+                            
+                                <h2>No es posible modificar JRVs</h2><br/>
+                                <center>
+                                    <h:graphicImage name="img/calendar.png" style="width: 25%;"></h:graphicImage>
+                                </center>
+                                <div class="caption">
+                                    <a href="InicioAdminD.xhtml" class="btn btn-primary btn-lg" >Regresar</a><br/><br/>
+                                </div>
+
+                            
+                        </c:if>
+                        <c:if test="#{not empty jrvBean.eleccionDisponible}">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <h:inputHidden value="#{jrvBean.jrv.idJrv}" />
 
 
@@ -43,12 +56,10 @@
                                         <f:ajax render="@form"/>
                                     </h:selectOneMenu>
                                 </div>
-                            </div> <!-- col-md-4 -->
-
-                            <div class="col-md-6">
+                            
                                 <div class="form-group">
                                     <h:outputLabel value="Seleccione un presidente" for="presidente" />
-                                    <h:selectOneMenu id="presidente" class="form-control presidente" value="#{jrvBean.jrv.idPresidente}" title="IdPresidente" required="true" requiredMessage="No hay usuarios para presidente disponibles" >
+                                    <h:selectOneMenu id="presidente" class="form-control presidente" value="#{jrvBean.jrv.idPresidente}" title="IdPresidente" required="true" requiredMessage="El presidente es obligatorio" >
 
                                         <c:if test="#{not empty jrvBean.listaJrvs}">
 
@@ -81,7 +92,7 @@
                                 <div class="form-group">
                                     <h:outputLabel value="Seleccione un secretario" for="secretario" />
 
-                                    <h:selectOneMenu id="secretario" class="form-control secretario js-states" value="#{jrvBean.jrv.idSecretario}" title="Secretario" required="true" requiredMessage="No hay ciudadanos para secretario disponibles">                                      
+                                    <h:selectOneMenu id="secretario" class="form-control secretario js-states" value="#{jrvBean.jrv.idSecretario}" title="Secretario" required="true" requiredMessage="El secretario es obligatorio">                                      
                                         
                                             
                                             
@@ -115,7 +126,7 @@
                                 </div>
                                 <div class="form-group">
                                     <h:outputLabel value="Seleccione un vocal" for="vocal" />
-                                    <h:selectOneMenu id="vocal" class="form-control vocal" value="#{jrvBean.jrv.idVocal}" title="IdVocal" required="true" requiredMessage="No hay ciudadanos para vocales disponibles">
+                                    <h:selectOneMenu id="vocal" class="form-control vocal" value="#{jrvBean.jrv.idVocal}" title="IdVocal" required="true" requiredMessage="El Vocal es obligatorio">
                                         <c:if test="#{not empty jrvBean.listaJrvs}">
 
                                             <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
@@ -147,11 +158,11 @@
                             </div> 
                         </div>
 
->
-                                <a action="ListaJrv" href="ListaJrv.xhtml" class="btn btn-danger btn-lg" >Cancelar</a>
-                                <h:commandButton class="btn btn-primary btn-lg pull-right" action="#{jrvBean.modificarJrv()}" value="Modificar"/>
+                        <h:commandButton class="btn btn-primary btn-lg" action="#{jrvBean.modificarJrv()}" value="Modificar" style="margin-right: 20xp;"/>
+                        <a action="ListaJrv" href="ListaJrv.xhtml" class="btn btn-danger btn-lg" >Cancelar</a>
+                                
 
-                        </div>
+                        </c:if>
 
                         <script>
                             $(document).ready(function () {

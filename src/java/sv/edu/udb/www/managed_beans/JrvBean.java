@@ -15,11 +15,13 @@ import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
 import sv.edu.udb.www.entities.CentroVotacionEntity;
 import sv.edu.udb.www.entities.CiudadanoEntity;
+import sv.edu.udb.www.entities.DetalleCiudadanoJrvEntity;
 import sv.edu.udb.www.entities.EleccionEntity;
 import sv.edu.udb.www.entities.JrvEntity;
 import sv.edu.udb.www.entities.UsuarioEntity;
 import sv.edu.udb.www.model.CentroVotacionesModel;
 import sv.edu.udb.www.model.CiudadanosModel;
+import sv.edu.udb.www.model.DetalleCiudadanoJrvModel;
 import sv.edu.udb.www.model.EleccionesModel;
 import sv.edu.udb.www.model.JrvModel;
 import sv.edu.udb.www.model.UsuariosModel;
@@ -34,6 +36,9 @@ import sv.edu.udb.www.utils.JsfUtils;
 public class JrvBean implements Serializable{
 
     @EJB
+    private DetalleCiudadanoJrvModel detalleCiudadanoJrvModel;
+    
+    @EJB
     private CentroVotacionesModel centroVotacionesModel;
 
     @EJB
@@ -47,6 +52,8 @@ public class JrvBean implements Serializable{
 
     @EJB
     private JrvModel jrvModel;
+    
+    
 
     List<JrvEntity> listaJrvs;
 
@@ -57,6 +64,8 @@ public class JrvBean implements Serializable{
     List<EleccionEntity> listaElecciones;
 
     List<CentroVotacionEntity> listaCentroVotaciones;
+    
+    List<DetalleCiudadanoJrvEntity> listaDetalleCiudadanoJrv;
 
     JrvEntity jrv = new JrvEntity();
 
@@ -68,11 +77,14 @@ public class JrvBean implements Serializable{
     }
 
     public List<JrvEntity> getListaJrvsActivas() {
-        return jrvModel.listarJrvActivas();
+        
+        HttpServletRequest request = JsfUtils.getRequest();
+        return jrvModel.listarJrvActivas(Integer.parseInt(request.getSession().getAttribute("departamento").toString()));
     }
 
     public List<JrvEntity> getListaJrvsFinalizadas() {
-        return jrvModel.listarJrvFinalizadas();
+        HttpServletRequest request = JsfUtils.getRequest();
+        return jrvModel.listarJrvFinalizadas(Integer.parseInt(request.getSession().getAttribute("departamento").toString()));
     }
 
     public List<CiudadanoEntity> getListaCiudadanos() {
@@ -99,6 +111,19 @@ public class JrvBean implements Serializable{
         HttpServletRequest request = JsfUtils.getRequest();
         return centroVotacionesModel.listarCentroVotacionesDepartamento(Integer.parseInt(request.getSession().getAttribute("departamento").toString()));
     }
+    
+    public EleccionEntity getEleccionActiva(){
+        try{
+            return eleccionesModel.obtenerEleccionActiva();
+        }catch(Exception e){
+            return null;
+        }
+    }
+    
+    public List<EleccionEntity> getEleccionDisponible(){
+        return eleccionesModel.listaEleccionesDisponibles();
+    }
+    
 
     public JrvEntity getJrv() {
         return jrv;
@@ -132,6 +157,7 @@ public class JrvBean implements Serializable{
             return null;
         }
         
+        
         jrv = new JrvEntity();
         JsfUtils.addFlashMessage("exito", "JRV ingresada con exito");
         return "/adminDepartamental/ListaJrv?faces-redirect=true";
@@ -162,5 +188,18 @@ public class JrvBean implements Serializable{
         return "/adminDepartamental/ModificarJrv";
 
     }
+    
+    public void obtenerListaCiudadanosJrv(String id) {
+
+        
+        int idJrv = Integer.parseInt(id);
+        listaDetalleCiudadanoJrv = detalleCiudadanoJrvModel.listaCiudadanosJrv(idJrv);        
+    }
+
+    public List<DetalleCiudadanoJrvEntity> getListaDetalleCiudadanoJrv() {
+        return listaDetalleCiudadanoJrv;
+    }
+    
+    
 
 }

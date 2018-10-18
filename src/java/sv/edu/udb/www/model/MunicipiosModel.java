@@ -23,6 +23,12 @@ public class MunicipiosModel {
         Query query=em.createNamedQuery("MunicipioEntity.findAll");
         return query.getResultList();
     }
+    
+    public List<MunicipioEntity> listarMunicipiosDepartamento(int id){
+        Query query=em.createNamedQuery("SELECT m FROM MunicipioEntity m WHERE m.idDepartamento.idDepartamento=:idDepartamento");
+        query.setParameter("idDepartamento", id);
+        return query.getResultList();
+    }
 
     public int insertarMunicipio(MunicipioEntity municipio){
         try{

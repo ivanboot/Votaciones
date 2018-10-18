@@ -37,7 +37,7 @@ public class UsuariosModel {
     }
     
     public List<UsuarioEntity> listarPresidentes(int id) {
-        Query query = em.createQuery("SELECT u FROM UsuarioEntity u WHERE u.idTipoUsuario.idTipoUsuario = 4 AND u.idCiudadano.idMunicipio.idMunicipio =:idMunicipio");
+        Query query = em.createQuery("SELECT u FROM UsuarioEntity u WHERE u.idTipoUsuario.idTipoUsuario = 4 AND u.idCiudadano.idCentroVotacion.idMunicipio.idMunicipio =:idMunicipio");
         query.setParameter("idMunicipio", id);
         return query.getResultList();
     }

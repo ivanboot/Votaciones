@@ -6,7 +6,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:b="http://bootsfaces.net/ui">
 
     <ui:define name="titulo">
         Nueva JRV
@@ -15,7 +16,7 @@
     <ui:define name="content">
 
 
-        <section class="contact-section" style="padding: 0;">
+        <section class="contact-section" >
             <div class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
                  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
                  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; padding:2%;max-width: 700px;background-color: white;">
@@ -27,59 +28,102 @@
 
                 <div class="contact-form mt-50">
                     <h:form prependId="false">
-                        <div class="row">
-                            <div class="col-md-12">
-                                
+                        <c:if test="#{empty jrvBean.eleccionDisponible}">
 
-                                <div class="form-group">
-                                    <h:outputLabel value="Seleccione un centro de votacion" for="centroVotacion" />
-                                    <h:selectOneMenu id="centroVotacion" class="form-control centroVotacion" value="#{jrvBean.jrv.idCentroVotacion}" title="IdCentroVotacion" required="true" requiredMessage="No hay centros de votaciones disponibles">
-                                        <!-- TODO: update below reference to list of available items-->
-                                        <f:selectItem itemLabel="Seleccione el centro de votacion" itemValue="" noSelectionOption="true"/>
-                                        <f:selectItems value="#{jrvBean.listaCentroVotaciones}" var="centro"
-                                                       itemValue="#{centro}"
-                                                       itemLabel="#{centro.nombre}"/>
-                                        <f:ajax render="@form"/>
-                                    </h:selectOneMenu>
+                            <h2>No hay elección disponible para registrar JRV</h2><br/>
+                            <center>
+                                <h:graphicImage name="img/calendar.png" style="width: 25%;"></h:graphicImage>
+                            </center>
+                            <div class="caption">
+                                <a href="InicioAdminD.xhtml" class="btn btn-primary btn-lg" >Regresar</a><br/><br/>
+                            </div>
 
-                                </div>
-                            
-                                <div class="form-group">
-                                    <h:outputLabel value="Seleccione un presidente" for="presidente" />
-                                    <h:selectOneMenu id="presidente" class="form-control presidente" value="#{jrvBean.jrv.idPresidente}" title="IdPresidente" required="true" requiredMessage="No hay usuarios para presidente disponibles">
-                                        <f:selectItem itemLabel="Seleccione un presidente" itemValue="" noSelectionOption="true"/>
-                                        <c:if test="#{not empty jrvBean.listaJrvs}">
 
-                                            <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
+                        </c:if>
+                        <c:if test="#{not empty jrvBean.eleccionDisponible}">
+                            <div class="row">
+                                <div class="col-md-12">
 
-                                                <c:forEach items="#{jrvBean.listaUsuarios}" var="presidente">
-                                                    <c:if test="#{jrv.idPresidente.idUsuario ne presidente.idUsuario}">
-                                                        <f:selectItem  itemValue="#{presidente}"
-                                                                       itemLabel="#{presidente.idCiudadano.nombres} #{presidente.idCiudadano.apellidos}"/>
-                                                    </c:if>
+
+                                    <div class="form-group">
+                                        <h:outputLabel value="Seleccione un centro de votacion" for="centroVotacion" />
+                                        <h:selectOneMenu id="centroVotacion" class="form-control centroVotacion" value="#{jrvBean.jrv.idCentroVotacion}" title="IdCentroVotacion" required="true" requiredMessage="Debe seleccionar un centro de votación">
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItem itemLabel="Seleccione el centro de votacion" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItems value="#{jrvBean.listaCentroVotaciones}" var="centro"
+                                                           itemValue="#{centro}"
+                                                           itemLabel="#{centro.nombre}"/>
+                                            <f:ajax render="@form"/>
+                                        </h:selectOneMenu>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h:outputLabel value="Seleccione un presidente" for="presidente" />
+                                        <h:selectOneMenu id="presidente" class="form-control presidente" value="#{jrvBean.jrv.idPresidente}" title="IdPresidente" required="true" requiredMessage="Debe seleccionar un presidente">
+                                            <f:selectItem itemLabel="Seleccione un presidente" itemValue="" noSelectionOption="true"/>
+                                            <c:if test="#{not empty jrvBean.listaJrvs}">
+
+                                                <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
+
+                                                    <c:forEach items="#{jrvBean.listaUsuarios}" var="presidente">
+                                                        <c:if test="#{jrv.idPresidente.idUsuario ne presidente.idUsuario}">
+                                                            <f:selectItem  itemValue="#{presidente}"
+                                                                           itemLabel="#{presidente.idCiudadano.nombres} #{presidente.idCiudadano.apellidos}"/>
+                                                        </c:if>
+                                                    </c:forEach>
                                                 </c:forEach>
-                                            </c:forEach>
 
-                                        </c:if>
+                                            </c:if>
 
-                                        <c:if test="#{empty jrvBean.listaJrvs}">
+                                            <c:if test="#{empty jrvBean.listaJrvs}">
 
-                                            <f:selectItems value="#{jrvBean.listaUsuarios}" var="presidente" itemValue="#{presidente}"
-                                                           itemLabel="#{presidente.idCiudadano.nombres} #{presidente.idCiudadano.apellidos}"/>
+                                                <f:selectItems value="#{jrvBean.listaUsuarios}" var="presidente" itemValue="#{presidente}"
+                                                               itemLabel="#{presidente.idCiudadano.nombres} #{presidente.idCiudadano.apellidos}"/>
 
-                                        </c:if>
-
+                                            </c:if>
 
 
-                                    </h:selectOneMenu>
-                                </div>
-                                <div class="form-group">
-                                    <h:outputLabel value="Seleccione un secretario" for="secretario" />
 
-                                    <h:selectOneMenu id="secretario" class="form-control secretario js-states" value="#{jrvBean.jrv.idSecretario}" title="Secretario" required="true" requiredMessage="No hay ciudadanos para secretario disponibles">                                      
-                                        <f:selectItem itemLabel="Seleccione un secretario" itemValue="" noSelectionOption="true" />
-                                        <c:if test="#{not empty jrvBean.listaJrvs}">
-                                            <c:if test="#{not empty jrvBean.listaCiudadanos}">
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <h:outputLabel value="Seleccione un secretario" for="secretario" />
+
+                                        <h:selectOneMenu id="secretario" class="form-control secretario js-states" value="#{jrvBean.jrv.idSecretario}" title="Secretario" required="true" requiredMessage="Debe seleccionar un secretario">   
+                                            <f:selectItem itemLabel="Seleccione un secretario" itemValue="" noSelectionOption="true" />
+                                            <c:if test="#{not empty jrvBean.listaJrvs}">
+                                                <c:if test="#{not empty jrvBean.listaCiudadanos}">
+
+                                                    <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
+
+                                                        <c:forEach items="#{jrvBean.listaCiudadanos}" var="ciudadano">
+                                                            <c:if test="#{(jrv.idSecretario.idCiudadano ne ciudadano.idCiudadano) and (jrv.idVocal.idCiudadano ne ciudadano.idCiudadano) and (jrv.idPresidente.idCiudadano.idCiudadano ne ciudadano.idCiudadano)}">
+                                                                <f:selectItem itemValue="#{ciudadano}"
+                                                                              itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </c:forEach>
+                                                </c:if>
+                                            </c:if>
+
+                                            <c:if test="#{empty jrvBean.listaJrvs}">
+
+                                                <f:selectItems value="#{jrvBean.listaCiudadanos}" var="ciudadano"
+                                                               itemValue="#{ciudadano}"
+                                                               itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+
+                                            </c:if>
+
+                                            <f:ajax rendered="secretario"/>
+
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="form-group">
+                                        <h:outputLabel value="Seleccione un vocal" for="vocal" />
+                                        <h:selectOneMenu id="vocal" class="form-control vocal" value="#{jrvBean.jrv.idVocal}" title="IdVocal" required="true" requiredMessage="Debe seleccionar un vocal">
+                                            <f:selectItem itemLabel="Seleccione un vocal" itemValue="" noSelectionOption="true" />
+                                            <c:if test="#{not empty jrvBean.listaJrvs}">
 
                                                 <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
 
@@ -91,55 +135,25 @@
                                                     </c:forEach>
                                                 </c:forEach>
                                             </c:if>
-                                        </c:if>
 
-                                        <c:if test="#{empty jrvBean.listaJrvs}">
+                                            <c:if test="#{empty jrvBean.listaJrvs}">
 
-                                            <f:selectItems value="#{jrvBean.listaCiudadanos}" var="ciudadano"
-                                                           itemValue="#{ciudadano}"
-                                                           itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
+                                                <f:selectItems value="#{jrvBean.listaCiudadanos}" var="ciudadano"
+                                                               itemValue="#{ciudadano}"
+                                                               itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
 
-                                        </c:if>
+                                            </c:if>
 
-                                        <f:ajax rendered="secretario"/>
+                                            <f:ajax rendered="vocal"/>
 
-                                    </h:selectOneMenu>
-                                </div>
-                                <div class="form-group">
-                                    <h:outputLabel value="Seleccione un vocal" for="vocal" />
-                                    <h:selectOneMenu id="vocal" class="form-control vocal" value="#{jrvBean.jrv.idVocal}" title="IdVocal" required="true" requiredMessage="No hay ciudadanos para vocales disponibles">
-                                        <f:selectItem itemLabel="Seleccione un vocal" itemValue="" noSelectionOption="true" />
-                                        <c:if test="#{not empty jrvBean.listaJrvs}">
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div> 
+                            </div>
 
-                                            <c:forEach items="#{jrvBean.listaJrvs}" var="jrv">
+                            <h:commandButton class="btn btn-primary btn-lg" action="#{jrvBean.nuevaJrv()}" style="margin-right: 20px;" value="Registrar"/>
+                        </c:if>
 
-                                                <c:forEach items="#{jrvBean.listaCiudadanos}" var="ciudadano">
-                                                    <c:if test="#{(jrv.idSecretario.idCiudadano ne ciudadano.idCiudadano) and (jrv.idVocal.idCiudadano ne ciudadano.idCiudadano) and (jrv.idPresidente.idCiudadano.idCiudadano ne ciudadano.idCiudadano)}">
-                                                        <f:selectItem itemValue="#{ciudadano}"
-                                                                      itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </c:forEach>
-                                        </c:if>
-
-                                        <c:if test="#{empty jrvBean.listaJrvs}">
-
-                                            <f:selectItems value="#{jrvBean.listaCiudadanos}" var="ciudadano"
-                                                           itemValue="#{ciudadano}"
-                                                           itemLabel="#{ciudadano.nombres} #{ciudadano.apellidos}"/>
-
-                                        </c:if>
-
-                                        <f:ajax rendered="vocal"/>
-
-                                    </h:selectOneMenu>
-                                </div>
-                            </div> 
-                        </div>
-
-                        <h:commandButton class="btn btn-primary btn-lg" action="#{jrvBean.nuevaJrv()}" style="margin-right: 20px;" value="Registrar"/>
-                        
-                        
                         <script>
                             $(document).ready(function () {
 
