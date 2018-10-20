@@ -2,11 +2,13 @@ package sv.edu.udb.www.managed_beans;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
@@ -25,8 +27,8 @@ import sv.edu.udb.www.utils.JsfUtils;
  * @author Rodriguez
  */
 @Named(value = "ciudadanosBean")
-@ViewScoped
-public class CiudadanosBean {
+@RequestScoped
+public class CiudadanosBean implements Serializable{
 
     @EJB
     private CiudadanosModel ciudadanosModel;
@@ -76,6 +78,7 @@ public class CiudadanosBean {
     //Para llenar los comboBOX
     public List<CentroVotacionEntity> getListaCentroVotacion() {
         try {
+            
             return centroVotacionesModel.listarCentroVotacionesMunicipio(Integer.parseInt(municipio.getIdMunicipio().toString()));
         } catch (Exception e) {
             return null;
@@ -89,6 +92,7 @@ public class CiudadanosBean {
 
     public List<MunicipioEntity> getListarMunicipiosDepartamento(){
         try {
+            
             return municipiosModel.listarMunicipiosDepartamento(Integer.parseInt(departamento.getIdDepartamento().toString()));
         } catch (Exception e) {
             return null;

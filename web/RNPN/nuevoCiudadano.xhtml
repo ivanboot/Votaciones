@@ -76,39 +76,11 @@
                                          title="UrlImagen" required="true" 
                                          requiredMessage="Foto del ciudadano es obligatoria."/>
                         </div>
-                        
-                        <div class="form-group">
-                            <h:outputLabel value="Departamento:" for="idDepartamento" />
-                            <h:selectOneMenu id="idDepartamento" class="form-control"
-                                             required="true" requiredMessage="Departamento es obligatorio"
-                                             value="#{ciudadanosBean.departamento}" 
-                                             title="IdDepartamento" >
-                                <f:selectItem itemLabel="Seleccione un Departamento" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ciudadanosBean.listaDepartamentos}" var="dep"
-                                               itemValue="#{dep}"
-                                               itemLabel="#{dep.departamento}"/>
-                                <f:ajax render="idMunicipio" />
-                            </h:selectOneMenu>
-                        </div>
-                        
-                        
-                        <div class="form-group">
-                            <h:outputLabel value="Municipio" for="idMunicipio" />
-                            <h:selectOneMenu id="idMunicipio" class="form-control"
-                                             required="true" requiredMessage="Municipio es obligatorio"
-                                             value="#{ciudadanosBean.municipio}" 
-                                             title="IdMunicipio" >
-                                <f:selectItem itemLabel="Seleccione un municipio" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{ciudadanosBean.listarMunicipiosDepartamento}" var="municipio"
-                                               itemValue="#{municipio}"
-                                               itemLabel="#{municipio.municipio}"/>
-                                <f:ajax render="idCentroVotacion" />
-                            </h:selectOneMenu>
-                        </div>
+
 
                         <div class="form-group">
                             <h:outputLabel value="Centro de votación:" for="idCentroVotacion" />
-                            <h:selectOneMenu id="idCentroVotacion" class="form-control"
+                            <h:selectOneMenu id="idCentroVotacion" class="form-control idCentroVotacion"
                                              required="true" requiredMessage="Centro de votación obligatorioriorio"
                                              value="#{ciudadanosBean.ciudadano.idCentroVotacion}" 
                                              title="IdCentroVotacion" >
@@ -126,6 +98,16 @@
                 </div>
             </div>
         </section>
+
+        <script>
+            $(document).ready(function () {
+                $('.idCentroVotacion').select2({
+                    language: "es"
+                });
+
+            });
+        </script>
+
     </ui:define>
 
 </ui:composition>
