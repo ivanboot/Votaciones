@@ -116,6 +116,13 @@ public class Filtro implements Filter {
                     }
                     wrappedResponse.sendRedirect(wrappedRequest.getContextPath() + "/faces/RNPN/listaCiudadano.xhtml");
                     break;
+                case 4:
+                    if(url.contains("/GFJRV")){
+                        chain.doFilter(request, response);
+                        return;
+                    }
+                    wrappedResponse.sendRedirect(wrappedRequest.getContextPath() + "/faces/GFJRV/InicioGJRV.xhtml");
+                    break;
             }
 
         }
