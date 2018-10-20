@@ -13,6 +13,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import sv.edu.udb.www.entities.EleccionEntity;
 import sv.edu.udb.www.entities.TipoEleccionEntity;
+import sv.edu.udb.www.model.CiudadanosModel;
 import sv.edu.udb.www.model.EleccionesModel;
 import sv.edu.udb.www.model.TipoEleccionModel;
 import sv.edu.udb.www.utils.JsfUtils;
@@ -26,10 +27,15 @@ import sv.edu.udb.www.utils.JsfUtils;
 public class EleccionesBean {
 
     @EJB
+    private CiudadanosModel ciudadanosModel;
+
+    @EJB
     private TipoEleccionModel tipoEleccionModel;
 
     @EJB
     private EleccionesModel eleccionesModel;
+    
+    
 
     List <TipoEleccionEntity> listaTipoEleccion;
     
@@ -95,6 +101,9 @@ public class EleccionesBean {
         }else{
             JsfUtils.addFlashMessage("exito", "Proceso de eleccion iniciado con exito");
         }
+        
+        
+        
         return "/adminGeneral/ListaElecciones?faces-redirect=true";
     }
     

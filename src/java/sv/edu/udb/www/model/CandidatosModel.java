@@ -24,6 +24,11 @@ public class CandidatosModel {
         return query.getResultList();
     }
     
+    public List<CandidatoEntity> listarCandidatosPresidenciales(){
+        Query query= em.createQuery("SELECT c FROM CandidatoEntity c WHERE c.detalleCandidatoEleccionEntityList.idEleccion.idEleccion=1");
+        return query.getResultList();
+    }
+    
     public int insertarCandidadto(CandidatoEntity candidato){
         try{
             em.persist(candidato);
