@@ -129,5 +129,5 @@ public class MunicipioEntity implements Serializable {
     public String toString() {
         return "sv.edu.udb.www.entities.MunicipioEntity[ idMunicipio=" + idMunicipio + " ]";
     }
-    
+
 }

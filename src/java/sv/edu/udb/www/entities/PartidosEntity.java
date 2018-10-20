@@ -106,5 +106,5 @@ public class PartidosEntity implements Serializable {
     public String toString() {
         return "sv.edu.udb.www.entities.PartidosEntity[ idPartido=" + idPartido + " ]";
     }
-    
+
 }

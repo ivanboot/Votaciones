@@ -128,5 +128,5 @@ public class VotoEntity implements Serializable {
     public String toString() {
         return "sv.edu.udb.www.entities.VotoEntity[ idVotos=" + idVotos + " ]";
     }
-    
+
 }

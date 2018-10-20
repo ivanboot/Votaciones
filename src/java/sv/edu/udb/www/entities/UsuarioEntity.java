@@ -144,5 +144,5 @@ public class UsuarioEntity implements Serializable {
     public String toString() {
         return "sv.edu.udb.www.entities.UsuarioEntity[ idUsuario=" + idUsuario + " ]";
     }
-    
+
 }

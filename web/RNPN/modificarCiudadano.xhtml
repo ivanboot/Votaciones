@@ -80,10 +80,11 @@
 
                         <div class="form-group">
                             <h:outputLabel value="Centro de votación:" for="idCentroVotacion" />
-                            <h:selectOneMenu id="idCentroVotacion" class="form-control"
+                            <h:selectOneMenu id="idCentroVotacion" class="form-control idCentroVotacion"
                                              required="true" requiredMessage="Centro de votación obligatorioriorio"
                                              value="#{ciudadanosBean.ciudadano.idCentroVotacion}" 
                                              title="IdCentroVotacion" >
+                                <f:selectItem itemLabel="Seleccione un centro de votación" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{ciudadanosBean.listaCentroVotacion}" var="centro"
                                                itemValue="#{centro}"
                                                itemLabel="#{centro.nombre}"/>
@@ -91,12 +92,20 @@
                         </div>
 
                         <h:commandLink class="btn btn-success" 
-                                       value="Registrar" id="btnGuardar" 
+                                       value="Editar" id="btnGuardar" 
                                        action="#{ciudadanosBean.modificarCiudadano()}" />
                     </h:form>
                 </div>
             </div>
         </section>
+        <script>
+            $(document).ready(function () {
+                $('.idCentroVotacion').select2({
+                    language: "es"
+                });
+
+            });
+        </script>
     </ui:define>
 
 </ui:composition>
