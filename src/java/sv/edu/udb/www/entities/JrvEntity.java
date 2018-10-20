@@ -198,5 +198,5 @@ public class JrvEntity implements Serializable {
     public String toString() {
         return "sv.edu.udb.www.entities.JrvEntity[ idJrv=" + idJrv + " ]";
     }
-    
+
 }

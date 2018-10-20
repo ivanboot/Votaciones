@@ -106,5 +106,5 @@ public class DepartamentoEntity implements Serializable {
     public String toString() {
         return "sv.edu.udb.www.entities.DepartamentoEntity[ idDepartamento=" + idDepartamento + " ]";
     }
-    
+
 }
