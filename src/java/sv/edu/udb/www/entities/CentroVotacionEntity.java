@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author usuario
+ * @author ivanm
  */
 @Entity
 @Table(name = "centro_votacion")
