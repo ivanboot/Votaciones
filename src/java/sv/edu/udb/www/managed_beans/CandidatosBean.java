@@ -1,4 +1,3 @@
-
 package sv.edu.udb.www.managed_beans;
 
 import java.io.File;
@@ -41,7 +40,7 @@ public class CandidatosBean {
 
     @EJB
     private CandidatosModel candidatosModel;
-    
+
     List<CandidatoEntity> listaCandidatos;
 
     List<MunicipioEntity> listaMunicipios;
@@ -88,21 +87,21 @@ public class CandidatosBean {
     }
 
     public String nuevoCandidatoPresidencial() {
-        if(eleccionesModel.listaEleccionesDisponibles().isEmpty()){
+        if (eleccionesModel.listaEleccionesDisponibles().isEmpty()) {
             JsfUtils.addFlashMessage("fracaso", "No hay elecciones activas disponibles para ingresar candidatos");
             return "/adminGeneral/ListaCandidatos?faces-redirect=true";
         }
-        
-        if(!imagen.getSubmittedFileName().toString().endsWith("jpg") || !imagen.getSubmittedFileName().toString().endsWith("jpeg") || !imagen.getSubmittedFileName().toString().endsWith("png")){
+
+        if (!imagen.getSubmittedFileName().toString().endsWith("jpg") || !imagen.getSubmittedFileName().toString().endsWith("jpeg") || !imagen.getSubmittedFileName().toString().endsWith("png")) {
             JsfUtils.addErrorMessage("idCandidatos", "Debe seleccionar un archivo de imagen .jpg, .jpeg o .png");
             return null;
         }
-        
+
         candidato.setIdMunicipio(null);
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
 
         try {
-            
+
             InputStream input = imagen.getInputStream();
             candidato.setUrlFoto(imagen.getSubmittedFileName());
             Files.copy(input, new File(path + "/resources/candidatos/", candidato.getUrlFoto()).toPath());
@@ -124,23 +123,23 @@ public class CandidatosBean {
         JsfUtils.addErrorMessage("idCandidatos", path);
         return null;
     }
-    
-    public String obtenerCandidato(){
+
+    public String obtenerCandidato() {
         int codigo = Integer.parseInt(JsfUtils.getRequest().getParameter("codigo"));
         candidato = candidatosModel.obtenerCandidato(codigo);
         return "/adminGeneral/ModificarCandidato";
     }
-    
-    public String modificarCandidatoPresidencial() {        
-        
+
+    public String modificarCandidatoPresidencial() {
+
         candidato.setIdMunicipio(null);
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-        
-        if(!imagen.getSubmittedFileName().toString().endsWith("jpg") || !imagen.getSubmittedFileName().toString().endsWith("jpeg") || !imagen.getSubmittedFileName().toString().endsWith("png")){
+
+        if (!imagen.getSubmittedFileName().toString().endsWith("jpg") || !imagen.getSubmittedFileName().toString().endsWith("jpeg") || !imagen.getSubmittedFileName().toString().endsWith("png")) {
             JsfUtils.addErrorMessage("idCandidatos", "Debe seleccionar un archivo de imagen .jpg, .jpeg o .png");
             return null;
         }
-        
+
         try {
             InputStream input = imagen.getInputStream();
             candidato.setUrlFoto(imagen.getSubmittedFileName());
@@ -156,6 +155,16 @@ public class CandidatosBean {
         }
         JsfUtils.addFlashMessage("exito", "Candidato a presidente modificado con exito");
         return "/adminGeneral/ListaCandidatos?faces-redirect=true";
+    }
+
+    public List<MunicipioEntity> getListaMunicipiosDepartamento() {
+        HttpServletRequest request = JsfUtils.getRequest();
+        try {
+            return municipiosModel.listarMunicipiosDepartamento(Integer.parseInt(request.getSession().getAttribute("departamento").toString()));
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
 }

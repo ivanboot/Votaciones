@@ -47,4 +47,8 @@ public class CandidatosModel {
     public CandidatoEntity obtenerCandidato(int codigo){
         return em.find(CandidatoEntity.class,codigo);
     }
+    
+    public CandidatoEntity obtenerCandidatoPartido(int codigo){
+        return em.find(CandidatoEntity.class,codigo);
+    }
 }
