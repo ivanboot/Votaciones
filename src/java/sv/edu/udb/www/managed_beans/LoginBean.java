@@ -64,7 +64,7 @@ public class LoginBean {
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 3) {
                 return "/RNPN/InicioRNPN?faces-redirect=true";
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 4) {
-                return null;
+               return "/GFJRV/InicioGFJRV?faces-redirect=true";
             } else {
                 return null;
             }
