@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sv.edu.udb.www.managed_beans;
 
 import javax.ejb.EJB;
@@ -13,10 +8,6 @@ import sv.edu.udb.www.entities.UsuarioEntity;
 import sv.edu.udb.www.model.UsuariosModel;
 import sv.edu.udb.www.utils.JsfUtils;
 
-/**
- *
- * @author ivanm
- */
 @Named(value = "loginBean")
 @RequestScoped
 public class LoginBean {
@@ -64,8 +55,9 @@ public class LoginBean {
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 3) {
                 return "/RNPN/InicioRNPN?faces-redirect=true";
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 4) {
-               return "/GFJRV/InicioGFJRV?faces-redirect=true";
+               return "/GFJRV/InicioGJRV?faces-redirect=true";
             } else {
+                JsfUtils.addErrorMessage(null, "Correo y/o contraseña incorrecta");
                 return null;
             }
         }
