@@ -12,15 +12,15 @@
         <h:outputStylesheet name="css/style.css"/>
         <h:outputStylesheet name="css/alertify.core.css" />
         <h:outputStylesheet name="css/alertify.default.css" />
-         <h:outputStylesheet name="css/dataTables.bootstrap.min.css" />
+        <h:outputStylesheet name="css/dataTables.bootstrap.min.css" />
         <h:outputScript name="js/jquery-1.12.0.min.js"/>
-          <h:outputScript name="js/bootstrap.min.js"/>
-            <h:outputScript name="js/alertify.js"/>
-          <h:outputScript name="js/jquery.dataTables.min.js"/>
-           <h:outputScript name="js/dataTables.bootstrap.min.js"/>
-           <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-        
-        <title>Administrador general</title>
+        <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/alertify.js"/>
+        <h:outputScript name="js/jquery.dataTables.min.js"/>
+        <h:outputScript name="js/dataTables.bootstrap.min.js"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+        <title>RNPN</title>
     </h:head>
 
     <h:body>
@@ -45,12 +45,12 @@
                         <li><h:link outcome="/RNPN/InicioRNPN">Inicio</h:link></li>
                         <li class="dropdown dropdown-toggle"><a href="#">Ciudadanos<span><i class="fa fa-angle-down"></i></span></a>
                             <ul class="dropdown-menu">
-                                <li><h:link outcome="/adminGeneral/NuevoCandidato">Nuevo ciudadano</h:link></li>
-                                <li><h:link outcome="/adminGeneral/ListaCandidatos">Lista de ciudadano</h:link></li>                                
+                                <li><h:link outcome="/RNPN/nuevoCiudadano">Nuevo ciudadano</h:link></li>
+                                <li><h:link outcome="/RNPN/listaCiudadanos">Lista de ciudadano</h:link></li>                                
                             </ul>
                         </li>
                         <li><h:form> <h:commandLink value="Cerrar Sesion" action="#{loginBean.cerrarSesion()}" /></h:form></li>
-                        
+
                     </ul>
 
                 </div>
@@ -60,33 +60,33 @@
         </nav>
 
         <section class="case-studies">
-    <div class="container">
-         <div id="content" class="center_content">
-             <h2><ui:insert name="titulo"></ui:insert></h2>
-        </div>
-        
-         <ui:insert name="contenido"/>
-    </div><!-- /.container -->
-    
-     
-        <h:outputScript rendered="#{not empty flash.exito}">
+            <div class="container">
+                <div id="content" class="center_content">
+                    <h2><ui:insert name="titulo"></ui:insert></h2>
+                </div>
+
+                <ui:insert name="contenido"/>
+            </div><!-- /.container -->
+
+
+            <h:outputScript rendered="#{not empty flash.exito}">
                 alertify.success('#{flash.exito}');
-        </h:outputScript>
-        
-        <h:outputScript rendered="#{not empty flash.fracaso}">
+            </h:outputScript>
+
+            <h:outputScript rendered="#{not empty flash.fracaso}">
                 alertify.error('#{flash.fracaso}');
-        </h:outputScript>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js">
+            </h:outputScript>
 
-        </script>
-    
-</section>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js">
 
-       
+            </script>
 
-       
-        
+        </section>
+
+
+
+
+
     </h:body>
 
 </html>

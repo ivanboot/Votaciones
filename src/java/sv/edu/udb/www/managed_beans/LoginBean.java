@@ -62,7 +62,7 @@ public class LoginBean {
                 request.getSession().setAttribute("departamento", user.getIdCiudadano().getIdCentroVotacion().getIdMunicipio().getIdDepartamento().getIdDepartamento());
                 return "/adminDepartamental/InicioAdminD?faces-redirect=true";
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 3) {
-                return "/RNPN/listaCiudadanos?faces-redirect=true";
+                return "/RNPN/InicioRNPN?faces-redirect=true";
             } else if (user.getIdTipoUsuario().getIdTipoUsuario() == 4) {
                 return null;
             } else {

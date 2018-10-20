@@ -79,7 +79,7 @@ public class CiudadanosBean implements Serializable{
     public List<CentroVotacionEntity> getListaCentroVotacion() {
         try {
             
-            return centroVotacionesModel.listarCentroVotacionesMunicipio(Integer.parseInt(municipio.getIdMunicipio().toString()));
+            return centroVotacionesModel.listarCentroVotaciones();
         } catch (Exception e) {
             return null;
         }
