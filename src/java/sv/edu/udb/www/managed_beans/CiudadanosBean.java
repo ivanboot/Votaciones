@@ -8,11 +8,16 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
 import sv.edu.udb.www.entities.CentroVotacionEntity;
 import sv.edu.udb.www.entities.CiudadanoEntity;
+import sv.edu.udb.www.entities.DepartamentoEntity;
+import sv.edu.udb.www.entities.MunicipioEntity;
 import sv.edu.udb.www.model.CentroVotacionesModel;
 import sv.edu.udb.www.model.CiudadanosModel;
+import sv.edu.udb.www.model.DepartamentosModel;
+import sv.edu.udb.www.model.MunicipiosModel;
 import sv.edu.udb.www.utils.JsfUtils;
 
 /**
@@ -20,25 +25,49 @@ import sv.edu.udb.www.utils.JsfUtils;
  * @author Rodriguez
  */
 @Named(value = "ciudadanosBean")
-@RequestScoped
+@ViewScoped
 public class CiudadanosBean {
 
     @EJB
     private CiudadanosModel ciudadanosModel;
-
+    
     //Inyecciones para poder llenar ComboBox
     @EJB
     private CentroVotacionesModel centroVotacionesModel;
+    
+    @EJB
+    private MunicipiosModel municipiosModel;
+    @EJB
+    private DepartamentosModel deparatamentosModel;
 
     List<CiudadanoEntity> listaCiudadanos;
 
     private Part imagen;
 
     private CiudadanoEntity ciudadano = new CiudadanoEntity();
+    private MunicipioEntity municipio = new MunicipioEntity();
+    private DepartamentoEntity departamento = new DepartamentoEntity();
 
     public CiudadanosBean() {
     }
 
+    public MunicipioEntity getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(MunicipioEntity municipio) {
+        this.municipio = municipio;
+    }
+
+    public DepartamentoEntity getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(DepartamentoEntity departamento) {
+        this.departamento = departamento;
+    }
+
+    
     public List<CiudadanoEntity> getListaCiudadanos() {
         listaCiudadanos = ciudadanosModel.listarCiudadanos();
         return listaCiudadanos;
@@ -46,9 +75,25 @@ public class CiudadanosBean {
 
     //Para llenar los comboBOX
     public List<CentroVotacionEntity> getListaCentroVotacion() {
-        return centroVotacionesModel.listarCentroVotaciones();
+        try {
+            return centroVotacionesModel.listarCentroVotacionesMunicipio(Integer.parseInt(municipio.getIdMunicipio().toString()));
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
+    
+   public List<DepartamentoEntity> getListaDepartamentos(){
+       return deparatamentosModel.listarDepartamentos();
+   }
 
+    public List<MunicipioEntity> getListarMunicipiosDepartamento(){
+        try {
+            return municipiosModel.listarMunicipiosDepartamento(Integer.parseInt(departamento.getIdDepartamento().toString()));
+        } catch (Exception e) {
+            return null;
+        }   
+    }
     public CiudadanoEntity getCiudadano() {
         return ciudadano;
     }

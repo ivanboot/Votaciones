@@ -6,10 +6,6 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns="http://www.w3.org/1999/xhtml">
 
-    <ui:define name="titulo">
-
-    </ui:define>
-
     <ui:define name="contenido">
         <section class="contact-section" style="padding: 0;">
             <div  class="container" style="-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3),0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -21,17 +17,17 @@
                     <h:messages />
                 </h:panelGroup>
 
-
                 <div class="contact-form mt-50">
-                    <h:form enctype="multipart/form-data"  prependId="false">
-                        <h2 style="text-align: center;">Modificar Ciudadano</h2>
+                    <h:form enctype="multipart/form-data" prependId="false">
+
+                        <h2 style="text-align: center;">Editar ciudadano</h2>
                         <div class="form-group">
-                            <h:inputHidden value="#{ciudadanosBean.ciudadano.idCiudadano}" />
+                            <h:inputHidden value="#{ciudadanosBean.ciudadano.idCiudadano}"/>
                             <h:outputLabel value="Nombres:" for="nombres" />
                             <h:inputText id="nombres" class="form-control"
                                          value="#{ciudadanosBean.ciudadano.nombres}" 
                                          title="Nombres" required="true" 
-                                         requiredMessage="El nombre es obligatario."/>
+                                         requiredMessage="Nombres del ciudadano son obligatorios."/>
                         </div>
 
                         <div class="form-group">
@@ -39,7 +35,7 @@
                             <h:inputText id="apellidos" class="form-control"
                                          value="#{ciudadanosBean.ciudadano.apellidos}" 
                                          title="Apellidos" required="true" 
-                                         requiredMessage="Los apellidos son obligatorios."/>
+                                         requiredMessage="Apellidos del ciudadano son obligatorios."/>
                         </div>
 
                         <div class="form-group">
@@ -47,7 +43,7 @@
                             <h:inputText id="direccion" class="form-control"
                                          value="#{ciudadanosBean.ciudadano.direccion}" 
                                          title="Direccion" required="true" 
-                                         requiredMessage="La dirección es obligatoria."/>
+                                         requiredMessage="Dirección obligatoria"/>
                         </div>
 
                         <div class="form-group">
@@ -55,8 +51,9 @@
                             <h:inputText id="dui" class="form-control"
                                          value="#{ciudadanosBean.ciudadano.dui}" 
                                          title="Dui" required="true" 
-                                         requiredMessage="El Dui es obligatorio."
+                                         requiredMessage="Dui obligatorio."
                                          validatorMessage="Dui con formato incorrecto.">
+
                                 <f:validateRegex pattern="[0-9]{8}-[0-9]{1}" />
                             </h:inputText>
                         </div>
@@ -66,41 +63,40 @@
                             <h:inputText id="telefono" class="form-control"
                                          value="#{ciudadanosBean.ciudadano.telefono}" 
                                          title="Telefono" required="true" 
-                                         requiredMessage="El telefono es obligatorio."
-                                         validatorMessage="Telefono con formato incorrecto.">
-                                <f:validateRegex pattern="[267][0-9]{3}-[0-9]{4}"/>
+                                         requiredMessage="Teléfono obligatorio."
+                                         validatorMessage="Teléfono con formato incorrecto.">
+
+                                <f:validateRegex pattern="[267][0-9]{3}-[0-9]{4}" />
                             </h:inputText>
                         </div>
 
                         <div class="form-group">
-                            <h:outputLabel value="Imagen:" for="urlImagen" />
-                            <h:inputFile class="form-control" id="urlImagen" 
+                            <h:outputLabel value="Foto:" for="urlImagen" />
+                            <h:inputFile id="urlImagen" class="form-control"
                                          value="#{ciudadanosBean.imagen}" 
-                                         title="urlImagen" 
-                                         required="true" 
-                                         requiredMessage="La foto del ciudadano es obligatoria." />
+                                         title="UrlImagen" required="true" 
+                                         requiredMessage="Foto del ciudadano es obligatoria."/>
                         </div>
 
                         <div class="form-group">
-                            <h:outputLabel value="Centro de Votación:" for="idCentroVotacion" />
+                            <h:outputLabel value="Centro de votación:" for="idCentroVotacion" />
                             <h:selectOneMenu id="idCentroVotacion" class="form-control"
+                                             required="true" requiredMessage="Centro de votación obligatorioriorio"
                                              value="#{ciudadanosBean.ciudadano.idCentroVotacion}" 
-                                             title="IdCentroVotacion" required="true" 
-                                             requiredMessage="The IdCentroVotacion field is required.">
+                                             title="IdCentroVotacion" >
                                 <f:selectItems value="#{ciudadanosBean.listaCentroVotacion}" var="centro"
                                                itemValue="#{centro}"
                                                itemLabel="#{centro.nombre}"/>
                             </h:selectOneMenu>
                         </div>
 
-                        <h:commandButton value="Modificar" class="btn btn-primary" id="btnGuardar"
-                                         action="#{ciudadanosBean.modificarCiudadano()}"/>
+                        <h:commandLink class="btn btn-success" 
+                                       value="Registrar" id="btnGuardar" 
+                                       action="#{ciudadanosBean.modificarCiudadano()}" />
                     </h:form>
                 </div>
             </div>
         </section>
-
-
     </ui:define>
 
 </ui:composition>
